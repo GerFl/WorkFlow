@@ -1,0 +1,208 @@
+/*
+
+*/
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /**Reset para REMS - 62.5% = 10px de 16px*/
+    background-color: #e7e7e7;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.contenedor-principal {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.sidebar{
+    background-color: #23374d;
+}
+.tarea{
+    background-color: #f7f5f5;
+}
+a.hecho{
+    color:green;
+}
+a.nocompleto{
+    color:red;
+}
+a.basura{
+    color:orange;
+}
+
+h2 {
+    color: #8de4af;
+    font-size: 2.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+}
+
+
+/* SIDEBAR */
+
+aside {
+    width: 25%;
+    height: 100vh;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.sidebar {
+    height: 100%;
+    padding: 2rem 1rem;
+    color: #edf5e0;
+    box-shadow: 1px 1px 10px 0.5rem #5d5c61;
+}
+
+.sidebar .barraprogreso {
+    height: 20rem;
+    width: 20rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.barraprogreso .circulo {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 7px solid white;
+    border-radius: 50%;
+}
+
+.circulo p {
+    font-size: 3rem;
+    font-weight: 300;
+}
+
+.circulo span {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.8rem;
+}
+
+.detallesproyecto p {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.detallesproyecto .opcionesproyecto {
+    display: flex;
+    justify-content: space-between;
+}
+
+.opcionesproyecto a {
+    padding: 1rem;
+    font-size: 1.4rem;
+}
+
+.opcionesproyecto a:first-child {
+    font-weight: 700;
+    border-radius: 2rem;
+    border:1px solid white;
+}
+
+.opcionesproyecto a:first-child:hover {
+    background-color:#0085ff;
+    border:1px solid #0085ff;
+    color: white;
+    transition:.3s all;
+}
+
+.opcionesproyecto a:nth-child(2) {
+    font-size:1.5rem;
+}
+
+.opcionesproyecto a:nth-child(2):hover {
+    color: red;
+    transition:.3s all;
+}
+
+
+/* MAIN */
+
+div.contenido {
+    width: 75%;
+    padding: 1rem 3rem;
+    border: 1px solid red;
+}
+
+
+/* GRID TAREAS  Y BARRA*/
+
+div.tareas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid purple;
+    gap: 3rem;
+}
+
+div.tarea {
+    border: 4px solid #5d5c61;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+    height: 21rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color:#242121;
+}
+
+
+div.opcionestarea {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div.opcionestarea i {
+    font-size: 2.3rem;
+    padding: 1rem;
+}
+
+div.priority,
+.opcionestarea {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div.barra {
+    grid-column: 1/4;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    border: 1px solid orange;
+    align-items:center;
+}
+div.barra a{
+    color:black;
+}
+
+.nuevatarea {
+    border: 1px solid #000000;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+.nuevatarea:hover{
+    background-color:#0085ff;
+    border:1px solid #0085ff;
+    transition:.3s all;
+    color:white;
+}
