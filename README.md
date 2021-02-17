@@ -8,3 +8,5 @@ To-do:
 - Establecer el layout en html y css
 - Inicializar el proyecto en node.js
 - Diseñar la BD
+
+I'm addicted to you, don't you know that I'm toxic
