@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+html(lang='es')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous')
+    link(rel='stylesheet' href='../css/normalize.css')
+    link(rel='stylesheet' href='../css/estilos.css')
+    title WorkFlow
+  body
+    .contenedor-principal
+      aside
+        .sidebar
+          .barraprogreso
+            .circulo
+              p WorkFlow
+          .detallesproyectos
+            .user
+              img(src='../fish.ico' alt='Profile Pic')
+              h2
+                | Bienvenido, 
+                span User
+            a.botonazul(href='developer.html' style='margin-top:2rem;') Developer
+            p Proyectos empezados: 7
+            p Proyectos terminados: 0
+            .acciones
+              a(href='#')
+                i.fas.fa-tools
+                |  Configuración
+              a(href='#')
+                i.fas.fa-sign-out-alt
+                |  Salir
+      .contenido
+        .barra
+          a.botonazul(href='#')
+            i.fas.fa-plus
+            | Nuevo proyecto
+        .listadoproyectos
+          .proyecto
+            a(href='proyecto.html')
+              .color
+              h2.nombreproyecto WorkFlow
+              p Administrador personal de proyectos.
+              h3 14.29%
+          .proyecto
+            a(href='proyecto.html')
+              .color
+              h2.nombreproyecto ROFL
+              p Portafolio de diseño realizado para Ricardo Flores.
+              h3 73%
+          .proyecto
+            a(href='proyecto.html')
+              .color
+              h2.nombreproyecto GoldPick
+              p Sitio web para una tienda de instrumentos musicales.
+              h3 42.0%
+        // Cierre de proyectos
+        // Cierre del contenido
+  script(src='../public/js/script.js')

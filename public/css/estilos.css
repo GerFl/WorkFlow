@@ -22,7 +22,6 @@ h2 {
 
 h3{
     font-size:2.8rem;
-    color:#5d5c61;
 }
 
 p {
@@ -44,20 +43,14 @@ a {
 .sidebar{
     background-color: #23374d;
 }
-a.hecho,a.nocompleto,a.basura{
-    color:black;
-}
-a.hecho:hover{
+a.hecho{
     color:#3bd964;
-    transition:.2s ease-in-out;
 }
-a.nocompleto:hover{
+a.nocompleto{
     color:#d93b5b;
-    transition:.2s ease-in-out;
 }
-a.basura:hover{
+a.basura{
     color:#d99c3b;
-    transition:.2s ease-in-out;
 }
 
 div.barra {
@@ -81,11 +74,11 @@ div.barra a.volver:hover{
     -webkit-box-shadow: 0px 10px 6px -4px #fff;
     -moz-box-shadow: 0px 10px 5px -4px #fff;*/
     filter: drop-shadow(0 0 1rem black);
-    transition:.2s ease-in-out;
+    transition:.3s ease-in-out;
 }
 div.barra a.volver:hover i{
     padding-right: 0.3rem;
-    transition: .2s ease-in-out;
+    transition: .3s ease-in-out;
 }
 
 .botonazul {
@@ -139,14 +132,11 @@ aside {
 .circulo p {
     font-size: 3rem;
     font-weight: 300;
-    margin:0;
 }
 
 .circulo span {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.5rem;
-    font-weight:300;
-    margin-top:0.5rem;
+    font-size: 1.8rem;
 }
 
 /* SIDEBAR INDEX */
@@ -275,6 +265,7 @@ div.proyecto h3{
     width:20%;
     align-self: center;
     text-align:center;
+    color:#5d5c61;
 }
 
 
@@ -300,12 +291,7 @@ div.tarea {
     background-color: #f7f5f5;
 }
 
-div.tarea h3{
-    margin:0;
-}
-div.tarea p.descripcion{
-    margin:1rem;
-}
+
 div.opcionestarea {
     display: flex;
     justify-content: space-evenly;
@@ -315,9 +301,6 @@ div.opcionestarea i {
     font-size: 2.5rem;
     padding: 1rem;
 }
-div.opcionestarea i:active{
-    display:none;
-}
 
 div.priority,
 .opcionestarea {
@@ -326,21 +309,10 @@ div.priority,
 }
 
 
-/* SELECT */
-div.priority select{
-    border:1px solid #0085ff;
-    width:4rem;
-    height:3rem;
-    align-self:center;
-    font-family: 'Arial','sans-serif';
-    font-size:1.5rem;
-    border-radius:0.5rem;
-}
-
 /* RANDOM TESTS */
 
 
-/*.circulos {
+.circulos {
     display: flex;
     width: 200px;
     justify-content: space-between;
@@ -480,4 +452,4 @@ div[data-anim~=base] {
     to {
         clip: rect(auto, auto, auto, auto);
     }
-} 
+}
