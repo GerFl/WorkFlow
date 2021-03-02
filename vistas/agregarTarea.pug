@@ -33,28 +33,36 @@ html(lang='es')
                 |  Salir
       .contenido
         .barra
-          a.botonazul(href='/agregarProyecto')
-            i.fas.fa-plus
-            | Nuevo proyecto
+          a.volver(href='/')
+            i.fas.fa-arrow-left
+            | Volver al menú
         .listadoproyectos
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto WorkFlow
-              p Administrador personal de proyectos.
-              h3 14.29%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto ROFL
-              p Portafolio de diseño realizado para Ricardo Flores.
-              h3 73%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto GoldPick
-              p Sitio web para una tienda de instrumentos musicales.
-              h3 42.0%
+          .formulario
+            form(action='')
+              fieldset
+                legend Nueva tarea
+                label(for='tareanombre') ¿Cuál es el nombre de la tarea?
+                input(type='text' name='tareanombre')
+                label(for='descripciontarea') Agrega una pequeña descripción:
+                input(type='text' name='descripciontarea')
+                label(for='departamento') ¿A qué área de trabajo pertenece?
+                input(type='text' name='departamento')
+                label(for='prioridad') Indica la prioridad (la puedes cambiar después):
+                select#prioridad(name='prioridad')
+                  option(value='' disabled='' selected='') -- Seleccione --
+                  option(value='1') 1
+                  option(value='2') 2
+                  option(value='3') 3
+                  option(value='4') 4
+                  option(value='5') 5
+                  option(value='6') 6
+              .boton
+                input.btnEnviar(type='submit')
+                .bg
+                .bg
+                .bg
+                .bg
+                .bg
         // Cierre de proyectos
         // Cierre del contenido
-  script(src='../public/js/script.js')
+        script(src='../js/script.js')

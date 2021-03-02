@@ -3,6 +3,7 @@ html {
     font-size: 62.5%;
     /**Reset para REMS - 62.5% = 10px de 16px*/
     background-color: #e7e7e7;
+    user-select:none;
 }
 
 *,
@@ -337,147 +338,88 @@ div.priority select{
     border-radius:0.5rem;
 }
 
-/* RANDOM TESTS */
-
-
-/*.circulos {
-    display: flex;
-    width: 200px;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    margin: 5rem;
-    padding: 3rem;
+/* FORMULARIOS */
+form{
+    font-family: 'Lato', sans-serif;
+    position:relative;
 }
-
-.circulo {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(#7864f4, #3872d3);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+legend{
+    font-size:3rem;
+    margin:1rem;
 }
-
-.circulo:before {
-    content: "";
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(#7864f4, #3872d3);
-    border-radius: 50%;
-    opacity: 0.7;
-    animation: loading 2s;
-    animation-iteration-count: infinite;
+fieldset{
+    width:60%;
 }
-
-@keyframes loading {
-    100% {
-        transform: scale(3);
-        opacity: 0;
-    }
+ label, input, textarea, select{
+    display:block;
+    margin:1rem;
+    font-size:2rem;
+    width:70%;
 }
-
-.circulo:nth-child(2):before {
-    animation-delay: 0.3s;
+input:not([type="submit"]), textarea, select{
+    border-radius: 1rem;
+    border: 1px solid #242121;
+    padding:0.5rem;
 }
-
-.circulo:nth-child(3):before {
-    animation-delay: 0.6s;
+/*
+    Esta pequeña animación.
+    Si se quita el overflow hidden, se verán las barras debajo del botón. Por eso es "hidden".
+    Mueves las posiciones del position.
+    Background-transparent quién sabe que sea, pero se ocupa.
+    z-index es para declarar capas.
+*/
+.boton{
+    width:100px;
+    height:50px;
+    position:absolute;
+    bottom:-7rem;
+    left:2rem;
+    overflow:hidden;
 }
-
-.circulo:nth-child(4):before {
-    animation-delay: 0.9s;
+input.btnEnviar{
+    position:absolute;
+    width:100px;
+    height:100%;
+    background:transparent;
+    border:2px solid #242121;
+    cursor:pointer;
+    color:#242121;
+    font-size:1.8rem;
+    margin:0;
 }
-
-.circulo:nth-child(5):before {
-    animation-delay: 1.2s;
+.bg{
+    position:absolute;
+    width:20px;
+    height:100%;
+    background:#ea2c62;
+    z-index:-1;
+    transform:translateY(100%);
+    transition:all .5s;
 }
-
-/* <!-- 
-
-    https://player.vimeo.com/video/323361564
-    https://player.vimeo.com/video/436576507
-    https://player.vimeo.com/video/436832479
-    https://player.vimeo.com/video/323360885
-    https://player.vimeo.com/video/196503054
-    https://player.vimeo.com/video/214746429
-    https://player.vimeo.com/video/196503424
-
-    <i class="fas fa-chevron-up"></i>
-    <i class="fas fa-chevron-right"></i>
-    <i class="fas fa-chevron-left"></i>
-    <i class="fas fa-chevron-down"></i>
-
-    -COMERCIAL: desarrollo de estrategias de función y estética
-    -RESIDENCIAL: proyección de comfortabilidad acorde al usuario
-    -RENDERS: colaboración con diversos profesionales del diseño
-    -R.V.: representación cinematográfica de ideas
-    -DISEÑO: conceptualización de identidad y desarrollo de ideas
-
---> */
-
-
-.wrapper {
-    border:1px solid black;
-    width: 400px; /* Es el tamaño del área donde ocurre todo */
-    height: 400px;
-    position: absolute; /* Enable clipping */
-    clip: rect(0px, 200px, 200px, 0px); /* Esconder la mitad de la barra de progreso */
+.bg:nth-child(3){
+    left:20px;
+    transition-delay: .1s;
 }
-/* Tamaño de los elementos de la barra de progreso */
-.circle {
-    width: 200px;
-    height: 200px;
-    border: 10px solid blue;
-    border-radius: 50%;
-    position: absolute;
-    clip: rect(130px, 200px, 200px, 0px); /* Ver la propiedad de rect */
+.bg:nth-child(4){
+    left:40px;
+    transition-delay: .2s;
 }
-/* Usando atributos personalizados para los selectores de animación */
-/* Parámetros base para todas las animaciones */
-div[data-anim~=base] {
-    -webkit-animation-iteration-count: 1;  /* Solo corre una vez */
-    -webkit-animation-fill-mode: forwards; /* Mantiene fija la mitad superior de la barra */
-    -webkit-animation-timing-function:linear; /* Animación linear */
+.bg:nth-child(5){
+    left:60px;
+    transition-delay: .3s;
 }
-
-.wrapper[data-anim~=wrapper] {
-    -webkit-animation-duration: 0.01s; /* Complete keyframes asap */
-    -webkit-animation-delay: 3s; /* Wait half of the animation */
-    -webkit-animation-name: close-wrapper; /* Keyframes name */
+.bg:nth-child(6){
+    left:80px;
+    transition-delay: .4s;
 }
-
-.circle[data-anim~=left] {
-    -webkit-animation-duration: 5s; /* Tiempo total de la animación */
-    -webkit-animation-name: giroIzquierda;
+.bg:nth-child(7){
+    left:100px;
+    transition-delay: .5s;
 }
-
-.circle[data-anim~=right] {
-    -webkit-animation-duration: 2.5s; /* Duración del giro hacia la derecha */
-    -webkit-animation-name: giroDerecha;
+input.btnEnviar:hover{
+    color:white;
+    transition:.5s ease-in-out;
 }
-/* Girar hacia la derecha de 0 a 180 grados */
-@-webkit-keyframes giroDerecha {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(180deg);
-    }
+.boton:hover .bg{
+    transform:translateY(0);
 }
-/* Girar hacia la izquierda de 0 a 360 */
-@-webkit-keyframes giroIzquierda {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
-/* Set the wrapper clip to auto, effectively removing the clip */
-@-webkit-keyframes close-wrapper {
-    to {
-        clip: rect(auto, auto, auto, auto);
-    }
-} 

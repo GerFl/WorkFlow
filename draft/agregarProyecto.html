@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/estilos.css">
     <title>WorkFlow</title>
@@ -36,36 +38,32 @@
         </aside>
         <div class="contenido">
             <div class="barra">
-                <a href="agregarProyecto.html" class="botonazul"><i class="fas fa-plus"></i>Nuevo proyecto</a>
+                <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver al menú</a>
             </div>
             <div class="listadoproyectos">
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">WorkFlow</h2>
-                        <p>Administrador personal de proyectos.</p>
-                        <h3>14.29%</h3>
-                    </a>
+                <div class="formulario">
+                    <form action="">
+                        <fieldset>
+                            <legend>Nuevo proyecto</legend>
+                            <label for="nombreproyecto">¿Cuál es el nombre del proyecto?</label>
+                            <input type="text" name="nombreproyecto">
+                            <label for="descripcionproyecto">Agrega una descripción:</label>
+                            <textarea name="descripcionproyecto" id="campotexto" cols="50" rows="3"></textarea>
+                            <label for="fechaentrega">Selecciona la fecha estimada de la entrega:</label>
+                            <input type="date" name="fechaentrega">
+                            <label for="color">Selecciona un color para identificarlo</label>
+                            <input type="text" name="color">
+                        </fieldset>
+                        <div class="boton">
+                            <input type="submit" class="btnEnviar">
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                        </div>
+                    </form>
                 </div>
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">ROFL</h2>
-                        <p>Portafolio de diseño realizado para Ricardo Flores.</p>
-                        <h3>73%</h3>
-                    </a>
-                </div>
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">GoldPick</h2>
-                        <p>Sitio web para una tienda de instrumentos musicales.</p>
-                        <h3>42.0%</h3>
-                    </a>
-                </div>
-
-                
-
             </div><!-- Cierre de proyectos -->
         </div> <!-- Cierre del contenido -->
 

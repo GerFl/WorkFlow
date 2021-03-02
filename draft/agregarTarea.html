@@ -36,35 +36,40 @@
         </aside>
         <div class="contenido">
             <div class="barra">
-                <a href="agregarProyecto.html" class="botonazul"><i class="fas fa-plus"></i>Nuevo proyecto</a>
+                <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver al menú</a>
             </div>
             <div class="listadoproyectos">
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">WorkFlow</h2>
-                        <p>Administrador personal de proyectos.</p>
-                        <h3>14.29%</h3>
-                    </a>
+                <div class="formulario">
+                    <form action="">
+                        <fieldset>
+                            <legend>Nueva tarea</legend>
+                            <label for="tareanombre">¿Cuál es el nombre de la tarea?</label>
+                            <input type="text" name="tareanombre">
+                            <label for="descripciontarea">Agrega una pequeña descripción:</label>
+                            <input type="text" name="descripciontarea">
+                            <label for="departamento">¿A qué área de trabajo pertenece?</label>
+                            <input type="text" name="departamento">
+                            <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label>
+                            <select name="prioridad" id="prioridad">
+                                <option value disabled selected>-- Seleccione --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                            </select>
+                        </fieldset>
+                        <div class="boton">
+                            <input type="submit" class="btnEnviar">
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                            <div class="bg"></div>
+                        </div>
+                    </form>
                 </div>
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">ROFL</h2>
-                        <p>Portafolio de diseño realizado para Ricardo Flores.</p>
-                        <h3>73%</h3>
-                    </a>
-                </div>
-                <div class="proyecto">
-                    <a href="proyecto.html">
-                        <div class="color"></div>
-                        <h2 class="nombreproyecto">GoldPick</h2>
-                        <p>Sitio web para una tienda de instrumentos musicales.</p>
-                        <h3>42.0%</h3>
-                    </a>
-                </div>
-
-                
 
             </div><!-- Cierre de proyectos -->
         </div> <!-- Cierre del contenido -->

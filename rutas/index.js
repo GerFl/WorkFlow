@@ -4,6 +4,8 @@ const express=require('express'); // Se trae todas las funciones de express a es
 const router=express.Router();
 
 // Importar los controladores
+const proyectosController = require('../controladores/proyectosController');
+const tareasController = require('../controladores/tareasController');
 
 module.exports = function(){ // Para exportar todas las rutas al archivo de index.js
 	
@@ -14,10 +16,9 @@ module.exports = function(){ // Para exportar todas las rutas al archivo de inde
 	router.get('/', (req,res)=>{
 		res.render("index");
 	}); // Middleware de express
-	router.get('/proyecto',(req,res)=>{
-		res.render("proyecto");
-	});
-
+	router.get('/proyecto', proyectosController.proyectosHome); // Middleware de express
+	router.get('/agregarProyecto', proyectosController.agregarProyecto);
+	router.get('/agregarTarea', tareasController.agregarTarea);
 
 
 	return router;

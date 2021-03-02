@@ -1,0 +1,248 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /**Reset para REMS - 62.5% = 10px de 16px*/
+    background-color: #e7e7e7;
+    user-select:none;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+h2,h3,a,p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+    color: #8de4af;
+    font-size: 2.8rem;
+}
+
+h3{
+    font-size:2.8rem;
+    color:#5d5c61;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+}
+
+
+.contenedor-principal {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+/* RANDOM TESTS */
+
+
+.circulos {
+    display: flex;
+    width: 200px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin: 5rem;
+    padding: 3rem;
+}
+
+.circulo {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(#7864f4, #3872d3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo:before {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(#7864f4, #3872d3);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: loading 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loading {
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+.circulo:nth-child(2):before {
+    animation-delay: 0.3s;
+}
+
+.circulo:nth-child(3):before {
+    animation-delay: 0.6s;
+}
+
+.circulo:nth-child(4):before {
+    animation-delay: 0.9s;
+}
+
+.circulo:nth-child(5):before {
+    animation-delay: 1.2s;
+}
+
+/* <!-- 
+
+    https://player.vimeo.com/video/323361564
+    https://player.vimeo.com/video/436576507
+    https://player.vimeo.com/video/436832479
+    https://player.vimeo.com/video/323360885
+    https://player.vimeo.com/video/196503054
+    https://player.vimeo.com/video/214746429
+    https://player.vimeo.com/video/196503424
+
+    <i class="fas fa-chevron-up"></i>
+    <i class="fas fa-chevron-right"></i>
+    <i class="fas fa-chevron-left"></i>
+    <i class="fas fa-chevron-down"></i>
+
+    -COMERCIAL: desarrollo de estrategias de función y estética
+    -RESIDENCIAL: proyección de comfortabilidad acorde al usuario
+    -RENDERS: colaboración con diversos profesionales del diseño
+    -R.V.: representación cinematográfica de ideas
+    -DISEÑO: conceptualización de identidad y desarrollo de ideas
+
+--> */
+
+
+.wrapper {
+    border:1px solid black;
+    width: 400px; /* Es el tamaño del área donde ocurre todo */
+    height: 400px;
+    position: absolute; /* Enable clipping */
+    clip: rect(0px, 200px, 200px, 0px); /* Esconder la mitad de la barra de progreso */
+}
+/* Tamaño de los elementos de la barra de progreso */
+.circle {
+    width: 200px;
+    height: 200px;
+    border: 10px solid blue;
+    border-radius: 50%;
+    position: absolute;
+    clip: rect(130px, 200px, 200px, 0px); /* Ver la propiedad de rect */
+}
+/* Usando atributos personalizados para los selectores de animación */
+/* Parámetros base para todas las animaciones */
+div[data-anim~=base] {
+    -webkit-animation-iteration-count: 1;  /* Solo corre una vez */
+    -webkit-animation-fill-mode: forwards; /* Mantiene fija la mitad superior de la barra */
+    -webkit-animation-timing-function:linear; /* Animación linear */
+}
+
+.wrapper[data-anim~=wrapper] {
+    -webkit-animation-duration: 0.01s; /* Complete keyframes asap */
+    -webkit-animation-delay: 3s; /* Wait half of the animation */
+    -webkit-animation-name: close-wrapper; /* Keyframes name */
+}
+
+.circle[data-anim~=left] {
+    -webkit-animation-duration: 5s; /* Tiempo total de la animación */
+    -webkit-animation-name: giroIzquierda;
+}
+
+.circle[data-anim~=right] {
+    -webkit-animation-duration: 2.5s; /* Duración del giro hacia la derecha */
+    -webkit-animation-name: giroDerecha;
+}
+/* Girar hacia la derecha de 0 a 180 grados */
+@-webkit-keyframes giroDerecha {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(180deg);
+    }
+}
+/* Girar hacia la izquierda de 0 a 360 */
+@-webkit-keyframes giroIzquierda {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+/* Set the wrapper clip to auto, effectively removing the clip */
+@-webkit-keyframes close-wrapper {
+    to {
+        clip: rect(auto, auto, auto, auto);
+    }
+} 
+
+/* BOTON */
+.button{
+    width:180px;
+    height:60px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    overflow:hidden;
+}
+.btn{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:transparent;
+    border:2px solid white;
+    outline:none;
+    cursor:pointer;
+    color:white;
+    font-size:1.4rem;
+}
+.bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:30px;
+    height:100%;
+    background:#ea2c62;
+    z-index:-1;
+    transform:translateY(100%);
+    transition:all .4s;
+}
+.bg:nth-child(3){
+    left:30px;
+    transition-delay: .1s;
+}
+.bg:nth-child(4){
+    left:60px;
+    transition-delay: .2s;
+}
+.bg:nth-child(5){
+    left:90px;
+    transition-delay: .3s;
+}
+.bg:nth-child(6){
+    left:120px;
+    transition-delay: .4s;
+}
+.bg:nth-child(7){
+    left:150px;
+    transition-delay: .5s;
+}
+.bg:nth-child(8){
+    left:180px;
+    transition-delay: .6s;
+}
+.button:hover .bg{
+    transform:translateY(0);
+}

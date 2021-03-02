@@ -33,28 +33,29 @@ html(lang='es')
                 |  Salir
       .contenido
         .barra
-          a.botonazul(href='/agregarProyecto')
-            i.fas.fa-plus
-            | Nuevo proyecto
+          a.volver(href='/')
+            i.fas.fa-arrow-left
+            | Volver al menú
         .listadoproyectos
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto WorkFlow
-              p Administrador personal de proyectos.
-              h3 14.29%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto ROFL
-              p Portafolio de diseño realizado para Ricardo Flores.
-              h3 73%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto GoldPick
-              p Sitio web para una tienda de instrumentos musicales.
-              h3 42.0%
+          .formulario
+            form(action='')
+              fieldset
+                legend Nuevo proyecto
+                label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
+                input(type='text' name='nombreproyecto')
+                label(for='descripcionproyecto') Agrega una descripción:
+                textarea#campotexto(name='descripcionproyecto' cols='50' rows='3')
+                label(for='fechaentrega') Selecciona la fecha estimada de la entrega:
+                input(type='date' name='fechaentrega')
+                label(for='color') Selecciona un color para identificarlo
+                input(type='text' name='color')
+              .boton
+                input.btnEnviar(type='submit')
+                .bg
+                .bg
+                .bg
+                .bg
+                .bg
         // Cierre de proyectos
         // Cierre del contenido
-  script(src='../public/js/script.js')
+        script(src='../js/script.js')
