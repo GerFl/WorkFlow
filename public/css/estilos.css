@@ -240,6 +240,7 @@ div.acciones a i{
 div.contenido {
     width: 75%;
     padding: 1rem 3rem;
+    margin-top:1rem;
 }
 div.listadoproyectos{
     margin-top:3rem;
@@ -350,11 +351,21 @@ legend{
 fieldset{
     width:60%;
 }
- label, input, textarea, select{
+ label,input, textarea, select{
     display:block;
     margin:1rem;
     font-size:2rem;
     width:70%;
+}
+label.color{
+    display: inline-block;
+}
+input#color{
+    display: inline-block;
+    width:5rem;
+    height:4rem;
+    padding:0;
+    border: none;
 }
 input:not([type="submit"]), textarea, select{
     border-radius: 1rem;

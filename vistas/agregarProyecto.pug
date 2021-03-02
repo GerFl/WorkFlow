@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-html(lang='es')
+doctype html
+html(lang="en")
   head
-    meta(charset='UTF-8')
-    meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous')
-    link(rel='stylesheet' href='../css/normalize.css')
-    link(rel='stylesheet' href='../css/estilos.css')
-    title WorkFlow
+    include partials/header
   body
     .contenedor-principal
       aside
@@ -17,11 +11,10 @@ html(lang='es')
               p WorkFlow
           .detallesproyectos
             .user
-              img(src='../fish.ico' alt='Profile Pic')
+              img(src='/fish.ico' alt='Profile Pic')
               h2
                 | Bienvenido, 
                 span User
-            a.botonazul(href='developer.html' style='margin-top:2rem;') Developer
             p Proyectos empezados: 7
             p Proyectos terminados: 0
             .acciones
@@ -47,8 +40,8 @@ html(lang='es')
                 textarea#campotexto(name='descripcionproyecto' cols='50' rows='3')
                 label(for='fechaentrega') Selecciona la fecha estimada de la entrega:
                 input(type='date' name='fechaentrega')
-                label(for='color') Selecciona un color para identificarlo
-                input(type='text' name='color')
+                label(for="color" class="color") Selecciona un color para identificarlo:
+                input(type="color" id="color" name="color" value="000000")
               .boton
                 input.btnEnviar(type='submit')
                 .bg
@@ -58,4 +51,4 @@ html(lang='es')
                 .bg
         // Cierre de proyectos
         // Cierre del contenido
-        script(src='../js/script.js')
+  script(src='/js/script.js')

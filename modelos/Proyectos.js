@@ -18,7 +18,8 @@ const Proyectos=database.define('proyectos',{
 	},
 	/*fecha_entrega:Sequelize.TIMESTAMP,*/
 	porcentaje:Sequelize.STRING(10),
-	color:Sequelize.STRING(10)
+	color:Sequelize.STRING(10),
+	completado:Sequelize.INTEGER(1);
 });
 
 // Exportar los proyectos

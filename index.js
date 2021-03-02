@@ -22,7 +22,7 @@ database.sync()
 const app=express(); // La variable de arriba pasa como función. Se crea el servidor
 
 // Habilitar archivos estáticos de CSS y JS...creo
-app.use(express.static('public/'));
+app.use(express.static('public'));
 // Habilitar el Template Engine
 app.set('view engine','pug');
 // Enlazar el path hacia las vistas

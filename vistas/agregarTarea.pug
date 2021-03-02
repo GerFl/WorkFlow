@@ -1,41 +1,31 @@
-<!DOCTYPE html>
-html(lang='es')
+doctype html
+html(lang="en")
   head
-    meta(charset='UTF-8')
-    meta(http-equiv='X-UA-Compatible' content='IE=edge')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' integrity='sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/' crossorigin='anonymous')
-    link(rel='stylesheet' href='../css/normalize.css')
-    link(rel='stylesheet' href='../css/estilos.css')
-    title WorkFlow
+    include partials/header
   body
     .contenedor-principal
       aside
         .sidebar
           .barraprogreso
             .circulo
-              p WorkFlow
-          .detallesproyectos
-            .user
-              img(src='../fish.ico' alt='Profile Pic')
-              h2
-                | Bienvenido, 
-                span User
-            a.botonazul(href='developer.html' style='margin-top:2rem;') Developer
-            p Proyectos empezados: 7
-            p Proyectos terminados: 0
-            .acciones
-              a(href='#')
-                i.fas.fa-tools
-                |  Configuración
-              a(href='#')
-                i.fas.fa-sign-out-alt
-                |  Salir
+              p 14.29%
+              span COMPLETADO
+          .detallesproyecto
+            h2 WorkFlow
+            p Cantidad de tareas: 6
+            p Tareas terminadas: 1
+            p Tareas pendientes: 5
+            p Fecha de inicio del proyecto: 04/02/2021
+            p Fecha estimada de entrega: Indefinido
+            p Tiempo trabajado: 04:49:39
+            .opcionesproyecto
+              a.botonguardar(href='#') Guardar cambios
+              a(href='#') Eliminar proyecto
       .contenido
         .barra
-          a.volver(href='/')
+          a.volver(href='/proyecto')
             i.fas.fa-arrow-left
-            | Volver al menú
+            | Volver
         .listadoproyectos
           .formulario
             form(action='')
@@ -65,4 +55,4 @@ html(lang='es')
                 .bg
         // Cierre de proyectos
         // Cierre del contenido
-        script(src='../js/script.js')
+  script(src='/js/script.js')
