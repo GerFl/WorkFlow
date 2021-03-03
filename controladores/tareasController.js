@@ -2,6 +2,16 @@
 const Proyectos = require('../modelos/Proyectos');
 const Tareas = require('../modelos/Tareas');
 
-exports.agregarTarea=async(req,res)=>{
-	res.render('agregarTarea');
+exports.formularioTarea = async(req, res) => {
+    res.render('agregarTarea', {
+        nombrePagina: 'WorkFlow - Agregar tarea'
+    });
+}
+exports.agregarTarea = async(req, res) => {
+    // Enviar a la consola lo que el usuario escriba
+    console.log(req.body);
+}
+
+exports.eliminarTarea = async(req, res) => {
+
 }

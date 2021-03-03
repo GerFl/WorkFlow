@@ -15,7 +15,7 @@ html(lang="en")
               h2
                 | Bienvenido, 
                 span User
-            p Proyectos empezados: 7
+            p Proyectos empezados: #{proyectos.length}
             p Proyectos terminados: 0
             .acciones
               a(href='#')
@@ -31,15 +31,15 @@ html(lang="en")
             | Volver al menú
         .listadoproyectos
           .formulario
-            form(action='')
+            form(action="/agregarProyecto" method="POST")
               fieldset
                 legend Nuevo proyecto
                 label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
-                input(type='text' name='nombreproyecto')
-                label(for='descripcionproyecto') Agrega una descripción:
-                textarea#campotexto(name='descripcionproyecto' cols='50' rows='3')
-                label(for='fechaentrega') Selecciona la fecha estimada de la entrega:
-                input(type='date' name='fechaentrega')
+                input(type='text' name='nombre_proyecto' required)
+                label(for='descripcion_proyecto') Agrega una descripción:
+                textarea#campotexto(name='descripcion_proyecto' cols='50' rows='3' required)
+                label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
+                input(type='date' name='fecha_entrega' required)
                 label(for="color" class="color") Selecciona un color para identificarlo:
                 input(type="color" id="color" name="color" value="000000")
               .boton

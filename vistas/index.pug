@@ -15,7 +15,7 @@ html(lang="en")
               h2
                 | Bienvenido, 
                 span User
-            p Proyectos empezados: 7
+            p Proyectos empezados: #{proyectos.length}
             p Proyectos terminados: 0
             .acciones
               a(href='#')
@@ -30,24 +30,16 @@ html(lang="en")
             i.fas.fa-plus
             | Nuevo proyecto
         .listadoproyectos
+        each proyecto in proyectos 
           .proyecto
             a(href='/proyecto')
-              .color
-              h2.nombreproyecto WorkFlow
-              p Administrador personal de proyectos.
-              h3 14.29%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto ROFL
-              p Portafolio de diseño realizado para Ricardo Flores.
-              h3 73%
-          .proyecto
-            a(href='/proyecto')
-              .color
-              h2.nombreproyecto GoldPick
-              p Sitio web para una tienda de instrumentos musicales.
-              h3 42.0%
+              .color(style="width:5%;border:1px solid black; background-color: `${#{proyecto.color}}`")
+              h2.nombreproyecto #{proyecto.nombre_proyecto}
+              h3 #{proyecto.color}
+              p #{proyecto.descripcion_proyecto}
+              h3 #{proyecto.porcentaje}%
+        // Averiguar cómo acceder a ese valor
+        // No lo se a los template strings GG
         // Cierre de proyectos
         // Cierre del contenido
         script(src='/js/script.js')

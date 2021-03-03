@@ -10,7 +10,7 @@ const database = new Sequelize('workflow','root','root',{
 	port:'3307',
 	operatorAliases:false,
 	define:{
-		timestamps:true
+		timestamps:false
 	},
 	pool:{
 		max:5,
