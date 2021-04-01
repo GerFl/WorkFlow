@@ -41,11 +41,49 @@
                 <a href="agregarTarea.html" class="botonazul"><i class="fas fa-plus"></i>Nueva tarea</a>
                 <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver al menú</a>
             </div>
+            <div class="departamentos">
+                <div class="barraDepto">
+                    <p>Análisis:</p>
+                    <div class="barraVacia">
+                        <div class="progresoDepto" id="barraAnalisis"></div>
+                    </div>
+                    <p>5/7</p>
+                </div>
+                <div class="barraDepto">
+                    <p>Diseño:</p>
+                    <div class="barraVacia">
+                        <div class="progresoDepto" id="barraDiseno"></div>
+                    </div>
+                    <p>3/8</p>
+                </div>
+                <div class="barraDepto">
+                    <p>Coding:</p>
+                    <div class="barraVacia">
+                        <div class="progresoDepto" id="barraCoding"></div>
+                    </div>
+                    <p>1/1</p>
+                </div>
+                <div class="barraDepto">
+                    <p>Testing:</p>
+                    <div class="barraVacia">
+                        <div class="progresoDepto" id="barraTesting"></div>
+                    </div>
+                    <p>2/4</p>
+                </div>
+                <div class="barraDepto">
+                    <p>Soporte:</p>
+                    <div class="barraVacia">
+                        <div class="progresoDepto" id="barraSoporte"></div>
+                    </div>
+                    <p>1/3</p>
+                </div>
+            </div>
             <div class="tareas">
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p class="descripcion">Descripción</p>
-                    <div class="priority">
+                    <p>Área: Coding</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -56,7 +94,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="far fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="far fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="far fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>
@@ -65,7 +103,8 @@
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p class="descripcion">Realizar los diseños preliminares en AdobeXd</p>
-                    <div class="priority">
+                    <p>Área: Diseño</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -76,7 +115,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="fas fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="fas fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="fas fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>
@@ -86,7 +125,8 @@
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p class="descripcion">Elegir una paleta de colores para las interfaces</p>
-                    <div class="priority">
+                    <p>Área: Diseño</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -97,7 +137,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="fas fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="fas fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="far fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>
@@ -106,7 +146,8 @@
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p>Ver manera de poner la basura, no saturar de íconos</p>
-                    <div class="priority">
+                    <p>Área: Diseño</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -117,7 +158,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="far fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="far fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="fas fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>
@@ -126,7 +167,8 @@
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p class="descripcion">Descripción</p>
-                    <div class="priority">
+                    <p>Área: Testing</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -137,7 +179,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="fas fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="fas fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="fas fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>
@@ -146,7 +188,8 @@
                 <div class="tarea">
                     <h3>Tarea</h3>
                     <p class="descripcion">Descripción</p>
-                    <div class="priority">
+                    <p>Área: Testing</p>
+                    <div class="selects">
                         <p>Prioridad:</p>
                         <select name="prioridad" id="prioridad">
                             <option value="1">1</option>
@@ -157,7 +200,7 @@
                         </select>
                     </div>
                     <div class="opcionestarea">
-                        <a href="#" class="hecho"><i class="far fa-check-circle"></i></a>
+                        <a href="#" class="completo"><i class="far fa-check-circle"></i></a>
                         <a href="#" class="nocompleto"><i class="far fa-times-circle"></i></a>
                         <a href="#" class="basura"><i class="far fa-trash-alt"></i></a>
                     </div>

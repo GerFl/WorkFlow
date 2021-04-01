@@ -2,6 +2,15 @@
 const Sequelize = require('sequelize');
 // Traer la BD
 const database = require('../config/database');
+// Importar las librerias para la url
+const slug = require('slug');
+const shortid = require('shortid');
+
+// TO-DO
+// Aumentar a 50 el nombre del proyecto
+// Aumentar a 100 la descripcion del proyecto
+// Validacion del lado del cliente lista
+// Hacer la validacion del lado del servidor
 
 // Construir la tabla
 const Proyectos = database.define('proyectos', {
@@ -10,22 +19,28 @@ const Proyectos = database.define('proyectos', {
         primaryKey: true,
         autoIncrement: true
     },
-    nombre_proyecto: Sequelize.STRING(20),
+    nombre_proyecto: Sequelize.STRING(40),
     descripcion_proyecto: Sequelize.STRING(60),
     fecha_inicio: {
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
     },
-    fecha_entrega:Sequelize.DATEONLY,
+    fecha_entrega: Sequelize.DATEONLY,
     porcentaje: Sequelize.STRING(10),
     color: Sequelize.STRING(10),
-    completado: Sequelize.INTEGER(1)
-},{
-	hooks:{
-		beforeCreate(proyecto){
-			console.log("Antes de insertar en la BD.");
-		}
-	}
+    completado: Sequelize.INTEGER(1),
+    url: Sequelize.STRING(100)
+}, {
+    hooks: {
+        beforeCreate(proyecto) {
+            console.log("Antes de insertar en la BD.");
+            console.log(proyecto.nombre_proyecto);
+            // Con slug recortamos la url de manera que no haya espacios ni cosas raras
+            const url = slug(proyecto.nombre_proyecto);
+            // Después aplicamos un shortid.generate para que le de valores random
+            proyecto.url = `${url}-${shortid.generate()}`;
+        }
+    }
 });
 
 // Exportar los proyectos

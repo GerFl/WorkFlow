@@ -35,9 +35,9 @@ html(lang="en")
               fieldset
                 legend Nuevo proyecto
                 label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
-                input(type='text' name='nombre_proyecto' required)
+                input(type='text' name='nombre_proyecto' required maxlength="40")
                 label(for='descripcion_proyecto') Agrega una descripción:
-                textarea#campotexto(name='descripcion_proyecto' cols='50' rows='3' required)
+                textarea#campotexto(name='descripcion_proyecto' cols='50' rows='3' required maxlength="60")
                 label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
                 input(type='date' name='fecha_entrega' required)
                 label(for="color" class="color") Selecciona un color para identificarlo:

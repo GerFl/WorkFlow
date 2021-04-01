@@ -23,23 +23,29 @@ html(lang="en")
               a(href='#') Eliminar proyecto
       .contenido
         .barra
-          a.volver(href='/proyecto')
+          a.volver(href=`/proyecto/${proyecto.url}`)
             i.fas.fa-arrow-left
             | Volver
         .listadoproyectos
           .formulario
-            form(action='/agregarTarea' method="POST")
+            form(action=`/proyecto/${proyecto.url}/agregarTarea` method="POST")
               fieldset
                 legend Nueva tarea
                 label(for='tareanombre') ¿Cuál es el nombre de la tarea?
-                input(type='text' name='tareanombre')
+                input(type='text' name='tareanombre' maxlength="30")
                 label(for='descripciontarea') Agrega una pequeña descripción:
-                input(type='text' name='descripciontarea')
+                input(type='text' name='descripciontarea' maxlength="60")
                 label(for='departamento') ¿A qué área de trabajo pertenece?
-                input(type='text' name='departamento')
+                select#departamento(name="departamento") 
+                  option(value="ninguna" selected) -Ninguna-
+                  option(value="analisis") Análisis
+                  option(value="diseno") Diseño
+                  option(value="coding") Coding
+                  option(value="testing") Testing
+                  option(value="soporte") Soporte
                 label(for='prioridad') Indica la prioridad (la puedes cambiar después):
                 select#prioridad(name='prioridad')
-                  option(value='' disabled='' selected='') -- Seleccione --
+                  option(value='' disabled='' selected='') --
                   option(value='1') 1
                   option(value='2') 2
                   option(value='3') 3

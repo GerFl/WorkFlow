@@ -12,6 +12,11 @@ html {
     box-sizing: inherit;
 }
 
+
+/*
+    AJAJAJAJ HACER RESPONSIVO TODO
+*/
+
 h2,
 h3,
 a,
@@ -49,13 +54,21 @@ a {
     background-color: #23374d;
 }
 
-a.hecho,
+a.completo,
 a.nocompleto,
 a.basura {
     color: black;
 }
 
-a.hecho:hover {
+a.completo.activo {
+    color: #3bd964;
+}
+
+a.nocompleto.activo {
+    color: #d93b5b;
+}
+
+a.completo:hover {
     color: #3bd964;
     transition: .2s ease-in-out;
 }
@@ -312,21 +325,72 @@ div.proyecto h3 {
 }
 
 
+/* DEPARTAMENTOS */
+
+.departamentos {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.departamentos .barraDepto {
+    display: flex;
+    justify-content: space-between;
+}
+
+.barraVacia {
+    width: 7rem;
+    height: 0.7rem;
+    align-self: center;
+    border-radius: 2rem;
+    margin: 0 1rem;
+    background-color: #5d5c61;
+}
+
+.barraVacia:hover {
+    filter: drop-shadow(0 0 1rem gold);
+    transition: .3s ease-in-out;
+}
+
+.progresoDepto {
+    width: 3rem;
+    height: 0.7rem;
+    border-radius: 2rem;
+}
+
+#barraAnalisis {
+    background-color: lime;
+}
+
+#barraDiseno {
+    background-color: purple;
+}
+
+#barraCoding {
+    background-color: turquoise;
+}
+
+#barraTesting {
+    background-color: orange;
+}
+
+#barraSoporte {
+    background-color: gold;
+}
+
+
 /* GRID TAREAS  Y BARRA*/
 
 div.tareas {
     margin-top: 3rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 3rem;
 }
 
 div.tarea {
     border: 4px solid #5d5c61;
     text-align: center;
-    width: 75%;
-    margin: 0 auto;
-    height: 21rem;
+    padding: 1rem 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -352,11 +416,12 @@ div.opcionestarea i {
     padding: 1rem;
 }
 
-div.opcionestarea i:active {
-    display: none;
-}
 
-div.priority,
+/* div.opcionestarea i:active {
+    display: none;
+} */
+
+div.selects,
 .opcionestarea {
     display: flex;
     justify-content: space-evenly;
@@ -365,14 +430,18 @@ div.priority,
 
 /* SELECT */
 
-div.priority select {
+div.selects select {
     border: 1px solid #0085ff;
-    width: 4rem;
+    width: 10rem;
     height: 3rem;
-    align-self: center;
     font-family: 'Arial', 'sans-serif';
     font-size: 1.5rem;
     border-radius: 0.5rem;
+    text-align: left;
+}
+
+select#prioridad {
+    width: 6rem;
 }
 
 

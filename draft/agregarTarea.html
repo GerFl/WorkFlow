@@ -48,7 +48,14 @@
                             <label for="descripciontarea">Agrega una pequeña descripción:</label>
                             <input type="text" name="descripciontarea">
                             <label for="departamento">¿A qué área de trabajo pertenece?</label>
-                            <input type="text" name="departamento">
+                            <select name="departamento" id="departamento">
+                                <option value="ninguna" selected>-Ninguna-</option>
+                                <option value="analisis">Análisis</option>
+                                <option value="diseno">Diseño</option>
+                                <option value="coding">Coding</option>
+                                <option value="testing">Testing</option>
+                                <option value="soporte">Soporte</option>
+                            </select>
                             <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label>
                             <select name="prioridad" id="prioridad">
                                 <option value disabled selected>-- Seleccione --</option>

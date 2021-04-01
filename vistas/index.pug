@@ -1,5 +1,5 @@
 doctype html
-html(lang="en")
+html(lang="es")
   head
     include partials/header
   body
@@ -30,16 +30,20 @@ html(lang="en")
             i.fas.fa-plus
             | Nuevo proyecto
         .listadoproyectos
-        each proyecto in proyectos 
-          .proyecto
-            a(href='/proyecto')
-              .color(style="width:5%;border:1px solid black; background-color: `${#{proyecto.color}}`")
-              h2.nombreproyecto #{proyecto.nombre_proyecto}
-              h3 #{proyecto.color}
-              p #{proyecto.descripcion_proyecto}
-              h3 #{proyecto.porcentaje}%
-        // Averiguar cómo acceder a ese valor
-        // No lo se a los template strings GG
+        if proyectos.length
+          each proyecto in proyectos 
+            .proyecto
+              a(href=`/proyecto/${proyecto.url}`)
+                .color(style=`width:5%; background-color:${proyecto.color}`)
+                //- Parece que en la sintaxis de Pug, utilizas # cuando imprimes algo dentro de una etiqueta html, y con $ cuando quieres imprimirlo como atributo de una etiqueta
+                h2.nombreproyecto #{proyecto.nombre_proyecto}
+                h3 #{proyecto.color}
+                p #{proyecto.descripcion_proyecto}
+                h3 #{proyecto.porcentaje}%
+          // Averiguar cómo acceder a ese valor
+          // No lo se a los template strings GG
+        else 
+          h2 No hay ningún proyecto iniciado.
         // Cierre de proyectos
         // Cierre del contenido
         script(src='/js/script.js')

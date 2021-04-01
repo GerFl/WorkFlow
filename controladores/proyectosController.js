@@ -2,7 +2,9 @@
 const Proyectos = require('../modelos/Proyectos');
 const Tareas = require('../modelos/Tareas');
 
+/* HOME */
 exports.proyectosHome = async(req, res) => {
+    // Buscamos todos los proyectos existentes, los almacenamos en la variable y los pasamos a la vista
     const proyectos = await Proyectos.findAll();
     res.render('index', {
         nombrePagina: 'WorkFlow',
@@ -10,17 +12,41 @@ exports.proyectosHome = async(req, res) => {
     });
 }
 
-exports.proyecto = async(req, res) => {
-    // Usamos async-await porque es una operación de consulta asíncrona.
-    // .findAll() es una función de Sequelize que nos retornará todos los registros en 
-    // la tabla de proyectos.
-    const proyectos = await Proyectos.findAll();
-    console.log(proyectos);
-    res.render('proyecto', {
-        nombrePagina: 'WorkFlow - Proyecto',
-        proyectos
+/* LISTAR PROYECTOS */
+exports.proyectoUrl = async(req, res, next) => {
+    // Consultar los proyectos para que nos retorne el de la url
+    console.log(req.params); // Esto nos retornará el comodín, el cual es proyectourl
+    const proyecto = await Proyectos.findOne({
+        where: {
+            url: req.params.proyectourl
+        }
     });
+
+    if (!proyecto) return next();
+
+    console.log("Proyecto existe.");
+    console.log(proyecto);
+
+    // Consultar tareas del proyecto actual
+    // Se pasa como parametro el id del proyecto. Se accede a el gracias a que hicimos la consulta para traer ese proyecto
+    const tareas = await Tareas.findAll({
+        where: {
+            proyectoIdProyecto: proyecto.id_proyecto
+        }
+    });
+    console.log(tareas);
+
+    // Render a la vista
+    // Mandamos el proyecto y las tareas dentro de ese proyecto para poder acceder a ellas en la vista
+    res.render('proyecto', {
+        nombrePagina: "Tareas del proyecto",
+        proyecto,
+        tareas
+    });
+
 }
+
+/* AGREGAR PROYECTO */
 
 exports.formularioProyecto = async(req, res) => {
     const proyectos = await Proyectos.findAll();
@@ -74,8 +100,4 @@ exports.agregarProyecto = async(req, res, next) => {
     //res.send("Enviaste el formulario para agregar un proyecto.");
     await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado })
     res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
-}
-
-exports.eliminarProyecto = async(req, res, next) => {
-
 }
