@@ -7,14 +7,21 @@ body
       aside
         .sidebar
           .barraprogreso
-            .circulo
+            .circulo(style=`border: 7px solid ${proyecto.color}`)
               p 14.29%
               span COMPLETADO
           .detallesproyecto
             h2 #{proyecto.nombre_proyecto}
             p Cantidad de tareas: #{tareas.length}
-            p Tareas terminadas: 1
-            p Tareas pendientes: 5
+            -var tareasCompletadas=0
+            -var tareasNoCompletadas=0
+            each tarea in tareas
+              if tarea.estatus==1
+                -tareasCompletadas+=1
+              else 
+                -tareasNoCompletadas+=1
+            p Tareas terminadas: #{tareasCompletadas}
+            p Tareas pendientes: #{tareasNoCompletadas}
             p Inicio del proyecto: #{proyecto.fecha_inicio}
             p Entrega del proyecto: #{proyecto.fecha_entrega}
             .opcionesproyecto
@@ -61,7 +68,19 @@ body
               .tarea
                 h3 #{tarea.tarea_nombre}
                 p.descripcion #{tarea.descripcion_tarea}
-                p(id=`${tarea.departamento}`) Área: #{tarea.departamento}
+                case tarea.departamento
+                  when "analisis"
+                    p(id=`${tarea.departamento}`) Área: Análisis
+                  when "diseno"
+                    p(id=`${tarea.departamento}`) Área: Diseño
+                  when "coding"
+                    p(id=`${tarea.departamento}`) Área: Código
+                  when "testing"
+                    p(id=`${tarea.departamento}`) Área: Testing
+                  when "soporte"
+                    p(id=`${tarea.departamento}`) Área: Soporte
+                  default 
+                    p No se especificó ningún departamento
                 .selects
                   p Prioridad:
                   select#prioridad(name='prioridad')
