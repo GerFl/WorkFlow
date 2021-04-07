@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="../public/css/estilos.css">
     <title>WorkFlow</title>
 </head>
+
 <body>
     <div class="contenedor-principal">
         <aside>
@@ -45,6 +47,11 @@
                         <h2 class="nombreproyecto">WorkFlow</h2>
                         <p>Administrador personal de proyectos.</p>
                         <h3>14.29%</h3>
+                        <div class="estado-proyecto">
+                            <div class="on-time"></div>
+                            <div class="halfway"></div>
+                            <div class="ended"></div>
+                        </div>
                     </a>
                 </div>
                 <div class="proyecto">
@@ -53,6 +60,14 @@
                         <h2 class="nombreproyecto">ROFL</h2>
                         <p>Portafolio de diseño realizado para Ricardo Flores.</p>
                         <h3>73%</h3>
+                        <!-- TO-DO:
+                        Tres circulitos del estado del proyecto. Yo creo que ese se genera nada más con la diferencia entre las fechas.
+                        Btw, recordar que idea fue la que tuve con la columna de UpdatedAt,, ahorita ya se me olvido -->
+                        <div class="estado-proyecto">
+                            <div class="on-time"></div>
+                            <div class="halfway"></div>
+                            <div class="ended"></div>
+                        </div>
                     </a>
                 </div>
                 <div class="proyecto">
@@ -61,13 +76,20 @@
                         <h2 class="nombreproyecto">GoldPick</h2>
                         <p>Sitio web para una tienda de instrumentos musicales.</p>
                         <h3>42.0%</h3>
+                        <div class="estado-proyecto">
+                            <div class="on-time"></div>
+                            <div class="halfway"></div>
+                            <div class="ended"></div>
+                        </div>
                     </a>
                 </div>
 
-                
 
-            </div><!-- Cierre de proyectos -->
-        </div> <!-- Cierre del contenido -->
+
+            </div>
+            <!-- Cierre de proyectos -->
+        </div>
+        <!-- Cierre del contenido -->
 
         <script src="../js/script.js"></script>
 </body>

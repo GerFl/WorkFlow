@@ -5,9 +5,7 @@ En proceso:
 - Modelos y controladores
 
 To-do:
-- Sombreados
-- Experimentar las paletas de colores
-- Solucionar problema de los tags de colores
+- La verdad ya no sé, que sea lo que Gerard Way quiera
 
 Completado:
 - Jugar con animaciones nuevas para botones
@@ -15,5 +13,8 @@ Completado:
 - Establecer el layout en html y css
 - Diseñar la BD
 - Inicializar el proyecto en node.js
+- Sombreados
+- Experimentar las paletas de colores
+- Solucionar problema de los tags de colores
 
 I'm addicted to you, don't you know that I'm toxic

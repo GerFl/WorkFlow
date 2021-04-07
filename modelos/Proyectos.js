@@ -19,8 +19,8 @@ const Proyectos = database.define('proyectos', {
         primaryKey: true,
         autoIncrement: true
     },
-    nombre_proyecto: Sequelize.STRING(40),
-    descripcion_proyecto: Sequelize.STRING(60),
+    nombre_proyecto: Sequelize.STRING(50),
+    descripcion_proyecto: Sequelize.STRING(200),
     fecha_inicio: {
         type: Sequelize.DATEONLY,
         defaultValue: Sequelize.NOW
@@ -28,7 +28,7 @@ const Proyectos = database.define('proyectos', {
     fecha_entrega: Sequelize.DATEONLY,
     porcentaje: Sequelize.STRING(10),
     color: Sequelize.STRING(10),
-    completado: Sequelize.INTEGER(1),
+    // completado: Sequelize.INTEGER(1),
     url: Sequelize.STRING(100)
 }, {
     hooks: {

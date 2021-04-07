@@ -15,7 +15,7 @@ exports.proyectosHome = async(req, res) => {
 /* LISTAR PROYECTOS */
 exports.proyectoUrl = async(req, res, next) => {
     // Consultar los proyectos para que nos retorne el de la url
-    console.log(req.params); // Esto nos retornará el comodín, el cual es proyectourl
+    // console.log(req.params); // Esto nos retornará el comodín, el cual es proyectourl
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
@@ -24,8 +24,8 @@ exports.proyectoUrl = async(req, res, next) => {
 
     if (!proyecto) return next();
 
-    console.log("Proyecto existe.");
-    console.log(proyecto);
+    // console.log("Proyecto existe.");
+    // console.log(proyecto);
 
     // Consultar tareas del proyecto actual
     // Se pasa como parametro el id del proyecto. Se accede a el gracias a que hicimos la consulta para traer ese proyecto
@@ -34,7 +34,7 @@ exports.proyectoUrl = async(req, res, next) => {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
-    console.log(tareas);
+    // console.log(tareas);
 
     // Render a la vista
     // Mandamos el proyecto y las tareas dentro de ese proyecto para poder acceder a ellas en la vista
@@ -93,11 +93,22 @@ exports.agregarProyecto = async(req, res, next) => {
     const porcentaje = 0;
     const completado = 0;
 
-    console.log("A continuación, el req.body:");
-    console.log(req.body);
+    // console.log("A continuación, el req.body:");
+    // console.log(req.body);
     //console.log(proyectos.length); // Para saber cuántos proyectos tenemos en total
     // Tal vez hacer un apartado para validar errores y otro para agregar a la BD
     //res.send("Enviaste el formulario para agregar un proyecto.");
     await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado })
     res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
+}
+
+exports.eliminarProyecto = async(req,res,next) => {
+    console.log(req.params);
+    const {url}=req.params;
+    const proyecto=await Proyectos.destroy({where:{url}});
+
+    if(!proyecto) return next();
+
+    res.send("Eliminando proyecto...");
+
 }

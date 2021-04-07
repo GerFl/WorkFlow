@@ -7,17 +7,23 @@ html(lang="en")
       aside
         .sidebar
           .barraprogreso
-            .circulo
-              p 14.29%
+            .circulo(style=`border: 7px solid ${proyecto.color}`)
+              p #{proyecto.porcentaje}%
               span COMPLETADO
           .detallesproyecto
-            h2 WorkFlow
-            p Cantidad de tareas: 6
-            p Tareas terminadas: 1
-            p Tareas pendientes: 5
-            p Fecha de inicio del proyecto: 04/02/2021
-            p Fecha estimada de entrega: Indefinido
-            p Tiempo trabajado: 04:49:39
+            h2 #{proyecto.nombre_proyecto}
+            p Cantidad de tareas: #{tareas.length}
+            -var tareasTerminadas=0
+            -var tareasNoTerminadas=0
+            each tarea in tareas 
+              if tarea.estatus==1
+                -tareasTerminadas+=1
+              else 
+                -tareasNoTerminadas+=1
+            p Tareas terminadas: #{tareasTerminadas}
+            p Tareas pendientes: #{tareasNoTerminadas}
+            p Inicio del proyecto: #{proyecto.fecha_inicio}
+            p Entrega del proyecto: #{proyecto.fecha_entrega}
             .opcionesproyecto
               a.botonguardar(href='#') Guardar cambios
               a(href='#') Eliminar proyecto
@@ -32,12 +38,12 @@ html(lang="en")
               fieldset
                 legend Nueva tarea
                 label(for='tareanombre') ¿Cuál es el nombre de la tarea?
-                input(type='text' name='tareanombre' maxlength="30")
+                input(type='text' name='tareanombre' maxlength="30" required)
                 label(for='descripciontarea') Agrega una pequeña descripción:
-                input(type='text' name='descripciontarea' maxlength="60")
+                input(type='text' name='descripciontarea' maxlength="100" required)
                 label(for='departamento') ¿A qué área de trabajo pertenece?
-                select#departamento(name="departamento") 
-                  option(value="ninguna" selected) -Ninguna-
+                select#departamento(name="departamento" required) 
+                  option(value="" selected) -Ninguna-
                   option(value="analisis") Análisis
                   option(value="diseno") Diseño
                   option(value="coding") Coding

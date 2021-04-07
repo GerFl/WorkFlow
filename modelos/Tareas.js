@@ -12,7 +12,7 @@ const Tareas = database.define('tareas', {
         autoIncrement: true
     },
     tarea_nombre: Sequelize.STRING(30),
-    descripcion_tarea: Sequelize.STRING(60),
+    descripcion_tarea: Sequelize.STRING(100),
     departamento: Sequelize.STRING(15),
     prioridad: Sequelize.INTEGER(1),
     estatus: Sequelize.INTEGER(1)

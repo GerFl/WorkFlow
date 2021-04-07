@@ -31,6 +31,9 @@ app.set('views', path.join(__dirname, './vistas'));
 // Habilitar BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/* TO-DO */
+// Sesiones
+
 app.use('/', routes()); // Se llama como función porque precisamente se exportó como función
 
 // Ubicación para cargar los archivos estáticos...lo cual no entiendo muy bien por ahora

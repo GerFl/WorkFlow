@@ -16,7 +16,11 @@ html(lang="es")
                 | Bienvenido, 
                 span User
             p Proyectos empezados: #{proyectos.length}
-            p Proyectos terminados: 0
+            -var terminados=0
+            each proyecto in proyectos 
+              if proyecto.porcentaje==100
+                -terminados+=1 
+            p Proyectos terminados: #{terminados}
             .acciones
               a(href='#')
                 i.fas.fa-tools
@@ -37,13 +41,17 @@ html(lang="es")
                 .color(style=`width:5%; background-color:${proyecto.color}`)
                 //- Parece que en la sintaxis de Pug, utilizas # cuando imprimes algo dentro de una etiqueta html, y con $ cuando quieres imprimirlo como atributo de una etiqueta
                 h2.nombreproyecto #{proyecto.nombre_proyecto}
-                h3 #{proyecto.color}
                 p #{proyecto.descripcion_proyecto}
                 h3 #{proyecto.porcentaje}%
-          // Averiguar cómo acceder a ese valor
-          // No lo se a los template strings GG
+                .estado-proyecto 
+                  .on-time 
+                  .halfway 
+                  .ended
+          //- Averiguar cómo acceder a ese valor
+          //- No lo se a los template strings GG
+          //- UPDATE: SI LE SE AL TEMPLATE GGG
         else 
           h2 No hay ningún proyecto iniciado.
-        // Cierre de proyectos
-        // Cierre del contenido
+        //- Cierre de proyectos
+        //- Cierre del contenido
         script(src='/js/script.js')

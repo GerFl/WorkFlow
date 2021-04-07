@@ -25,9 +25,16 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     // PROYECTOS - Cada uno reacciona a un método diferente
     router.get('/agregarProyecto', proyectosController.formularioProyecto);
     router.post('/agregarProyecto', proyectosController.agregarProyecto);
+    // Eliminar proyecto
+    router.delete('/eliminar-proyecto/:url',proyectosController.eliminarProyecto);
     // TAREAS
     router.get('/proyecto/:proyectourl/agregarTarea', tareasController.formularioTarea);
     router.post('/proyecto/:proyectourl/agregarTarea', tareasController.agregarTarea);
+    // Actualizar tarea
+    router.patch('/tarea-completada/:id', tareasController.completarTarea);
+    router.patch('/tarea-descompletada/:id', tareasController.descompletarTarea);
+    // Eliminar tarea
+    router.delete('/tarea-eliminar/:id', tareasController.eliminarTarea);
 
 
     return router;

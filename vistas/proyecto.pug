@@ -7,26 +7,21 @@ body
       aside
         .sidebar
           .barraprogreso
+
             .circulo(style=`border: 7px solid ${proyecto.color}`)
-              p 14.29%
+              //- JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
+
+              p #{proyecto.porcentaje}%
               span COMPLETADO
           .detallesproyecto
-            h2 #{proyecto.nombre_proyecto}
+            h2(data-url=proyecto.url) #{proyecto.nombre_proyecto}
             p Cantidad de tareas: #{tareas.length}
-            -var tareasCompletadas=0
-            -var tareasNoCompletadas=0
-            each tarea in tareas
-              if tarea.estatus==1
-                -tareasCompletadas+=1
-              else 
-                -tareasNoCompletadas+=1
             p Tareas terminadas: #{tareasCompletadas}
             p Tareas pendientes: #{tareasNoCompletadas}
             p Inicio del proyecto: #{proyecto.fecha_inicio}
             p Entrega del proyecto: #{proyecto.fecha_entrega}
             .opcionesproyecto
-              a.botonguardar(href='#') Guardar cambios
-              a(href='#') Eliminar proyecto
+              a.eliminar(href='#') Eliminar proyecto
       .contenido
         .barra
           a.botonazul(href=`/proyecto/${proyecto.url}/agregarTarea`)
@@ -65,7 +60,7 @@ body
         if tareas.length
           .tareas
             each tarea in tareas 
-              .tarea
+              .tarea(data-tarea=tarea.id_tarea id=`${tarea.departamento}`)
                 h3 #{tarea.tarea_nombre}
                 p.descripcion #{tarea.descripcion_tarea}
                 case tarea.departamento
@@ -105,3 +100,4 @@ body
         else 
           h3 No hay tareas en este proyecto aún.
       script(src='/js/script.js')
+      script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
