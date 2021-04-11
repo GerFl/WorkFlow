@@ -77,13 +77,7 @@ body
                   default 
                     p No se especificó ningún departamento
                 .selects
-                  p Prioridad:
-                  select#prioridad(name='prioridad')
-                    option(value='1') 1
-                    option(value='2') 2
-                    option(value='3') 3
-                    option(value='4') 4
-                    option(value='5') 5
+                  p Prioridad: #{tarea.prioridad}
                 .opcionestarea
                   if tarea.estatus==0
                     a.completo(href='#')
@@ -99,5 +93,5 @@ body
                     i.far.fa-trash-alt          
         else 
           h3 No hay tareas en este proyecto aún.
-      script(src='/js/script.js')
-      script(src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js')
+      
+      include partials/footer

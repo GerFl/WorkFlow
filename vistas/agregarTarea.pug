@@ -50,7 +50,7 @@ html(lang="en")
                   option(value="testing") Testing
                   option(value="soporte") Soporte
                 label(for='prioridad') Indica la prioridad (la puedes cambiar después):
-                select#prioridad(name='prioridad')
+                select#prioridad(name='prioridad' required)
                   option(value='' disabled='' selected='') --
                   option(value='1') 1
                   option(value='2') 2
@@ -67,4 +67,5 @@ html(lang="en")
                 .bg
         // Cierre de proyectos
         // Cierre del contenido
-  script(src='/js/script.js')
+  
+  include partials/footer

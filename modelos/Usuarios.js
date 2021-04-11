@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../config/database');
 const bcrypt = require('bcrypt-nodejs');
-const Proyectos = require('../models/Proyectos');
+const Proyectos = require('../modelos/Proyectos');
 
 // Construir la tabla
 const Usuarios = database.define('usuarios', {
@@ -46,9 +46,12 @@ const Usuarios = database.define('usuarios', {
 }, {
     hooks: {
         beforeCreate(usuario) {
-            console.log("Creando usuario");
+            console.log("=====================");
+            console.log("   Creando usuario   ");
+            console.log("=====================");
             console.log(usuario);
-            // usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
+            usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
+            console.log(usuario);
         }
     }
 });
@@ -61,4 +64,4 @@ Usuarios.prototype.verificarPassword = function(password) {
 }
 
 // Exportar los usuarios
-// module.exports = Usuarios;
+module.exports = Usuarios;

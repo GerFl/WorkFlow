@@ -33,8 +33,8 @@ const Proyectos = database.define('proyectos', {
 }, {
     hooks: {
         beforeCreate(proyecto) {
-            console.log("Antes de insertar en la BD.");
-            console.log(proyecto.nombre_proyecto);
+            // console.log("Antes de insertar en la BD.");
+            // console.log(proyecto.nombre_proyecto);
             // Con slug recortamos la url de manera que no haya espacios ni cosas raras
             const url = slug(proyecto.nombre_proyecto);
             // Después aplicamos un shortid.generate para que le de valores random

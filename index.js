@@ -12,6 +12,10 @@ const bodyParser = require('body-parser');
 
 // 2- Traemos la config de la db para inicializarla
 const database = require('./config/database');
+// Importar el modelo para que sepa qué crear
+require('./modelos/Proyectos');
+require('./modelos/Tareas');
+require('./modelos/Usuarios');
 // Probamos la conexión con un promise
 database.sync()
     .then(() => console.log("Conectado al servidor."))

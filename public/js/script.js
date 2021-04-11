@@ -4,16 +4,71 @@
         // console.log("Loaded.");
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
+        const animacionCargando = document.querySelector('.loading');
+        if (animacionCargando) {
+            setTimeout(function() {
+                animacionCargando.parentElement.removeChild(animacionCargando.parentElement.childNodes[0]);
+            }, 9100);
+        }
+
+
         const totalTareas = document.querySelectorAll('.tarea');
         const sidebar = document.querySelector('.detallesproyecto');
         const circuloProgreso = document.querySelector('.circulo');
+        const btnLogin = document.querySelector('input.btn-login');
+        // Eliminacion de proyectos
+        const btnEliminar = document.querySelector('a.eliminar');
+
+        const proyectos = document.querySelectorAll('.proyecto a');
+        proyectos.forEach(proyecto => {
+            // console.log(proyecto.childNodes[5]);
+            const fecha_inicio = proyecto.childNodes[4].innerText; // Se extrae el valor
+            const fecha_entrega = proyecto.childNodes[5].innerText; // Se extrae el valor
+            const firstDate = Date.parse(fecha_inicio); // La fecha de inicio en milisegundos
+            const secondDate = Date.parse(fecha_entrega); // La fecha de entrega en milisegundos
+            const firstDateDays = firstDate / 86400000; // La fecha en dias enteros
+            const secondDateDays = secondDate / 86400000; // La fecha en dias enteros
+            const fechaActual = Date.now(); // Pues fecha actual, que no estas viendo
+            console.log("Fecha_inicio en formato original: " + fecha_inicio);
+            console.log("Fecha_entrega en formato original: " + fecha_entrega);
+            console.log("Diferencia entre las fechas: " + (secondDateDays - firstDateDays) + " días.");
+            console.log("Mitad de la diferencia entre las fechas: " + (secondDateDays - firstDateDays) / 2 + " días.");
+            console.log("Fecha actual en milisegundos: " + fechaActual);
+            console.log(fechaActual, secondDate);
+            if (fechaActual >= secondDate) { // Fechas en milisegundos para hacer la resta directamente
+                // console.log("RED STATUS");
+                // console.log("====================");
+                // console.log(proyecto.childNodes[6].childNodes[3]);
+                proyecto.childNodes[6].childNodes[3].style.opacity = "1";
+            } else if ((fechaActual) >= ((secondDate - firstDate) / 2)) {
+                // Si los dias de la diferencia entre la fecha de entrega y la fecha actual son mayor o
+                // igual a la mitad de la diferencia entre la fecha de entrega y la fecha de inicio, se ejecuta este bloque
+                console.log("YELLOW STATUS");
+                console.log(((secondDate - fechaActual) / 86400000));
+                console.log((((secondDate - firstDate) / 86400000) / 2));
+                console.log(((secondDate - fechaActual) / 86400000) - ((secondDateDays - firstDateDays) / 2));
+                console.log("====================");
+                console.log(proyecto.childNodes[6].childNodes[2]);
+                proyecto.childNodes[6].childNodes[2].style.opacity = "1";
+            } else { // Ni una ni otra
+                // console.log("GREEN STATUS");
+                // console.log("====================");
+                // console.log(proyecto.childNodes[6].childNodes[1]);
+                proyecto.childNodes[6].childNodes[1].style.opacity = "1";
+            }
+        });
+
+        /*
+            1 milisegundo = 0.001 segundos
+            1 segundo = 1,000 milisegundos
+            1 minuto = 60 segundos = 60,000
+            1 hora = 60 minutos = 3,600,000 milisegundos
+            1 dia = 24 horas = 86400000 milisegundos
+        */
 
         if (totalTareas.length > 0) {
             conteo();
         }
-
-        // Eliminacion de proyectos
-        const btnEliminar=document.querySelector('a.eliminar');
 
 
         // // Cantidad de tareas
@@ -37,7 +92,7 @@
             const noCompletadas = document.querySelectorAll('a.nocompleto.activo');
 
             //  Selecciona la cantidad de tareas por departamento
-            
+
             const tareasAnalisis = document.querySelectorAll('p#analisis');
             const tareasDiseno = document.querySelectorAll('p#diseno');
             const tareasCoding = document.querySelectorAll('p#coding');
@@ -53,10 +108,10 @@
             // barraAnalisis.parentElement.nextSibling para seleccionar el 5/7 y asi
 
 
-            console.log(totalTareas);
-            console.log("Total de tareas: " + totalTareas.length);
-            console.log("Tareas completadas: " + completadas.length);
-            console.log("Tareas no completadas: " + noCompletadas.length);
+            // console.log(totalTareas);
+            // console.log("Total de tareas: " + totalTareas.length);
+            // console.log("Tareas completadas: " + completadas.length);
+            // console.log("Tareas no completadas: " + noCompletadas.length);
 
             // Declaracion de variables para el conteo del total de las tareas completadas por departamento
             var analisisCompletadas = 0;
@@ -117,11 +172,11 @@
                 }
             });
 
-            console.log("Análisis completadas: " + analisisCompletadas);
-            console.log("Diseño completadas: " + disenoCompletadas);
-            console.log("Coding completadas: " + codingCompletadas);
-            console.log("Testing completadas: " + testingCompletadas);
-            console.log("Soporte completadas: " + soporteCompletadas);
+            // console.log("Análisis completadas: " + analisisCompletadas);
+            // console.log("Diseño completadas: " + disenoCompletadas);
+            // console.log("Coding completadas: " + codingCompletadas);
+            // console.log("Testing completadas: " + testingCompletadas);
+            // console.log("Soporte completadas: " + soporteCompletadas);
 
             // TO-DO
             // Hacer el code para los progresos en la barra
@@ -133,13 +188,13 @@
             var porcentajeSoporte = ((soporteCompletadas / tareasSoporte.length).toFixed(2)) * 100;
 
             var porcentajeTotal = ((completadas.length / totalTareas.length).toFixed(2)) * 100;
-            console.log(porcentajeTotal.toFixed(2));
+            // console.log(porcentajeTotal.toFixed(2));
 
-            console.log("Porcentaje análisis: " + porcentajeAnalisis);
-            console.log("Porcentaje diseño: " + porcentajeDiseno);
-            console.log("Porcentaje coding: " + porcentajeCoding);
-            console.log("Porcentaje testing: " + porcentajeTesting);
-            console.log("Porcentaje soporte: " + porcentajeSoporte);
+            // console.log("Porcentaje análisis: " + porcentajeAnalisis);
+            // console.log("Porcentaje diseño: " + porcentajeDiseno);
+            // console.log("Porcentaje coding: " + porcentajeCoding);
+            // console.log("Porcentaje testing: " + porcentajeTesting);
+            // console.log("Porcentaje soporte: " + porcentajeSoporte);
 
             // Se cambia el texto dentro del parrafo donde se lleva el conteo de las tareas
             barraAnalisis.parentElement.nextElementSibling.innerHTML = analisisCompletadas + "/" + tareasAnalisis.length;
@@ -156,9 +211,9 @@
             barraTesting.style.width = porcentajeTesting + "%";
             barraSoporte.style.width = porcentajeSoporte + "%";
 
-            console.log("Total de tareas: " + totalTareas.length);
-            console.log("Tareas completadas: " + completadas.length);
-            console.log("Tareas no completadas: " + noCompletadas.length);
+            // console.log("Total de tareas: " + totalTareas.length);
+            // console.log("Tareas completadas: " + completadas.length);
+            // console.log("Tareas no completadas: " + noCompletadas.length);
 
             // Cantidad de tareas
             sidebar.childNodes[1].innerHTML = "Cantidad de tareas: " + totalTareas.length;
@@ -186,17 +241,17 @@
                         // console.log("Diste click en la palomita");
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        console.log(icono);
-                        console.log(icono.parentElement.nextElementSibling);
-                        console.log(idTarea);
+                        // console.log(icono);
+                        // console.log(icono.parentElement.nextElementSibling);
+                        // console.log(idTarea);
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-completada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
                             .then(function(respuesta) {
 
-                                console.log(icono.parentElement);
-                                console.log(icono.parentElement.nextElementSibling);
+                                // console.log(icono.parentElement);
+                                // console.log(icono.parentElement.nextElementSibling);
                                 icono.parentElement.classList.add("activo");
                                 icono.parentElement.nextElementSibling.classList.remove("activo");
                                 console.log(respuesta);
@@ -207,16 +262,16 @@
                         // console.log("Diste click en la x");
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        console.log(icono);
-                        console.log(icono.parentElement.previousElementSibling);
-                        console.log(idTarea);
+                        // console.log(icono);
+                        // console.log(icono.parentElement.previousElementSibling);
+                        // console.log(idTarea);
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-descompletada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
                             .then(function(respuesta) {
-                                console.log(icono.parentElement.classList);
-                                console.log(icono.parentElement.previousElementSibling.classList);
+                                // console.log(icono.parentElement.classList);
+                                // console.log(icono.parentElement.previousElementSibling.classList);
                                 icono.parentElement.classList.add("activo");
                                 icono.parentElement.previousElementSibling.classList.remove("activo");
                                 console.log(respuesta);
@@ -227,15 +282,15 @@
                         // console.log("Diste click en la x");
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        console.log(icono);
-                        console.log(idTarea);
+                        // console.log(icono);
+                        // console.log(idTarea);
 
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-eliminar/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.delete(url, { idTarea })
                             .then(function(respuesta) {
-                                console.log(icono.parentElement.parentElement.parentElement);
+                                // console.log(icono.parentElement.parentElement.parentElement);
                                 icono.parentElement.parentElement.parentElement.remove();
                                 console.log(respuesta);
                                 conteo();
@@ -247,14 +302,15 @@
             });
         }
 
-        if(btnEliminar){
+        // ELIMINAR PROYECTO
+        if (btnEliminar) {
             // alert("Existe boton");
-            btnEliminar.addEventListener('click',e=>{
-                alert("Diste click en el boton");
-                const proyecto=document.querySelector('h2');
-                const urlProyecto=proyecto.dataset.url;
-                console.log(urlProyecto);
-                
+            btnEliminar.addEventListener('click', e => {
+                // alert("Diste click en el boton");
+                const proyecto = document.querySelector('h2');
+                const urlProyecto = proyecto.dataset.url;
+                // console.log(urlProyecto);
+
                 const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
 
                 // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
@@ -266,6 +322,10 @@
 
             });
         }
+
+        // Para que funcione en el draft
+        // fondo.style.backgroundImage="url('../public/success200.gif')";
+        // fondo.style.backgroundImage = "url('../success200.gif')";
 
     });
 })();

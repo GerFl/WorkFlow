@@ -2,8 +2,11 @@
 const Proyectos = require('../modelos/Proyectos');
 const Tareas = require('../modelos/Tareas');
 
+
 /* HOME */
-exports.proyectosHome = async(req, res) => {
+
+/* MOSTRAR PROYECTOS */
+exports.mostrarProyectos = async(req, res) => {
     // Buscamos todos los proyectos existentes, los almacenamos en la variable y los pasamos a la vista
     const proyectos = await Proyectos.findAll();
     res.render('index', {
@@ -11,6 +14,7 @@ exports.proyectosHome = async(req, res) => {
         proyectos
     });
 }
+
 
 /* LISTAR PROYECTOS */
 exports.proyectoUrl = async(req, res, next) => {
@@ -86,6 +90,7 @@ exports.agregarProyecto = async(req, res, next) => {
     	¿Ok? Ok
     */
     //const proyectos = await Proyectos.findAll();
+    console.log(req.body);
     const nombre_proyecto = req.body.nombre_proyecto;
     const descripcion_proyecto = req.body.descripcion_proyecto;
     const fecha_entrega = req.body.fecha_entrega;
@@ -102,12 +107,12 @@ exports.agregarProyecto = async(req, res, next) => {
     res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
 }
 
-exports.eliminarProyecto = async(req,res,next) => {
-    console.log(req.params);
-    const {url}=req.params;
-    const proyecto=await Proyectos.destroy({where:{url}});
+exports.eliminarProyecto = async(req, res, next) => {
+    // console.log(req.params);
+    const { url } = req.params;
+    const proyecto = await Proyectos.destroy({ where: { url } });
 
-    if(!proyecto) return next();
+    if (!proyecto) return next();
 
     res.send("Eliminando proyecto...");
 

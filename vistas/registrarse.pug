@@ -1,0 +1,28 @@
+doctype html
+html(lang='es')
+  head
+    include partials/header
+  body
+    .contenedor-principal.login
+      .caja-login
+        .encabezado
+          h2 Crear cuenta en WorkFlow
+        form(action='/registrarse' method='POST')
+          .campo
+            label Nombre de usuario:
+            input(type='text' name='nombre_usuario' required)
+          .campo
+            label(for='email') E-mail:
+            input(type='email' name='email' required)
+          .campo
+            label(for='password') Contraseña:
+            input(type='password' name='password' required)
+          .campo
+            input.btn-login(type='submit' value='Crear cuenta')
+        p ¿Ya estás registrado? 
+          a(href="/iniciar-sesion" style="color:#8de4af") Iniciar sesión
+        //- // <img src="../public/d7mv1gp-78b2d5a8-99b6-4874-80a9-3427238c4f62.gif" alt="Gif">
+        //- // <img src="../public/dfe4b7ce984e42e0b4438ce8bd232660.gif" alt="Gif">
+        //- // <img src="../public/RingedNiceFugu-max-14mb.gif" alt="Gif">
+    
+    include partials/footer
