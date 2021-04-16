@@ -12,39 +12,74 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
 
     // TO-DO
     // Eliminar proyectos
-    // 750
 
     // HOME
     // No podemos usar app como en el index.js porque no se puede crear
     // otra instancia de Express. Por eso se crea router arriba
     // Usamos .get en vez de .use, porque trae información...creo
-    router.get('/', proyectosController.mostrarProyectos); // Middleware de express
+    router.get('/',
+        authorizationController.usurioVerificado,
+        proyectosController.mostrarProyectos
+    ); // Middleware de express
 
     // LOGIN Y REGISTRO
     router.get('/registrarse', authorizationController.formRegistro);
     router.post('/registrarse', authorizationController.crearCuenta);
     router.get('/iniciar-sesion', authorizationController.loginPage);
     router.post('/iniciar-sesion', authorizationController.verificarUsuario);
+    router.get('/cerrar-sesion', authorizationController.cerrarSesion);
+    router.get('/iniciar-sesion/failure', authorizationController.autenticacionFallida);
+    router.get('/iniciar-sesion/success',
+        authorizationController.usurioVerificado,
+        authorizationController.autenticacionCorrecta
+    );
 
     /* PROYECTOS */
     // Listar proyectos
     // Usa proyectourl como comodin, puesto que no sabemos a cuál url va ir. Dicha url se asigna en la vista del index en cada etiqueta a generada por los proyectos listados
-    router.get('/proyecto/:proyectourl', proyectosController.proyectoUrl);
+    router.get('/proyecto/:proyectourl',
+        authorizationController.usurioVerificado,
+        proyectosController.proyectoUrl
+    );
     // Agregar proyectos - Cada uno reacciona a un método diferente
-    router.get('/agregarProyecto', proyectosController.formularioProyecto);
-    router.post('/agregarProyecto', proyectosController.agregarProyecto);
+    router.get('/agregarProyecto',
+        authorizationController.usurioVerificado,
+        proyectosController.formularioProyecto
+    );
+    router.post('/agregarProyecto',
+        authorizationController.usurioVerificado,
+        proyectosController.agregarProyecto
+    );
     // Eliminar proyecto
-    router.delete('/eliminar-proyecto/:url', proyectosController.eliminarProyecto);
+    router.delete('/eliminar-proyecto/:url',
+        authorizationController.usurioVerificado,
+        proyectosController.eliminarProyecto
+    );
 
     /* TAREAS */
     // Agregar tareas
-    router.get('/proyecto/:proyectourl/agregarTarea', tareasController.formularioTarea);
-    router.post('/proyecto/:proyectourl/agregarTarea', tareasController.agregarTarea);
+    router.get('/proyecto/:proyectourl/agregarTarea',
+        authorizationController.usurioVerificado,
+        tareasController.formularioTarea
+    );
+    router.post('/proyecto/:proyectourl/agregarTarea',
+        authorizationController.usurioVerificado,
+        tareasController.agregarTarea
+    );
     // Actualizar tarea
-    router.patch('/tarea-completada/:id', tareasController.completarTarea);
-    router.patch('/tarea-descompletada/:id', tareasController.descompletarTarea);
+    router.patch('/tarea-completada/:id',
+        authorizationController.usurioVerificado,
+        tareasController.completarTarea
+    );
+    router.patch('/tarea-descompletada/:id',
+        authorizationController.usurioVerificado,
+        tareasController.descompletarTarea
+    );
     // Eliminar tarea
-    router.delete('/tarea-eliminar/:id', tareasController.eliminarTarea);
+    router.delete('/tarea-eliminar/:id',
+        authorizationController.usurioVerificado,
+        tareasController.eliminarTarea
+    );
 
 
     return router;

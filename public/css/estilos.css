@@ -12,10 +12,6 @@ html {
     box-sizing: inherit;
 }
 
-* {
-    /* outline: 1px solid red; */
-}
-
 
 /*
     AJAJAJAJ HACER RESPONSIVO TODO
@@ -111,9 +107,6 @@ div.barra a i {
 }
 
 div.barra a.volver:hover {
-    /*box-shadow: 0px 10px 5px -4px #fff;
-    -webkit-box-shadow: 0px 10px 6px -4px #fff;
-    -moz-box-shadow: 0px 10px 5px -4px #fff;*/
     filter: drop-shadow(0 0 1rem black);
     transition: .2s ease-in-out;
 }
@@ -232,18 +225,8 @@ body.index {
     background-color: #000000;
     display: flex;
     justify-content: center;
-    /* animation: iniciando 8s; */
+    z-index: 21;
 }
-
-
-/* @keyframes iniciando {
-    50% {
-        opacity: 50%;
-    }
-    100% {
-        opacity: 0;
-    }
-} */
 
 
 /* SIDEBAR*/
@@ -529,28 +512,6 @@ div.tarea {
     background-color: #f7f5f5;
 }
 
-
-/* 
-div.tarea#analisis {
-    border: 4px solid lime;
-}
-
-div.tarea#diseno {
-    border: 4px solid blueviolet;
-}
-
-div.tarea#coding {
-    border: 4px solid turquoise;
-}
-
-div.tarea#testing {
-    border: 4px solid orange;
-}
-
-div.tarea#soporte {
-    border: 4px solid gold;
-} */
-
 div.tarea h3 {
     margin: 0;
 }
@@ -568,11 +529,6 @@ div.opcionestarea i {
     font-size: 2.5rem;
     padding: 1rem;
 }
-
-
-/* div.opcionestarea i:active {
-    display: none;
-} */
 
 div.selects,
 .opcionestarea {

@@ -1,7 +1,5 @@
-// Ya no te necesito UpTaskNodeJs
-
-// Ok, el primer paso es hacer este archivo de index. JuanPa se refiere a él como el archivo principal,
-// creo que es porque se inicilizan los módulos que se van a utilizar y se le ordena
+// Ok, el primer paso es hacer este archivo de index.
+// El principal porque se inicilizan los módulos que se van a utilizar y se le ordena
 // a la app utilizarlos.
 
 // 1- Empecemos con unos const
@@ -9,6 +7,9 @@ const express = require('express');
 const routes = require('./rutas');
 const path = require('path');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 
 // 2- Traemos la config de la db para inicializarla
 const database = require('./config/database');
@@ -35,8 +36,21 @@ app.set('views', path.join(__dirname, './vistas'));
 // Habilitar BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 
-/* TO-DO */
 // Sesiones
+app.use(cookieParser());
+app.use(session({
+    secret: 'supersecreto',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+    res.locals.usuario = {...req.user } || null;
+    console.log(res.locals.usuario);
+    next();
+})
 
 app.use('/', routes()); // Se llama como función porque precisamente se exportó como función
 

@@ -1,7 +1,6 @@
 (function() {
     "use strict";
     document.addEventListener('DOMContentLoaded', function() {
-        // console.log("Loaded.");
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
         const animacionCargando = document.querySelector('.loading');
@@ -21,39 +20,28 @@
 
         const proyectos = document.querySelectorAll('.proyecto a');
         proyectos.forEach(proyecto => {
-            // console.log(proyecto.childNodes[5]);
-            const fecha_inicio = proyecto.childNodes[4].innerText; // Se extrae el valor
-            const fecha_entrega = proyecto.childNodes[5].innerText; // Se extrae el valor
-            const firstDate = Date.parse(fecha_inicio); // La fecha de inicio en milisegundos
-            const secondDate = Date.parse(fecha_entrega); // La fecha de entrega en milisegundos
-            const firstDateDays = firstDate / 86400000; // La fecha en dias enteros
-            const secondDateDays = secondDate / 86400000; // La fecha en dias enteros
-            const fechaActual = Date.now(); // Pues fecha actual, que no estas viendo
-            console.log("Fecha_inicio en formato original: " + fecha_inicio);
-            console.log("Fecha_entrega en formato original: " + fecha_entrega);
-            console.log("Diferencia entre las fechas: " + (secondDateDays - firstDateDays) + " días.");
-            console.log("Mitad de la diferencia entre las fechas: " + (secondDateDays - firstDateDays) / 2 + " días.");
-            console.log("Fecha actual en milisegundos: " + fechaActual);
-            console.log(fechaActual, secondDate);
-            if (fechaActual >= secondDate) { // Fechas en milisegundos para hacer la resta directamente
-                // console.log("RED STATUS");
-                // console.log("====================");
-                // console.log(proyecto.childNodes[6].childNodes[3]);
+            const fecha_inicio = Date.parse(proyecto.childNodes[4].innerText); // La fecha de inicio se parsea a milisegundos
+            const fecha_entrega = Date.parse(proyecto.childNodes[5].innerText); // La fecha de entrega se parsea a milisegundos
+            const diferenciaInicioEntrega = (fecha_entrega - fecha_inicio) / 86400000; // Diferencia en dias entre las fechas
+            const fechaActual = Date.now(); // Fecha actual en milisegundos
+            const diferenciaActualEntrega = (fecha_entrega - fechaActual) / 86400000;
+            // console.log("Fecha de inicio: " + fecha_inicio);
+            // console.log("Fecha de entrega: " + fecha_entrega);
+            // console.log("Diferencia entre inicio y entrega: " + diferenciaInicioEntrega);
+            // console.log("Fecha de inicio en días: " + firstDate);
+            // console.log("Fecha de entrega en días: " + secondDate);
+            // console.log("Fecha actual: " + fechaActual);
+            // console.log("Fecha actual en días: " + fechaActualDias);
+            // console.log("Diferencia entre actual y entrega: " + diferenciaActualEntrega);
+
+            if (fechaActual >= fecha_entrega) { // Fechas en milisegundos para hacer la resta directamente
+                /* RED STATUS */
                 proyecto.childNodes[6].childNodes[3].style.opacity = "1";
-            } else if ((fechaActual) >= ((secondDate - firstDate) / 2)) {
-                // Si los dias de la diferencia entre la fecha de entrega y la fecha actual son mayor o
-                // igual a la mitad de la diferencia entre la fecha de entrega y la fecha de inicio, se ejecuta este bloque
-                console.log("YELLOW STATUS");
-                console.log(((secondDate - fechaActual) / 86400000));
-                console.log((((secondDate - firstDate) / 86400000) / 2));
-                console.log(((secondDate - fechaActual) / 86400000) - ((secondDateDays - firstDateDays) / 2));
-                console.log("====================");
-                console.log(proyecto.childNodes[6].childNodes[2]);
+            } else if (diferenciaActualEntrega <= (diferenciaInicioEntrega / 2)) {
+                /* YELLOW STATUS */
                 proyecto.childNodes[6].childNodes[2].style.opacity = "1";
             } else { // Ni una ni otra
-                // console.log("GREEN STATUS");
-                // console.log("====================");
-                // console.log(proyecto.childNodes[6].childNodes[1]);
+                /* GREEN STATUS */
                 proyecto.childNodes[6].childNodes[1].style.opacity = "1";
             }
         });
@@ -70,29 +58,13 @@
             conteo();
         }
 
-
-        // // Cantidad de tareas
-        // sidebar.childNodes[1].innerHTML = "Cantidad de tareas: " + totalTareas.length;
-        // // Tareas terminadas
-        // sidebar.childNodes[2].innerHTML = "Tareas terminadas: " + completadas.length;
-        // // Tareas pendientes
-        // sidebar.childNodes[3].innerHTML = "Tareas pendientes: " + noCompletadas.length;
-        // // Progreso total
-        // circuloProgreso.firstChild.innerHTML = porcentajeTotal + "%";
-        // const enviar = document.querySelector("input.btnEnviar");
         // Funcion para realizar el conteo de las tareas y hacer las operaciones para mostrar las barras de progreso
         function conteo() {
-            // TO-DO
-            // Hacer que la barra sea repsponsiva al click de los botones de COMPLETAR o DESCOMPLETAR
-            // Hacer que todo el sidebar sea responsivo tambien
-            // Selecciona todas las tareas completadas y el total de las tareas, para realizar el calculo del porcentaje
-            // Pasarlo todo al sidebaaaaar
             const totalTareas = document.querySelectorAll('.tarea');
             const completadas = document.querySelectorAll('a.completo.activo');
             const noCompletadas = document.querySelectorAll('a.nocompleto.activo');
 
             //  Selecciona la cantidad de tareas por departamento
-
             const tareasAnalisis = document.querySelectorAll('p#analisis');
             const tareasDiseno = document.querySelectorAll('p#diseno');
             const tareasCoding = document.querySelectorAll('p#coding');
@@ -137,37 +109,31 @@
                 const icono = parrafoId.nextElementSibling.nextElementSibling.firstChild;
                 switch (parrafoId.id) {
                     case "analisis":
-                        // console.log("El id es de Análisis.");
                         if (icono.classList.contains('activo')) {
                             analisisCompletadas += 1;
                         };
                         break;
                     case "diseno":
-                        // console.log("El id es de Diseño.");
                         if (icono.classList.contains('activo')) {
                             disenoCompletadas += 1;
                         };
                         break;
                     case "coding":
-                        // console.log("El id es de Código.");
                         if (icono.classList.contains('activo')) {
                             codingCompletadas += 1;
                         };
                         break;
                     case "testing":
-                        // console.log("El id es de Testing.");
                         if (icono.classList.contains('activo')) {
                             testingCompletadas += 1;
                         };
                         break;
                     case "soporte":
-                        // console.log("El id es de Soporte.");
                         if (icono.classList.contains('activo')) {
                             soporteCompletadas += 1;
                         };
                         break;
                     default:
-                        // console.log("El id no es correcto.");
                         break;
                 }
             });
@@ -178,18 +144,19 @@
             // console.log("Testing completadas: " + testingCompletadas);
             // console.log("Soporte completadas: " + soporteCompletadas);
 
-            // TO-DO
-            // Hacer el code para los progresos en la barra
-            // Declarar variables para imprimirlas y pintar las barritas
             var porcentajeAnalisis = ((analisisCompletadas / tareasAnalisis.length).toFixed(2)) * 100;
             var porcentajeDiseno = ((disenoCompletadas / tareasDiseno.length).toFixed(2)) * 100;
             var porcentajeCoding = ((codingCompletadas / tareasCoding.length).toFixed(2)) * 100;
             var porcentajeTesting = ((testingCompletadas / tareasTesting.length).toFixed(2)) * 100;
             var porcentajeSoporte = ((soporteCompletadas / tareasSoporte.length).toFixed(2)) * 100;
 
-            var porcentajeTotal = ((completadas.length / totalTareas.length).toFixed(2)) * 100;
-            // console.log(porcentajeTotal.toFixed(2));
+            if (totalTareas.length == 0) {
+                var porcentajeTotal = 0;
+            } else {
+                var porcentajeTotal = ((completadas.length / totalTareas.length).toFixed(2)) * 100;
+            }
 
+            // console.log(porcentajeTotal.toFixed(2));
             // console.log("Porcentaje análisis: " + porcentajeAnalisis);
             // console.log("Porcentaje diseño: " + porcentajeDiseno);
             // console.log("Porcentaje coding: " + porcentajeCoding);
@@ -205,6 +172,11 @@
 
             // Que se hace aqui? Simple. Al inicio se tomaron las barras de color de cada departamento con un querySelector, y ahora solo se formatea el ancho de cada barrita
             // con el calculo que acabamos de hacer arribita con todo el revoltijo de variables y demas cositas
+            barraAnalisis.style.width = "0%";
+            barraDiseno.style.width = "0%";
+            barraCoding.style.width = "0%";
+            barraTesting.style.width = "0%";
+            barraSoporte.style.width = "0%";
             barraAnalisis.style.width = porcentajeAnalisis + "%";
             barraDiseno.style.width = porcentajeDiseno + "%";
             barraCoding.style.width = porcentajeCoding + "%";
@@ -225,77 +197,47 @@
             circuloProgreso.firstChild.innerHTML = porcentajeTotal.toFixed(0) + "%";
         }
 
-        // if (enviar) {
-        //     enviar.addEventListener("click", function(e) {
-        //         var color = document.querySelector('input#color');
-        //         alert("Diste click en el botón. El color es " + color.value);
-        //     });
-        // }
-
         // Bloque para realizar las peticiones a Axios y DOMScripting
         if (totalTareas) {
             const opcionesTarea = document.querySelectorAll('.opcionestarea');
             opcionesTarea.forEach(tarea => {
                 tarea.addEventListener('click', e => {
                     if (e.target.classList.contains('fa-check-circle')) {
-                        // console.log("Diste click en la palomita");
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        // console.log(icono);
-                        // console.log(icono.parentElement.nextElementSibling);
-                        // console.log(idTarea);
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-completada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
                             .then(function(respuesta) {
-
-                                // console.log(icono.parentElement);
-                                // console.log(icono.parentElement.nextElementSibling);
                                 icono.parentElement.classList.add("activo");
                                 icono.parentElement.nextElementSibling.classList.remove("activo");
-                                console.log(respuesta);
                                 conteo();
                             })
-                            // console.log(url);
-                    } else if (e.target.classList.contains('fa-times-circle')) {
-                        // console.log("Diste click en la x");
+                    } else if (e.target.classList.contains('fa-times-circle')) { // Al completar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        // console.log(icono);
-                        // console.log(icono.parentElement.previousElementSibling);
-                        // console.log(idTarea);
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-descompletada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
                             .then(function(respuesta) {
-                                // console.log(icono.parentElement.classList);
-                                // console.log(icono.parentElement.previousElementSibling.classList);
                                 icono.parentElement.classList.add("activo");
                                 icono.parentElement.previousElementSibling.classList.remove("activo");
-                                console.log(respuesta);
                                 conteo();
                             })
-                            // console.log(url);
-                    } else {
-                        // console.log("Diste click en la x");
+                    } else { // Al descompletar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-                        // console.log(icono);
-                        // console.log(idTarea);
 
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-eliminar/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.delete(url, { idTarea })
                             .then(function(respuesta) {
-                                // console.log(icono.parentElement.parentElement.parentElement);
                                 icono.parentElement.parentElement.parentElement.remove();
-                                console.log(respuesta);
                                 conteo();
                             })
-                            // console.log(url);
                     }
 
                 });
@@ -304,37 +246,20 @@
 
         // ELIMINAR PROYECTO
         if (btnEliminar) {
-            // alert("Existe boton");
             btnEliminar.addEventListener('click', e => {
-                // alert("Diste click en el boton");
                 const proyecto = document.querySelector('h2');
                 const urlProyecto = proyecto.dataset.url;
-                // console.log(urlProyecto);
 
                 const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
 
                 // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                 axios.delete(url, { urlProyecto })
                     .then(function(respuesta) {
-                        console.log(respuesta);
                         window.location.href = '/'
                     })
 
             });
         }
 
-        // Para que funcione en el draft
-        // fondo.style.backgroundImage="url('../public/success200.gif')";
-        // fondo.style.backgroundImage = "url('../success200.gif')";
-
     });
 })();
-
-/* TO-DO:
-    LISTOOOO Seleccionar la cantidad de departamentos
-    Hacer las barritas responsivas a ese pedo
-    Hacer que los botones funcionen jajaja salv
-    Desinstalar AXIOS
-
-
-*/

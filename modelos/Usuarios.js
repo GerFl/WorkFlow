@@ -46,12 +46,7 @@ const Usuarios = database.define('usuarios', {
 }, {
     hooks: {
         beforeCreate(usuario) {
-            console.log("=====================");
-            console.log("   Creando usuario   ");
-            console.log("=====================");
-            console.log(usuario);
             usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
-            console.log(usuario);
         }
     }
 });

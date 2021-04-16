@@ -15,7 +15,11 @@ const Tareas = database.define('tareas', {
     descripcion_tarea: Sequelize.STRING(100),
     departamento: Sequelize.STRING(15),
     prioridad: Sequelize.INTEGER(1),
-    estatus: Sequelize.INTEGER(1)
+    estatus: Sequelize.INTEGER(1),
+    fecha_inicio: {
+        type: Sequelize.DATEONLY,
+        defaultValue: Sequelize.NOW
+    }
 });
 Tareas.belongsTo(proyectos); // Añadiendo llaves foraneas para relacionar ambas tablas
 

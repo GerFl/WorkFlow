@@ -8,7 +8,12 @@ const Tareas = require('../modelos/Tareas');
 /* MOSTRAR PROYECTOS */
 exports.mostrarProyectos = async(req, res) => {
     // Buscamos todos los proyectos existentes, los almacenamos en la variable y los pasamos a la vista
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id_usuario;
+    const proyectos = await Proyectos.findAll({
+        where: {
+            usuarioIdUsuario: usuarioId
+        }
+    });
     res.render('index', {
         nombrePagina: 'WorkFlow',
         proyectos
@@ -19,7 +24,7 @@ exports.mostrarProyectos = async(req, res) => {
 /* LISTAR PROYECTOS */
 exports.proyectoUrl = async(req, res, next) => {
     // Consultar los proyectos para que nos retorne el de la url
-    // console.log(req.params); // Esto nos retornará el comodín, el cual es proyectourl
+    // rea.params nos retornará el comodín, el cual es proyectourl
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
@@ -28,17 +33,13 @@ exports.proyectoUrl = async(req, res, next) => {
 
     if (!proyecto) return next();
 
-    // console.log("Proyecto existe.");
-    // console.log(proyecto);
-
-    // Consultar tareas del proyecto actual
+    // PROYECTO EXISTE. Consultar tareas del proyecto actual
     // Se pasa como parametro el id del proyecto. Se accede a el gracias a que hicimos la consulta para traer ese proyecto
     const tareas = await Tareas.findAll({
         where: {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
-    // console.log(tareas);
 
     // Render a la vista
     // Mandamos el proyecto y las tareas dentro de ese proyecto para poder acceder a ellas en la vista
@@ -50,10 +51,15 @@ exports.proyectoUrl = async(req, res, next) => {
 
 }
 
-/* AGREGAR PROYECTO */
 
+/* AGREGAR PROYECTO */
 exports.formularioProyecto = async(req, res) => {
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id_usuario;
+    const proyectos = await Proyectos.findAll({
+        where: {
+            usuarioIdUsuario: usuarioId
+        }
+    });
     res.render('agregarProyecto', {
         nombrePagina: 'WorkFlow - Agregar proyecto',
         proyectos
@@ -89,8 +95,7 @@ exports.agregarProyecto = async(req, res, next) => {
     	en el router (creo) pero no una tras otra.
     	¿Ok? Ok
     */
-    //const proyectos = await Proyectos.findAll();
-    console.log(req.body);
+
     const nombre_proyecto = req.body.nombre_proyecto;
     const descripcion_proyecto = req.body.descripcion_proyecto;
     const fecha_entrega = req.body.fecha_entrega;
@@ -98,17 +103,13 @@ exports.agregarProyecto = async(req, res, next) => {
     const porcentaje = 0;
     const completado = 0;
 
-    // console.log("A continuación, el req.body:");
-    // console.log(req.body);
-    //console.log(proyectos.length); // Para saber cuántos proyectos tenemos en total
     // Tal vez hacer un apartado para validar errores y otro para agregar a la BD
-    //res.send("Enviaste el formulario para agregar un proyecto.");
-    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado })
+    const usuarioIdUsuario = res.locals.usuario.id_usuario;
+    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado, usuarioIdUsuario })
     res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
 }
 
 exports.eliminarProyecto = async(req, res, next) => {
-    // console.log(req.params);
     const { url } = req.params;
     const proyecto = await Proyectos.destroy({ where: { url } });
 

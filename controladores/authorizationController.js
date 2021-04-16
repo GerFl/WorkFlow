@@ -2,6 +2,7 @@ const Usuarios = require('../modelos/Usuarios');
 const Proyectos = require('../modelos/Proyectos');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt-nodejs');
+const passport = require('passport');
 
 
 exports.loginPage = (req, res) => {
@@ -11,7 +12,6 @@ exports.loginPage = (req, res) => {
         fondo: 'login.gif',
         colorCandado
     });
-    // background-image:url('../login.gif');
 }
 
 exports.formRegistro = (req, res) => {
@@ -21,7 +21,6 @@ exports.formRegistro = (req, res) => {
 }
 
 exports.crearCuenta = async(req, res, next) => {
-    console.log(req.body);
     const { nombre_usuario, email, password } = req.body;
 
     await Usuarios.create({
@@ -32,28 +31,49 @@ exports.crearCuenta = async(req, res, next) => {
     res.redirect('/iniciar-sesion');
 }
 
-exports.verificarUsuario = async(req, res, next) => {
-    console.log("HELLO");
-    console.log(req.body);
-    const usuario = await Usuarios.findOne({ where: { email: req.body.email } });
-    console.log(usuario);
-    if (!usuario) {
-        const error = "ERROR";
-        const colorCandado = "#d93b5b";
-        res.render('login', {
-            nombrePagina: 'WorkFlow',
-            fondo: 'failedLogin.gif',
-            error,
-            colorCandado
-        });
-    }
+exports.autenticacionFallida = (req, res, next) => {
+    const error = "ERROR";
+    const colorCandado = "#d93b5b";
+    res.render('login', {
+        nombrePagina: 'WorkFlow',
+        fondo: 'failedLogin.gif',
+        error,
+        colorCandado
+    });
+}
 
-    const proyectos = await Proyectos.findAll();
+exports.autenticacionCorrecta = async(req, res, next) => {
+    const usuarioId = res.locals.usuario.id_usuario;
+    const proyectos = await Proyectos.findAll({
+        where: {
+            usuarioIdUsuario: usuarioId
+        }
+    });
     const loading = "success200.gif";
     res.render('index', {
         nombrePagina: 'WorkFlow',
-        proyectos,
-        loading
+        loading,
+        proyectos
     });
-    // res.send("La vdd no se que esta pasando");
+}
+
+// Verificar los datos del usuario
+exports.verificarUsuario = passport.authenticate('local', {
+    successRedirect: '/iniciar-sesion/success',
+    failureRedirect: '/iniciar-sesion/failure'
+});
+// Verificar que haya sido autenticado para acceder a las paginas
+exports.usurioVerificado = (req, res, next) => {
+    // Autenticado
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    // No autenticado
+    return res.redirect('/iniciar-sesion');
+}
+
+exports.cerrarSesion = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/iniciar-sesion');
+    })
 }

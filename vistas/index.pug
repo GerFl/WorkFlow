@@ -17,7 +17,7 @@ html(lang="es")
               img(src='/fish.ico' alt='Profile Pic')
               h2
                 | Bienvenido, 
-                span User
+                span #{usuario.nombre_usuario}
             p Proyectos empezados: #{proyectos.length}
             -var terminados=0
             each proyecto in proyectos 
@@ -28,7 +28,7 @@ html(lang="es")
               a(href='#')
                 i.fas.fa-tools
                 |  Configuración
-              a(href='/iniciar-sesion')
+              a(href='/cerrar-sesion')
                 i.fas.fa-sign-out-alt
                 |  Salir
       .contenido
@@ -42,7 +42,6 @@ html(lang="es")
             .proyecto
               a(href=`/proyecto/${proyecto.url}`)
                 .color(style=`width:5%; background-color:${proyecto.color}`)
-                //- Parece que en la sintaxis de Pug, utilizas # cuando imprimes algo dentro de una etiqueta html, y con $ cuando quieres imprimirlo como atributo de una etiqueta
                 h2.nombreproyecto #{proyecto.nombre_proyecto}
                 p #{proyecto.descripcion_proyecto}
                 h3 #{proyecto.porcentaje}%

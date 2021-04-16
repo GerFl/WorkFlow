@@ -6,12 +6,6 @@ const database = require('../config/database');
 const slug = require('slug');
 const shortid = require('shortid');
 
-// TO-DO
-// Aumentar a 50 el nombre del proyecto
-// Aumentar a 100 la descripcion del proyecto
-// Validacion del lado del cliente lista
-// Hacer la validacion del lado del servidor
-
 // Construir la tabla
 const Proyectos = database.define('proyectos', {
     id_proyecto: {
@@ -28,13 +22,10 @@ const Proyectos = database.define('proyectos', {
     fecha_entrega: Sequelize.DATEONLY,
     porcentaje: Sequelize.STRING(10),
     color: Sequelize.STRING(10),
-    // completado: Sequelize.INTEGER(1),
     url: Sequelize.STRING(100)
 }, {
     hooks: {
         beforeCreate(proyecto) {
-            // console.log("Antes de insertar en la BD.");
-            // console.log(proyecto.nombre_proyecto);
             // Con slug recortamos la url de manera que no haya espacios ni cosas raras
             const url = slug(proyecto.nombre_proyecto);
             // Después aplicamos un shortid.generate para que le de valores random
