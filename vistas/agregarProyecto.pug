@@ -38,6 +38,8 @@ html(lang="en")
             form(action="/agregarProyecto" method="POST")
               fieldset
                 legend Nuevo proyecto
+                if(error)
+                  p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;")= error
                 label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
                 input(type='text' name='nombre_proyecto' required maxlength="50")
                 label(for='descripcion_proyecto') Agrega una descripción:

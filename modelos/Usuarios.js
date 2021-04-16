@@ -29,12 +29,7 @@ const Usuarios = database.define('usuarios', {
     },
     password: {
         type: Sequelize.STRING(60),
-        allowNull: false,
-        validate: {
-            notEmpty: {
-                msg: "El password no puede ir vacío."
-            }
-        }
+        allowNull: false
     },
     activo: {
         type: Sequelize.INTEGER,

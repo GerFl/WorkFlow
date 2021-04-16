@@ -35,8 +35,29 @@ exports.agregarTarea = async(req, res) => {
     const estatus = 0;
     const proyectoIdProyecto = proyecto.id_proyecto;
 
-    await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
-    res.redirect(`/proyecto/${proyecto.url}`);
+    if (!tarea_nombre.replace(/\s/g, '').length || !descripcion_tarea.replace(/\s/g, '').length) {
+        // Con esto obtenemos el proyecto actual
+        const proyecto = await Proyectos.findOne({
+            where: {
+                url: req.params.proyectourl
+            }
+        });
+        const tareas = await Tareas.findAll({
+            where: {
+                proyectoIdProyecto: proyecto.id_proyecto
+            }
+        });
+        const error = "Ningún campo puede ir vacío";
+        res.render('agregarTarea', {
+            nombrePagina: 'WorkFlow - Agregar tarea',
+            proyecto,
+            tareas,
+            error
+        });
+    } else {
+        await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
+        res.redirect(`/proyecto/${proyecto.url}`);
+    }
 }
 
 exports.completarTarea = async(req, res) => {

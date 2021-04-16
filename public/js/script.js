@@ -3,6 +3,30 @@
     document.addEventListener('DOMContentLoaded', function() {
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
+        // Swal.fire({
+        //     title: 'Error!',
+        //     text: 'Do you want to continue',
+        //     type: 'error',
+        //     confirmButtonText: 'Cool'
+        // });
+        // swal("PROYECTO TERMINADO", "No tienes tareas pendientes...por ahora.", "success");
+        // swal({
+        //         title: "¿Segur@?",
+        //         text: "Esta acción no se puede deshacer.",
+        //         type: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: '#3085d6',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Sí, bórralo alv',
+        //         cancelButtonText: 'Cancelar'
+        //     })
+        //     .then((result) => {
+        //         swal("Eliminado.", {
+        //             type: "success",
+        //         });
+        //         swal("No se ha borrado nada.");
+        //     });
+
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
             setTimeout(function() {
@@ -186,6 +210,7 @@
             // console.log("Total de tareas: " + totalTareas.length);
             // console.log("Tareas completadas: " + completadas.length);
             // console.log("Tareas no completadas: " + noCompletadas.length);
+            console.log(porcentajeTotal);
 
             // Cantidad de tareas
             sidebar.childNodes[1].innerHTML = "Cantidad de tareas: " + totalTareas.length;
@@ -195,6 +220,12 @@
             sidebar.childNodes[3].innerHTML = "Tareas pendientes: " + noCompletadas.length;
             // Progreso total
             circuloProgreso.firstChild.innerHTML = porcentajeTotal.toFixed(0) + "%";
+            if (porcentajeTotal == 100) {
+                Swal.fire({
+                    title: '¡FELICIDADES!',
+                    text: "Has terminado el proyecto",
+                })
+            }
         }
 
         // Bloque para realizar las peticiones a Axios y DOMScripting
@@ -202,7 +233,7 @@
             const opcionesTarea = document.querySelectorAll('.opcionestarea');
             opcionesTarea.forEach(tarea => {
                 tarea.addEventListener('click', e => {
-                    if (e.target.classList.contains('fa-check-circle')) {
+                    if (e.target.classList.contains('fa-check-circle')) { // Al completar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
                         // Request hacia /tareas/:id
@@ -214,7 +245,7 @@
                                 icono.parentElement.nextElementSibling.classList.remove("activo");
                                 conteo();
                             })
-                    } else if (e.target.classList.contains('fa-times-circle')) { // Al completar
+                    } else if (e.target.classList.contains('fa-times-circle')) { // Al descompletar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
                         // Request hacia /tareas/:id
@@ -226,18 +257,33 @@
                                 icono.parentElement.previousElementSibling.classList.remove("activo");
                                 conteo();
                             })
-                    } else { // Al descompletar
+                    } else { // Al eliminar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
 
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-eliminar/${idTarea}`;
-                        // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
-                        axios.delete(url, { idTarea })
-                            .then(function(respuesta) {
-                                icono.parentElement.parentElement.parentElement.remove();
-                                conteo();
+                        swal({
+                                title: "¿Eliminar tarea?",
+                                text: "No se podrá recuperar.",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '',
+                                confirmButtonText: 'Eliminar tarea',
+                                cancelButtonText: 'Cancelar'
                             })
+                            .then((result) => {
+                                console.log(result);
+                                if (result.value == true) {
+                                    // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
+                                    axios.delete(url, { idTarea })
+                                        .then(function(respuesta) {
+                                            icono.parentElement.parentElement.parentElement.remove();
+                                            conteo();
+                                        });
+                                }
+                            });
                     }
 
                 });
@@ -249,14 +295,35 @@
             btnEliminar.addEventListener('click', e => {
                 const proyecto = document.querySelector('h2');
                 const urlProyecto = proyecto.dataset.url;
-
                 const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
-
-                // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
-                axios.delete(url, { urlProyecto })
-                    .then(function(respuesta) {
-                        window.location.href = '/'
+                swal({
+                        title: "¿Quieres eliminar el proyecto?",
+                        text: "Esta acción no se puede deshacer.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '',
+                        confirmButtonText: 'BORRAR',
+                        cancelButtonText: 'Cancelar'
                     })
+                    .then((result) => {
+                        if (result.value == true) {
+                            // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
+                            axios.delete(url, { urlProyecto })
+                                .then(function(respuesta) {
+                                    swal("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
+                                    setTimeout(() => {
+                                        window.location.href = '/'
+                                    }, 3000);
+                                })
+                        } else {
+                            Swal.fire({
+                                text: 'No se ha eliminado nada',
+                                type: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+                        }
+                    });
 
             });
         }

@@ -22,13 +22,30 @@ exports.formRegistro = (req, res) => {
 
 exports.crearCuenta = async(req, res, next) => {
     const { nombre_usuario, email, password } = req.body;
+    if (!nombre_usuario.replace(/\s/g, '').length || !email.replace(/\s/g, '').length) {
+        const error = "Ningún campo puede ir vacío";
+        res.render('registrarse', {
+            nombrePagina: "Registrarse en WorkFlow",
+            error
+        });
+    } else {
+        const existe = await Usuarios.findOne({ where: { email } });
+        if (existe) {
+            const error = "Usuario ya registrado con ese correo";
+            res.render('registrarse', {
+                nombrePagina: "Registrarse en WorkFlow",
+                error
+            });
+        } else {
+            await Usuarios.create({
+                nombre_usuario,
+                email,
+                password
+            });
+            res.redirect('/iniciar-sesion');
+        }
 
-    await Usuarios.create({
-        nombre_usuario,
-        email,
-        password
-    });
-    res.redirect('/iniciar-sesion');
+    }
 }
 
 exports.autenticacionFallida = (req, res, next) => {

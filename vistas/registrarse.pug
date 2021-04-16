@@ -7,6 +7,8 @@ html(lang='es')
       .caja-login
         .encabezado
           h2 Crear cuenta en WorkFlow
+          if(error)
+            p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;")= error
         form(action='/registrarse' method='POST')
           .campo
             label Nombre de usuario:

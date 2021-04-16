@@ -37,6 +37,8 @@ html(lang="en")
             form(action=`/proyecto/${proyecto.url}/agregarTarea` method="POST")
               fieldset
                 legend Nueva tarea
+                if(error)
+                  p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;")= error
                 label(for='tareanombre') ¿Cuál es el nombre de la tarea?
                 input(type='text' name='tareanombre' maxlength="30" required)
                 label(for='descripciontarea') Agrega una pequeña descripción:

@@ -102,11 +102,25 @@ exports.agregarProyecto = async(req, res, next) => {
     const color = req.body.color;
     const porcentaje = 0;
     const completado = 0;
-
-    // Tal vez hacer un apartado para validar errores y otro para agregar a la BD
-    const usuarioIdUsuario = res.locals.usuario.id_usuario;
-    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado, usuarioIdUsuario })
-    res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
+    if (!nombre_proyecto.replace(/\s/g, '').length || !descripcion_proyecto.replace(/\s/g, '').length) {
+        const usuarioId = res.locals.usuario.id_usuario;
+        const proyectos = await Proyectos.findAll({
+            where: {
+                usuarioIdUsuario: usuarioId
+            }
+        });
+        const error = "Ningún campo puede ir vacío";
+        res.render('agregarProyecto', {
+            nombrePagina: 'WorkFlow - Agregar proyecto',
+            proyectos,
+            error
+        });
+    } else {
+        // Tal vez hacer un apartado para validar errores y otro para agregar a la BD
+        const usuarioIdUsuario = res.locals.usuario.id_usuario;
+        await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado, usuarioIdUsuario })
+        res.redirect('/'); // Se insertan los datos en una nueva fila, y se redirecciona.
+    }
 }
 
 exports.eliminarProyecto = async(req, res, next) => {
