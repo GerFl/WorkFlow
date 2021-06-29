@@ -24,7 +24,7 @@ body
               a.eliminar(href='#') Eliminar proyecto
       .contenido
         .barra
-          a.botonazul(href=`/proyecto/${proyecto.url}/agregarTarea`)
+          a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
             i.fas.fa-plus
             | Nueva tarea
           a.volver(href='/')
@@ -80,17 +80,22 @@ body
                   p Prioridad: #{tarea.prioridad}
                 .opcionestarea
                   if tarea.estatus==0
-                    a.completo(href='#')
+                    a.completo.tooltip(href='#')
                       i.far.fa-check-circle
-                    a.nocompleto.activo(href='#')
+                       span.tooltiptext Completar
+                    a.nocompleto.tooltip.activo(href='#')
                       i.far.fa-times-circle
+                       span.tooltiptext Descompletar
                   if tarea.estatus==1
-                    a.completo.activo(href='#')
+                    a.completo.tooltip.activo(href='#')
                       i.far.fa-check-circle
-                    a.nocompleto(href='#')
+                       span.tooltiptext Completar
+                    a.nocompleto.tooltip(href='#')
                       i.far.fa-times-circle
-                  a.basura(href='#')
-                    i.far.fa-trash-alt          
+                       span.tooltiptext Descompletar
+                  a.basura.tooltip(href='#')
+                    i.far.fa-trash-alt
+                      span.tooltiptext Eliminar
         else 
           h3 No hay tareas en este proyecto aún.
       

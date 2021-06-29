@@ -316,12 +316,6 @@
                                         window.location.href = '/'
                                     }, 3000);
                                 })
-                        } else {
-                            Swal.fire({
-                                text: 'No se ha eliminado nada',
-                                type: 'error',
-                                confirmButtonText: 'Cool'
-                            });
                         }
                     });
 

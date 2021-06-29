@@ -42,11 +42,11 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
         proyectosController.proyectoUrl
     );
     // Agregar proyectos - Cada uno reacciona a un método diferente
-    router.get('/agregarProyecto',
+    router.get('/agregar-proyecto',
         authorizationController.usurioVerificado,
         proyectosController.formularioProyecto
     );
-    router.post('/agregarProyecto',
+    router.post('/agregar-proyecto',
         authorizationController.usurioVerificado,
         proyectosController.agregarProyecto
     );
@@ -58,11 +58,11 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
 
     /* TAREAS */
     // Agregar tareas
-    router.get('/proyecto/:proyectourl/agregarTarea',
+    router.get('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usurioVerificado,
         tareasController.formularioTarea
     );
-    router.post('/proyecto/:proyectourl/agregarTarea',
+    router.post('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usurioVerificado,
         tareasController.agregarTarea
     );

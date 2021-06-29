@@ -25,7 +25,6 @@ html(lang="en")
             p Inicio del proyecto: #{proyecto.fecha_inicio}
             p Entrega del proyecto: #{proyecto.fecha_entrega}
             .opcionesproyecto
-              a.botonguardar(href='#') Guardar cambios
               a(href='#') Eliminar proyecto
       .contenido
         .barra
@@ -34,7 +33,7 @@ html(lang="en")
             | Volver
         .listadoproyectos
           .formulario
-            form(action=`/proyecto/${proyecto.url}/agregarTarea` method="POST")
+            form(action=`/proyecto/${proyecto.url}/agregar-tarea` method="POST")
               fieldset
                 legend Nueva tarea
                 if(error)
@@ -61,7 +60,7 @@ html(lang="en")
                   option(value='5') 5
                   option(value='6') 6
               .boton
-                input.btnEnviar(type='submit')
+                input.btnEnviar(type='submit' value="Agregar")
                 .bg
                 .bg
                 .bg
