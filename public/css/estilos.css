@@ -525,9 +525,37 @@ div.opcionestarea {
     justify-content: space-evenly;
 }
 
-div.opcionestarea i {
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size:1.5rem;
+  visibility: hidden;
+  width: 12rem;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 1rem 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+div.opcionestarea a {
     font-size: 2.5rem;
-    padding: 1rem;
+    margin: 1rem;
 }
 
 div.selects,
