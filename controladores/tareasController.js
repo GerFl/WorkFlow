@@ -1,4 +1,4 @@
-// Llama los modelos
+// Importar modelos
 const Proyectos = require('../modelos/Proyectos');
 const Tareas = require('../modelos/Tareas');
 
@@ -21,22 +21,26 @@ exports.formularioTarea = async(req, res) => {
     });
 }
 
-exports.agregarTarea = async(req, res) => {
+exports.agregarTarea = async(req, res, next) => {
+    // Validar
+    req.checkBody('tarea_nombre').trim().notEmpty().withMessage("Indica un nombre para la tarea");
+    req.checkBody('descripcion_tarea').trim().notEmpty().withMessage('Debes escribir una descripción');
+    req.checkBody('departamento').trim().notEmpty().withMessage("Indica el departamento");
+    req.checkBody('prioridad').trim().notEmpty().withMessage("Indica la prioridad");
+    // Sanitizar
+    req.sanitizeBody('tarea_nombre').escape();
+    req.sanitizeBody('descripcion_tarea').escape();
+    req.sanitizeBody('departamento').escape();
+    req.sanitizeBody('prioridad').escape();
+    const errores = req.validationErrors();
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
         }
     });
-
-    const tarea_nombre = req.body.tareanombre;
-    const descripcion_tarea = req.body.descripciontarea;
-    const departamento = req.body.departamento;
-    const prioridad = req.body.prioridad;
-    const estatus = 0;
-    const proyectoIdProyecto = proyecto.id_proyecto;
-
-    if (!tarea_nombre.replace(/\s/g, '').length || !descripcion_tarea.replace(/\s/g, '').length) {
+    if (errores) {
         // Con esto obtenemos el proyecto actual
+        console.log(req.params);
         const proyecto = await Proyectos.findOne({
             where: {
                 url: req.params.proyectourl
@@ -47,17 +51,21 @@ exports.agregarTarea = async(req, res) => {
                 proyectoIdProyecto: proyecto.id_proyecto
             }
         });
-        const error = "Ningún campo puede ir vacío";
         res.render('agregarTarea', {
             nombrePagina: 'WorkFlow - Agregar tarea',
             proyecto,
             tareas,
-            error
+            errores
         });
-    } else {
-        await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
-        res.redirect(`/proyecto/${proyecto.url}`);
+        return next();
     }
+
+    const { tarea_nombre, descripcion_tarea, departamento, prioridad } = req.body;
+    const estatus = 0;
+    const proyectoIdProyecto = proyecto.id_proyecto;
+
+    await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
+    res.redirect(`/proyecto/${proyecto.url}`);
 }
 
 exports.completarTarea = async(req, res) => {
@@ -100,7 +108,7 @@ exports.completarTarea = async(req, res) => {
     proyecto.porcentaje = ((tareasCompletadas.length / totalTareas.length).toFixed(2)) * 100;
     const guardarProyecto = await proyecto.save();
     if (!guardarProyecto) return next();
-    res.send("Completando la tarea...");
+    res.send().status(200);
 }
 
 exports.descompletarTarea = async(req, res) => {
@@ -135,7 +143,7 @@ exports.descompletarTarea = async(req, res) => {
 
     if (!guardarProyecto) return next();
 
-    res.send("Descompletando la tarea...");
+    res.send().status(200);
 }
 
 exports.eliminarTarea = async(req, res, next) => {
@@ -170,6 +178,5 @@ exports.eliminarTarea = async(req, res, next) => {
     const guardarProyecto = await proyecto.save();
 
     if (!guardarProyecto) return next();
-
-    res.send("Eliminando la tarea...");
+    res.send().status(200);
 }
