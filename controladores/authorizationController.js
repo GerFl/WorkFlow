@@ -1,7 +1,6 @@
+// Importar
 const Usuarios = require('../modelos/Usuarios');
 const Proyectos = require('../modelos/Proyectos');
-const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt-nodejs');
 const passport = require('passport');
 
 
@@ -21,30 +20,35 @@ exports.formRegistro = (req, res) => {
 }
 
 exports.crearCuenta = async(req, res, next) => {
+    // Validar
+    req.checkBody('nombre_usuario').trim().notEmpty().withMessage("Debe de indicar un nombre de usuario.");
+    req.checkBody('email').trim().notEmpty().isEmail().withMessage("Ingrese un correo válido.");
+    req.checkBody('password').trim().notEmpty().withMessage("El password es obligatorio.");
+    // Sanitizar
+    req.sanitizeBody('nombre_usuario').escape();
+    req.sanitizeBody('email').escape();
+    req.sanitizeBody('password').escape();
+    const errores = req.validationErrors();
+    if (errores) {
+        console.log("HAY ERRORES");
+        console.log(errores);
+        res.render('registrarse', {
+            nombrePagina: "Registrarse en WorkFlow",
+            errores
+        });
+        return next();
+    }
     const { nombre_usuario, email, password } = req.body;
-    if (!nombre_usuario.replace(/\s/g, '').length || !email.replace(/\s/g, '').length) {
-        const error = "Ningún campo puede ir vacío";
+    const existe = await Usuarios.findOne({ where: { email } });
+    if (existe) {
+        const error = "Usuario ya registrado con ese correo";
         res.render('registrarse', {
             nombrePagina: "Registrarse en WorkFlow",
             error
         });
     } else {
-        const existe = await Usuarios.findOne({ where: { email } });
-        if (existe) {
-            const error = "Usuario ya registrado con ese correo";
-            res.render('registrarse', {
-                nombrePagina: "Registrarse en WorkFlow",
-                error
-            });
-        } else {
-            await Usuarios.create({
-                nombre_usuario,
-                email,
-                password
-            });
-            res.redirect('/iniciar-sesion');
-        }
-
+        await Usuarios.create({ nombre_usuario, email, password });
+        res.redirect('/iniciar-sesion');
     }
 }
 

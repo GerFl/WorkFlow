@@ -3,37 +3,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
-        // Swal.fire({
-        //     title: 'Error!',
-        //     text: 'Do you want to continue',
-        //     type: 'error',
-        //     confirmButtonText: 'Cool'
-        // });
-        // swal("PROYECTO TERMINADO", "No tienes tareas pendientes...por ahora.", "success");
-        // swal({
-        //         title: "¿Segur@?",
-        //         text: "Esta acción no se puede deshacer.",
-        //         type: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#d33',
-        //         confirmButtonText: 'Sí, bórralo alv',
-        //         cancelButtonText: 'Cancelar'
-        //     })
-        //     .then((result) => {
-        //         swal("Eliminado.", {
-        //             type: "success",
-        //         });
-        //         swal("No se ha borrado nada.");
-        //     });
-
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
             setTimeout(function() {
                 animacionCargando.parentElement.removeChild(animacionCargando.parentElement.childNodes[0]);
             }, 9100);
         }
-
 
         const totalTareas = document.querySelectorAll('.tarea');
         const sidebar = document.querySelector('.detallesproyecto');
@@ -49,14 +24,6 @@
             const diferenciaInicioEntrega = (fecha_entrega - fecha_inicio) / 86400000; // Diferencia en dias entre las fechas
             const fechaActual = Date.now(); // Fecha actual en milisegundos
             const diferenciaActualEntrega = (fecha_entrega - fechaActual) / 86400000;
-            // console.log("Fecha de inicio: " + fecha_inicio);
-            // console.log("Fecha de entrega: " + fecha_entrega);
-            // console.log("Diferencia entre inicio y entrega: " + diferenciaInicioEntrega);
-            // console.log("Fecha de inicio en días: " + firstDate);
-            // console.log("Fecha de entrega en días: " + secondDate);
-            // console.log("Fecha actual: " + fechaActual);
-            // console.log("Fecha actual en días: " + fechaActualDias);
-            // console.log("Diferencia entre actual y entrega: " + diferenciaActualEntrega);
 
             if (fechaActual >= fecha_entrega) { // Fechas en milisegundos para hacer la resta directamente
                 /* RED STATUS */
@@ -102,12 +69,6 @@
             const barraTesting = document.querySelector('#barraTesting');
             const barraSoporte = document.querySelector('#barraSoporte');
             // barraAnalisis.parentElement.nextSibling para seleccionar el 5/7 y asi
-
-
-            // console.log(totalTareas);
-            // console.log("Total de tareas: " + totalTareas.length);
-            // console.log("Tareas completadas: " + completadas.length);
-            // console.log("Tareas no completadas: " + noCompletadas.length);
 
             // Declaracion de variables para el conteo del total de las tareas completadas por departamento
             var analisisCompletadas = 0;
@@ -162,12 +123,6 @@
                 }
             });
 
-            // console.log("Análisis completadas: " + analisisCompletadas);
-            // console.log("Diseño completadas: " + disenoCompletadas);
-            // console.log("Coding completadas: " + codingCompletadas);
-            // console.log("Testing completadas: " + testingCompletadas);
-            // console.log("Soporte completadas: " + soporteCompletadas);
-
             var porcentajeAnalisis = ((analisisCompletadas / tareasAnalisis.length).toFixed(2)) * 100;
             var porcentajeDiseno = ((disenoCompletadas / tareasDiseno.length).toFixed(2)) * 100;
             var porcentajeCoding = ((codingCompletadas / tareasCoding.length).toFixed(2)) * 100;
@@ -179,13 +134,6 @@
             } else {
                 var porcentajeTotal = ((completadas.length / totalTareas.length).toFixed(2)) * 100;
             }
-
-            // console.log(porcentajeTotal.toFixed(2));
-            // console.log("Porcentaje análisis: " + porcentajeAnalisis);
-            // console.log("Porcentaje diseño: " + porcentajeDiseno);
-            // console.log("Porcentaje coding: " + porcentajeCoding);
-            // console.log("Porcentaje testing: " + porcentajeTesting);
-            // console.log("Porcentaje soporte: " + porcentajeSoporte);
 
             // Se cambia el texto dentro del parrafo donde se lleva el conteo de las tareas
             barraAnalisis.parentElement.nextElementSibling.innerHTML = analisisCompletadas + "/" + tareasAnalisis.length;
@@ -206,11 +154,6 @@
             barraCoding.style.width = porcentajeCoding + "%";
             barraTesting.style.width = porcentajeTesting + "%";
             barraSoporte.style.width = porcentajeSoporte + "%";
-
-            // console.log("Total de tareas: " + totalTareas.length);
-            // console.log("Tareas completadas: " + completadas.length);
-            // console.log("Tareas no completadas: " + noCompletadas.length);
-            console.log(porcentajeTotal);
 
             // Cantidad de tareas
             sidebar.childNodes[1].innerHTML = "Cantidad de tareas: " + totalTareas.length;
@@ -233,6 +176,7 @@
             const opcionesTarea = document.querySelectorAll('.opcionestarea');
             opcionesTarea.forEach(tarea => {
                 tarea.addEventListener('click', e => {
+                    e.preventDefault();
                     if (e.target.classList.contains('fa-check-circle')) { // Al completar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
@@ -252,10 +196,12 @@
                         const url = `${location.origin}/tarea-descompletada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
-                            .then(function(respuesta) {
-                                icono.parentElement.classList.add("activo");
-                                icono.parentElement.previousElementSibling.classList.remove("activo");
-                                conteo();
+                            .then(function(response) {
+                                if (response.status == 200) {
+                                    icono.parentElement.classList.add("activo");
+                                    icono.parentElement.previousElementSibling.classList.remove("activo");
+                                    conteo();
+                                }
                             })
                     } else { // Al eliminar
                         const icono = e.target;
@@ -285,7 +231,6 @@
                                 }
                             });
                     }
-
                 });
             });
         }
@@ -293,6 +238,7 @@
         // ELIMINAR PROYECTO
         if (btnEliminar) {
             btnEliminar.addEventListener('click', e => {
+                e.preventDefault();
                 const proyecto = document.querySelector('h2');
                 const urlProyecto = proyecto.dataset.url;
                 const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
@@ -310,23 +256,17 @@
                         if (result.value == true) {
                             // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                             axios.delete(url, { urlProyecto })
-                                .then(function(respuesta) {
-                                    swal("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
-                                    setTimeout(() => {
-                                        window.location.href = '/'
-                                    }, 3000);
+                                .then(function(response) {
+                                    if (response.status == 200) {
+                                        swal("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
+                                        setTimeout(() => {
+                                            window.location.href = '/'
+                                        }, 3000);
+                                    }
                                 })
-                        } else {
-                            Swal.fire({
-                                text: 'No se ha eliminado nada',
-                                type: 'error',
-                                confirmButtonText: 'Cool'
-                            });
                         }
                     });
-
             });
         }
-
     });
 })();

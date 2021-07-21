@@ -34,15 +34,16 @@ html(lang="en")
             | Volver
         .listadoproyectos
           .formulario
-            form(action=`/proyecto/${proyecto.url}/agregarTarea` method="POST")
+            form(action=`/proyecto/${proyecto.url}/agregar-tarea` method="POST")
               fieldset
                 legend Nueva tarea
-                if(error)
-                  p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;")= error
-                label(for='tareanombre') ¿Cuál es el nombre de la tarea?
-                input(type='text' name='tareanombre' maxlength="30" required)
-                label(for='descripciontarea') Agrega una pequeña descripción:
-                input(type='text' name='descripciontarea' maxlength="100" required)
+                if errores
+                  each error in errores
+                    p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+                label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
+                input(type='text' name='tarea_nombre' maxlength="30" required)
+                label(for='descripcion_tarea') Agrega una pequeña descripción:
+                input(type='text' name='descripcion_tarea' maxlength="100" required)
                 label(for='departamento') ¿A qué área de trabajo pertenece?
                 select#departamento(name="departamento" required) 
                   option(value="" selected) -Ninguna-
@@ -67,7 +68,7 @@ html(lang="en")
                 .bg
                 .bg
                 .bg
-        // Cierre de proyectos
-        // Cierre del contenido
+        //- Cierre de proyectos
+        //- Cierre del contenido
   
   include partials/footer
