@@ -3,20 +3,30 @@
     document.addEventListener('DOMContentLoaded', function() {
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
+        // CALENDARIO
+        var date = new Date();
+        if (date.getMonth() < 10) {
+            date = date.getFullYear() + '-0' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+        } else {
+            date = date.getFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+        }
+        console.log(date);
+        (document.querySelector('input#date')) ? (document.querySelector('input#date')).min = date: '';
+
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
             setTimeout(function() {
-                animacionCargando.parentElement.removeChild(animacionCargando.parentElement.childNodes[0]);
-            }, 9100);
+                window.location.href = '/';
+            }, 9000);
         }
 
         const totalTareas = document.querySelectorAll('.tarea');
         const sidebar = document.querySelector('.detallesproyecto');
         const circuloProgreso = document.querySelector('.circulo');
-        const btnLogin = document.querySelector('input.btn-login');
         // Eliminacion de proyectos
         const btnEliminar = document.querySelector('a.eliminar');
 
+        // SEMAFORO
         const proyectos = document.querySelectorAll('.proyecto a');
         proyectos.forEach(proyecto => {
             const fecha_inicio = Date.parse(proyecto.childNodes[4].innerText); // La fecha de inicio se parsea a milisegundos
@@ -220,7 +230,6 @@
                                 cancelButtonText: 'Cancelar'
                             })
                             .then((result) => {
-                                console.log(result);
                                 if (result.value == true) {
                                     // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                                     axios.delete(url, { idTarea })

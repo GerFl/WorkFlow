@@ -46,7 +46,7 @@ html(lang="en")
                 label(for='descripcion_proyecto') Agrega una descripción:
                 textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")
                 label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
-                input(type='date' name='fecha_entrega' required)
+                input(id='date' type='date' name='fecha_entrega' required min='2021-07-15')
                 label(for="color" class="color") Selecciona un color para identificarlo:
                 input(type="color" id="color" name="color" value="000000" required)
               .boton

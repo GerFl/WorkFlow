@@ -4,7 +4,7 @@ const Tareas = require('../modelos/Tareas');
 
 /* PROYECTOS */
 // HOME
-exports.mostrarProyectos = async(req, res) => {
+exports.paginaPrincipal = async(req, res) => {
     const usuarioId = res.locals.usuario.id_usuario;
     const proyectos = await Proyectos.findAll({
         where: {
