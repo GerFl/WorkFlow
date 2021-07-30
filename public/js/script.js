@@ -10,21 +10,16 @@
         } else {
             date = date.getFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
         }
-        console.log(date);
         (document.querySelector('input#date')) ? (document.querySelector('input#date')).min = date: '';
+        // FIN CALENDARIO
 
+        // MODULE INITIALIZED
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
             setTimeout(function() {
                 window.location.href = '/';
             }, 9000);
         }
-
-        const totalTareas = document.querySelectorAll('.tarea');
-        const sidebar = document.querySelector('.detallesproyecto');
-        const circuloProgreso = document.querySelector('.circulo');
-        // Eliminacion de proyectos
-        const btnEliminar = document.querySelector('a.eliminar');
 
         // SEMAFORO
         const proyectos = document.querySelectorAll('.proyecto a');
@@ -34,7 +29,6 @@
             const diferenciaInicioEntrega = (fecha_entrega - fecha_inicio) / 86400000; // Diferencia en dias entre las fechas
             const fechaActual = Date.now(); // Fecha actual en milisegundos
             const diferenciaActualEntrega = (fecha_entrega - fechaActual) / 86400000;
-
             if (fechaActual >= fecha_entrega) { // Fechas en milisegundos para hacer la resta directamente
                 /* RED STATUS */
                 proyecto.childNodes[6].childNodes[3].style.opacity = "1";
@@ -46,7 +40,7 @@
                 proyecto.childNodes[6].childNodes[1].style.opacity = "1";
             }
         });
-
+        // FIN SEMAFORO
         /*
             1 milisegundo = 0.001 segundos
             1 segundo = 1,000 milisegundos
@@ -54,124 +48,52 @@
             1 hora = 60 minutos = 3,600,000 milisegundos
             1 dia = 24 horas = 86400000 milisegundos
         */
-
-        if (totalTareas.length > 0) {
-            conteo();
+        // CONTEO
+        const totalTareas = document.querySelectorAll('.tarea').length;
+        const areas = document.querySelector('input#areas');
+        if (totalTareas > 0) {
+            conteoyPorcentaje(totalTareas, areas);
         }
 
-        // Funcion para realizar el conteo de las tareas y hacer las operaciones para mostrar las barras de progreso
-        function conteo() {
-            const totalTareas = document.querySelectorAll('.tarea');
-            const completadas = document.querySelectorAll('a.completo.activo');
-            const noCompletadas = document.querySelectorAll('a.nocompleto.activo');
-
-            //  Selecciona la cantidad de tareas por departamento
-            const tareasAnalisis = document.querySelectorAll('p#analisis');
-            const tareasDiseno = document.querySelectorAll('p#diseno');
-            const tareasCoding = document.querySelectorAll('p#coding');
-            const tareasTesting = document.querySelectorAll('p#testing');
-            const tareasSoporte = document.querySelectorAll('p#soporte');
-
-            // Selecciona las barras de progreso del departamento para formatear el texto
-            const barraAnalisis = document.querySelector('#barraAnalisis');
-            const barraDiseno = document.querySelector('#barraDiseno');
-            const barraCoding = document.querySelector('#barraCoding');
-            const barraTesting = document.querySelector('#barraTesting');
-            const barraSoporte = document.querySelector('#barraSoporte');
-            // barraAnalisis.parentElement.nextSibling para seleccionar el 5/7 y asi
-
-            // Declaracion de variables para el conteo del total de las tareas completadas por departamento
-            var analisisCompletadas = 0;
-            var disenoCompletadas = 0;
-            var codingCompletadas = 0;
-            var testingCompletadas = 0;
-            var soporteCompletadas = 0;
-
-
-            // Pues, no se que onda jaja
-            // Si no me equivoco, en esta parte ciclo todo el arreglo del total de tareas para ver el departamento que tienen
-            // Mmm, debo hacer que se verifique su sibling para buscar la clase completado
-            // UPDATE: se cicla el arreglo totalTareas que fue previamente sacado mas arribita.
-            // Se accede a su tercer hijo, el cual es el parrafo, para de ahi extraer el id que se le asigno al parrafo
-            // Despues de tener este id se pasa por un switch para filtrar los departamentos, bloque en el cual haremos mucho
-            // DOM scripting (se dice asi? si existe ese termino? se escucha chido)
-            // Con este DOM scripting va de moviendose desde parrafoId a sus elementos hermanos hasta llegar al div donde tenemos nuestros iconos
-            // Y una vez ahi en ese div checamos la etiqueta "<a>" que tenga la clase de activo
-            // Finalmente teniendo el resultado de esa busqueda, le sumamos 1 a nuestra variable que declaramos aqui arribita, para tener
-            // el conteo de las tareas completadas por departamento.
-            totalTareas.forEach(tarea => {
-                const parrafoId = tarea.children[2];
-                const icono = parrafoId.nextElementSibling.nextElementSibling.firstChild;
-                switch (parrafoId.id) {
-                    case "analisis":
-                        if (icono.classList.contains('activo')) {
-                            analisisCompletadas += 1;
-                        };
-                        break;
-                    case "diseno":
-                        if (icono.classList.contains('activo')) {
-                            disenoCompletadas += 1;
-                        };
-                        break;
-                    case "coding":
-                        if (icono.classList.contains('activo')) {
-                            codingCompletadas += 1;
-                        };
-                        break;
-                    case "testing":
-                        if (icono.classList.contains('activo')) {
-                            testingCompletadas += 1;
-                        };
-                        break;
-                    case "soporte":
-                        if (icono.classList.contains('activo')) {
-                            soporteCompletadas += 1;
-                        };
-                        break;
-                    default:
-                        break;
-                }
+        function conteoyPorcentaje(totalTareas, areas) {
+            resetearBarras();
+            if (totalTareas == 0) {
+                document.querySelector('h3#null-tareas').style.display = "block";
+            }
+            const departamentosString = areas.value.split(',');
+            const tareasArray = []; // Arreglo para guardar distintos departamentos con sus tareas relacionadas
+            departamentosString.forEach(departamento => {
+                tareasArray.push(document.querySelectorAll(`.tarea[data-departamento=${departamento}]`));
             });
+            var totalCompletadas = 0;
+            var totalNoCompletadas = 0;
+            tareasArray.forEach(tareasColeccion => {
+                var totalTareasDepartamento = 0;
+                var tareasCompletadasDepartamento = 0;
+                tareasColeccion.forEach(tarea => {
+                    totalTareasDepartamento += 1;
+                    if (tarea.children[4].children[0].classList.contains('activo')) {
+                        totalCompletadas += 1;
+                        tareasCompletadasDepartamento += 1
+                    } else {
+                        totalNoCompletadas += 1;
+                    }
 
-            var porcentajeAnalisis = ((analisisCompletadas / tareasAnalisis.length).toFixed(2)) * 100;
-            var porcentajeDiseno = ((disenoCompletadas / tareasDiseno.length).toFixed(2)) * 100;
-            var porcentajeCoding = ((codingCompletadas / tareasCoding.length).toFixed(2)) * 100;
-            var porcentajeTesting = ((testingCompletadas / tareasTesting.length).toFixed(2)) * 100;
-            var porcentajeSoporte = ((soporteCompletadas / tareasSoporte.length).toFixed(2)) * 100;
+                    document.querySelector(`.barraDepto[data-departamento=${tarea.dataset.departamento}]`).childNodes[1].childNodes[0].style.width = `${(tareasCompletadasDepartamento / totalTareasDepartamento).toFixed(2)*100}%`;
+                    document.querySelector(`.barraDepto[data-departamento=${tarea.dataset.departamento}]`).childNodes[2].innerText = `${tareasCompletadasDepartamento}/${totalTareasDepartamento}`;
+                })
+            })
 
-            if (totalTareas.length == 0) {
+            document.querySelector('.detallesproyecto').childNodes[1].innerText = `Cantidad de tareas: ${totalTareas}`;
+            document.querySelector('.detallesproyecto').childNodes[2].innerText = `Tareas terminadas: ${totalCompletadas}`;
+            document.querySelector('.detallesproyecto').childNodes[3].innerText = `Tareas pendientes: ${totalNoCompletadas}`;
+
+            if (totalTareas == 0) {
                 var porcentajeTotal = 0;
             } else {
-                var porcentajeTotal = ((completadas.length / totalTareas.length).toFixed(2)) * 100;
+                var porcentajeTotal = ((totalCompletadas / totalTareas).toFixed(2)) * 100;
             }
-
-            // Se cambia el texto dentro del parrafo donde se lleva el conteo de las tareas
-            barraAnalisis.parentElement.nextElementSibling.innerHTML = analisisCompletadas + "/" + tareasAnalisis.length;
-            barraDiseno.parentElement.nextElementSibling.innerHTML = disenoCompletadas + "/" + tareasDiseno.length;
-            barraCoding.parentElement.nextElementSibling.innerHTML = codingCompletadas + "/" + tareasCoding.length;
-            barraTesting.parentElement.nextElementSibling.innerHTML = testingCompletadas + "/" + tareasTesting.length;
-            barraSoporte.parentElement.nextElementSibling.innerHTML = soporteCompletadas + "/" + tareasSoporte.length;
-
-            // Que se hace aqui? Simple. Al inicio se tomaron las barras de color de cada departamento con un querySelector, y ahora solo se formatea el ancho de cada barrita
-            // con el calculo que acabamos de hacer arribita con todo el revoltijo de variables y demas cositas
-            barraAnalisis.style.width = "0%";
-            barraDiseno.style.width = "0%";
-            barraCoding.style.width = "0%";
-            barraTesting.style.width = "0%";
-            barraSoporte.style.width = "0%";
-            barraAnalisis.style.width = porcentajeAnalisis + "%";
-            barraDiseno.style.width = porcentajeDiseno + "%";
-            barraCoding.style.width = porcentajeCoding + "%";
-            barraTesting.style.width = porcentajeTesting + "%";
-            barraSoporte.style.width = porcentajeSoporte + "%";
-
-            // Cantidad de tareas
-            sidebar.childNodes[1].innerHTML = "Cantidad de tareas: " + totalTareas.length;
-            // Tareas terminadas
-            sidebar.childNodes[2].innerHTML = "Tareas terminadas: " + completadas.length;
-            // Tareas pendientes
-            sidebar.childNodes[3].innerHTML = "Tareas pendientes: " + noCompletadas.length;
-            // Progreso total
+            const circuloProgreso = document.querySelector('.circulo');
             circuloProgreso.firstChild.innerHTML = porcentajeTotal.toFixed(0) + "%";
             if (porcentajeTotal == 100) {
                 Swal.fire({
@@ -179,6 +101,14 @@
                     text: "Has terminado el proyecto",
                 })
             }
+        }
+
+        function resetearBarras() {
+            const barras = document.querySelectorAll('.barraDepto');
+            barras.forEach(barra => {
+                barra.childNodes[1].childNodes[0].style.width = "0%";
+                barra.childNodes[2].innerText = "0/0";
+            })
         }
 
         // Bloque para realizar las peticiones a Axios y DOMScripting
@@ -194,10 +124,13 @@
                         const url = `${location.origin}/tarea-completada/${idTarea}`;
                         // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                         axios.patch(url, { idTarea })
-                            .then(function(respuesta) {
-                                icono.parentElement.classList.add("activo");
-                                icono.parentElement.nextElementSibling.classList.remove("activo");
-                                conteo();
+                            .then(function(response) {
+                                if (response.status == 200) {
+                                    icono.parentElement.classList.add("activo");
+                                    icono.parentElement.nextElementSibling.classList.remove("activo");
+                                    const totalTareas = document.querySelectorAll('.tarea').length;
+                                    conteoyPorcentaje(totalTareas, areas);
+                                }
                             })
                     } else if (e.target.classList.contains('fa-times-circle')) { // Al descompletar
                         const icono = e.target;
@@ -210,13 +143,13 @@
                                 if (response.status == 200) {
                                     icono.parentElement.classList.add("activo");
                                     icono.parentElement.previousElementSibling.classList.remove("activo");
-                                    conteo();
+                                    const totalTareas = document.querySelectorAll('.tarea').length;
+                                    conteoyPorcentaje(totalTareas, areas);
                                 }
                             })
-                    } else { // Al eliminar
+                    } else if (e.target.classList.contains('fa-trash-alt')) { // Al eliminar
                         const icono = e.target;
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
-
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-eliminar/${idTarea}`;
                         swal({
@@ -233,9 +166,12 @@
                                 if (result.value == true) {
                                     // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
                                     axios.delete(url, { idTarea })
-                                        .then(function(respuesta) {
-                                            icono.parentElement.parentElement.parentElement.remove();
-                                            conteo();
+                                        .then(function(response) {
+                                            if (response.status == 200) {
+                                                icono.parentElement.parentElement.parentElement.remove();
+                                                const totalTareas = document.querySelectorAll('.tarea').length;
+                                                conteoyPorcentaje(totalTareas, areas);
+                                            }
                                         });
                                 }
                             });
@@ -244,7 +180,39 @@
             });
         }
 
+        // AREAS DE TRABAJO PERSONALIZABLES
+        const agregarArea = document.querySelector('button.areas-trabajo');
+        if (agregarArea) {
+            agregarArea.addEventListener('click', e => {
+                e.preventDefault();
+                if (agregarArea.previousElementSibling.lastElementChild.value === '') {
+                    agregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--incorrecto)';
+                } else {
+                    agregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
+                    const nuevaArea = document.createElement('INPUT');
+                    agregarArea.previousElementSibling.appendChild(nuevaArea).classList.add('area');
+                }
+            });
+        }
+
+        const inputBtnEnviar = document.querySelector('input.btnEnviar');
+        const inputAreas = document.querySelector('input.set-areas-trabajo');
+        if (inputBtnEnviar) {
+            inputBtnEnviar.addEventListener('click', e => {
+                const areas = document.querySelectorAll('input.area');
+                const setAreas = new Set();
+                areas.forEach(area => {
+                    if (area.value.replaceAll(',', '').replaceAll(' ', '') != '') {
+                        setAreas.add(area.value.replaceAll(',', '').replaceAll(' ', ''))
+                    }
+                })
+                inputAreas.value = [...setAreas];
+            });
+        }
+        // FIN AREAS DE TRABAJO PERSONALIZABLES
+
         // ELIMINAR PROYECTO
+        const btnEliminar = document.querySelector('a.eliminar');
         if (btnEliminar) {
             btnEliminar.addEventListener('click', e => {
                 e.preventDefault();

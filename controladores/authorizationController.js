@@ -17,9 +17,13 @@ exports.loginPage = (req, res) => {
 }
 
 exports.formRegistro = (req, res) => {
-    res.render('registrarse', {
-        nombrePagina: "Registrarse en WorkFlow"
-    });
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    } else {
+        res.render('registrarse', {
+            nombrePagina: "Registrarse en WorkFlow"
+        });
+    }
 }
 
 exports.crearCuenta = async(req, res, next) => {

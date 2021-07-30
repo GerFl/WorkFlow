@@ -24,8 +24,6 @@ html(lang="en")
             p Tareas pendientes: #{tareasNoTerminadas}
             p Inicio del proyecto: #{proyecto.fecha_inicio}
             p Entrega del proyecto: #{proyecto.fecha_entrega}
-            .opcionesproyecto
-              a(href='#') Eliminar proyecto
       .contenido
         .barra
           a.volver(href=`/proyecto/${proyecto.url}`)
@@ -36,30 +34,28 @@ html(lang="en")
             form(action=`/proyecto/${proyecto.url}/agregar-tarea` method="POST")
               fieldset
                 legend Nueva tarea
-                if errores
-                  each error in errores
-                    p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
-                label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
-                input(type='text' name='tarea_nombre' maxlength="30" required)
-                label(for='descripcion_tarea') Agrega una pequeña descripción:
-                input(type='text' name='descripcion_tarea' maxlength="100" required)
-                label(for='departamento') ¿A qué área de trabajo pertenece?
-                select#departamento(name="departamento" required) 
-                  option(value="" selected) -Ninguna-
-                  option(value="analisis") Análisis
-                  option(value="diseno") Diseño
-                  option(value="coding") Coding
-                  option(value="testing") Testing
-                  option(value="soporte") Soporte
-                label(for='prioridad') Indica la prioridad (la puedes cambiar después):
-                select#prioridad(name='prioridad' required)
-                  option(value='' disabled='' selected='') --
-                  option(value='1') 1
-                  option(value='2') 2
-                  option(value='3') 3
-                  option(value='4') 4
-                  option(value='5') 5
-                  option(value='6') 6
+                div
+                  if errores
+                    each error in errores
+                      p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+                  label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
+                  input(type='text' name='tarea_nombre' maxlength="30" required)
+                  label(for='descripcion_tarea') Agrega una pequeña descripción:
+                  input(type='text' name='descripcion_tarea' maxlength="100" required)
+                  label(for='departamento') ¿A qué área de trabajo pertenece?
+                  select#departamento(name="departamento" required) 
+                    option(value="" disabled selected) -- Seleccione --
+                    each area in areas
+                      option(value=`${area}`) #{area}
+                  label(for='prioridad') Indica la prioridad (la puedes cambiar después):
+                  select#prioridad(name='prioridad' required)
+                    option(value disabled selected) --
+                    option(value='1') 1
+                    option(value='2') 2
+                    option(value='3') 3
+                    option(value='4') 4
+                    option(value='5') 5
+                    option(value='6') 6
               .boton
                 input.btnEnviar(type='submit' value="Agregar")
                 .bg
