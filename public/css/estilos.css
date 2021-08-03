@@ -2,7 +2,7 @@ html {
     box-sizing: border-box;
     font-size: 62.5%;
     /**Reset para REMS - 62.5% = 10px de 16px*/
-    background-color: #e7e7e7;
+    background-color: var(--fondo);
     user-select: none;
 }
 
@@ -12,26 +12,40 @@ html {
     box-sizing: inherit;
 }
 
-
-/*
-    AJAJAJAJ HACER RESPONSIVO TODO
-*/
+:root {
+    --fondo: #e7e7e7;
+    --correcto: #3bd964;
+    --incorrecto: #d93b5b;
+    --basura: #d99c3b;
+    --claro: #fbfbfb;
+    --oscuro: #242121;
+    --black: #000000;
+    --btn-proyecto-tarea: #0085ff;
+    --sidebar: #23374d;
+    --light-gray: #5d5c61;
+    --color-principal: #8de4af;
+}
 
 h2,
 h3,
 a,
-p {
+p,
+i,
+select,
+span,
+button,
+.tooltiptext {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h2 {
-    color: #8de4af;
+    color: var(--color-principal);
     font-size: 2.8rem;
 }
 
 h3 {
     font-size: 2.8rem;
-    color: #5d5c61;
+    color: var(--light-gray);
 }
 
 p {
@@ -40,7 +54,7 @@ p {
 
 a {
     text-decoration: none;
-    color: white;
+    color: var(--claro);
     font-size: 1.5rem;
 }
 
@@ -53,36 +67,44 @@ a {
 
 /* GLOBALES */
 
+.campo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem auto;
+}
+
 .sidebar {
-    background-color: #23374d;
+    background-color: var(--sidebar);
 }
 
 a.completo,
 a.nocompleto,
 a.basura {
-    color: black;
+    color: var(--oscuro);
 }
 
 a.completo.activo {
-    color: #3bd964;
+    color: var(--correcto);
 }
 
 a.nocompleto.activo {
-    color: #d93b5b;
+    color: var(--incorrecto);
 }
 
 a.completo:hover {
-    color: #3bd964;
+    color: var(--correcto);
     transition: .2s ease-in-out;
 }
 
 a.nocompleto:hover {
-    color: #d93b5b;
+    color: var(--incorrecto);
     transition: .2s ease-in-out;
 }
 
 a.basura:hover {
-    color: #d99c3b;
+    color: var(--basura);
     transition: .2s ease-in-out;
 }
 
@@ -94,7 +116,7 @@ div.barra {
 }
 
 div.barra a {
-    color: black;
+    color: var(--oscuro);
     margin: 0 1rem;
 }
 
@@ -107,7 +129,7 @@ div.barra a i {
 }
 
 div.barra a.volver:hover {
-    filter: drop-shadow(0 0 1rem black);
+    filter: drop-shadow(0 0 1rem var(--oscuro));
     transition: .2s ease-in-out;
 }
 
@@ -119,18 +141,18 @@ div.barra a.volver:hover i {
 .botonazul {
     display: inline-flex;
     justify-content: space-evenly;
-    border: 1px solid #000000;
+    border: 1px solid var(--oscuro);
     border-radius: 2rem;
     padding: 1rem 1.2rem;
     align-items: center;
 }
 
 .botonazul:hover {
-    background-color: #0085ff;
-    border: 1px solid #0085ff;
+    background-color: var(--btn-proyecto-tarea);
+    border: 1px solid var(--btn-proyecto-tarea);
     transform: scale(1.15);
     transition: .3s all;
-    color: white;
+    color: var(--claro);
 }
 
 
@@ -148,10 +170,10 @@ div.barra a.volver:hover i {
 }
 
 .login {
-    background-color: black;
+    background-color: var(--black);
     height: 100vh;
     justify-content: center;
-    color: white;
+    color: var(--claro);
     text-align: center;
     padding-left: 2rem;
 }
@@ -161,7 +183,7 @@ div.barra a.volver:hover i {
 }
 
 .login .encabezado i {
-    color: white;
+    color: var(--claro);
     font-size: 2rem;
 }
 
@@ -174,24 +196,16 @@ div.barra a.volver:hover i {
     height: 40rem;
 }
 
-.login form .campo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem auto;
-}
-
 .login .campo label {
     text-align: left;
     height: 2rem;
-    color: #e7e7e7;
+    color: var(--claro);
 }
 
 .login .campo input {
     width: 100%;
-    background-color: #282828;
-    color: #e7e7e7;
+    background-color: var(--oscuro);
+    color: var(--claro);
 }
 
 .login input[type="submit"] {
@@ -200,21 +214,21 @@ div.barra a.volver:hover i {
     font-size: 1.5rem;
     text-align: center;
     margin-top: 3rem;
-    border: 1px solid white;
+    border: 1px solid var(--claro);
     background: none;
     border-radius: 2rem;
-    color: white;
+    color: var(--claro);
 }
 
 .login input[type="submit"]:hover {
     transition: .3s ease-in-out;
     transform: scale(1.050);
-    background-color: #e7e7e7;
-    color: black;
+    background-color: var(--claro);
+    color: var(--oscuro);
     cursor: pointer;
 }
 
-body.index {
+body.loader {
     position: relative;
 }
 
@@ -222,7 +236,7 @@ body.index {
     position: absolute;
     height: 100vh;
     width: 100%;
-    background-color: #000000;
+    background-color: var(--black);
     display: flex;
     justify-content: center;
     z-index: 21;
@@ -240,8 +254,8 @@ aside {
 .sidebar {
     height: 100%;
     padding: 2rem 2rem;
-    color: #edf5e0;
-    box-shadow: 1px 1px 10px 0.5rem #5d5c61;
+    color: var(--claro);
+    box-shadow: 1px 1px 10px 0.5rem var(--light-gray);
 }
 
 .sidebar .barraprogreso {
@@ -257,7 +271,7 @@ aside {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 7px solid white;
+    border: 7px solid var(--claro);
     border-radius: 50%;
 }
 
@@ -268,7 +282,6 @@ aside {
 }
 
 .circulo span {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.5rem;
     font-weight: 300;
     margin-top: 0.5rem;
@@ -298,7 +311,7 @@ div.detallesproyectos p {
 }
 
 div.user img {
-    border: 1px solid white;
+    border: 1px solid var(--claro);
     height: 7rem;
     width: 7rem;
     border-radius: 50%;
@@ -350,8 +363,8 @@ div.acciones a i {
 
 .opcionesproyecto a:hover {
     font-weight: 700;
-    border: 1px solid #d93b5b;
-    color: #d93b5b;
+    border: 1px solid var(--incorrecto);
+    color: var(--incorrecto);
     transform: scale(1.15);
     transition: .3s all;
 }
@@ -374,27 +387,27 @@ div.listadoproyectos {
 
 div.proyecto a {
     display: flex;
-    border: 3px solid #5d5c61;
+    border: 3px solid var(--light-gray);
     margin: 1rem 0;
-    background-color: #f7f5f5;
+    background-color: var(--claro);
 }
 
 div.proyecto:hover {
     transform: scale(1.045);
     transition: .3s all;
-    box-shadow: 1px 1px 10px 0.5rem #5d5c61;
+    box-shadow: 1px 1px 10px 0.5rem var(--light-gray);
 }
 
 div.proyecto h2.nombreproyecto {
     width: 25%;
-    color: #5d5c61;
+    color: var(--light-gray);
     align-self: center;
     text-align: center;
 }
 
 div.proyecto p {
     width: 50%;
-    color: #5d5c61;
+    color: var(--light-gray);
     align-self: center;
     text-align: center;
     font-style: italic;
@@ -426,7 +439,7 @@ div.estado-proyecto>div {
 }
 
 div.on-time {
-    background-color: #3bd964;
+    background-color: var(--correcto);
     /* opacity: 1!important; */
 }
 
@@ -435,7 +448,7 @@ div.halfway {
 }
 
 div.ended {
-    background-color: #d93b5b;
+    background-color: var(--incorrecto);
 }
 
 
@@ -457,7 +470,7 @@ div.ended {
     align-self: center;
     border-radius: 2rem;
     margin: 0 1rem;
-    background-color: #5d5c61;
+    background-color: var(--light-gray);
 }
 
 .barraVacia:hover {
@@ -502,14 +515,14 @@ div.tareas {
 }
 
 div.tarea {
-    border: 4px solid #5d5c61;
+    border: 4px solid var(--light-gray);
     text-align: center;
     padding: 1rem 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    color: #242121;
-    background-color: #f7f5f5;
+    color: var(--oscuro);
+    background-color: var(--claro);
 }
 
 div.tarea h3 {
@@ -526,31 +539,29 @@ div.opcionestarea {
 }
 
 .tooltip {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .tooltip .tooltiptext {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size:1.5rem;
-  visibility: hidden;
-  width: 12rem;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 1rem 0;
-  
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px;
+    font-size: 1.5rem;
+    visibility: hidden;
+    width: 12rem;
+    background-color: var(--oscuro);
+    color: var(--claro);
+    text-align: center;
+    border-radius: 6px;
+    padding: 1rem 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
 }
 
 .tooltip:hover .tooltiptext {
-  visibility: visible;
+    visibility: visible;
 }
 
 div.opcionestarea a {
@@ -568,10 +579,9 @@ div.selects,
 /* SELECT */
 
 div.selects select {
-    border: 1px solid #0085ff;
+    border: 1px solid var(--btn-proyecto-tarea);
     width: 10rem;
     height: 3rem;
-    font-family: 'Arial', 'sans-serif';
     font-size: 1.5rem;
     border-radius: 0.5rem;
     text-align: left;
@@ -589,13 +599,13 @@ form {
     position: relative;
 }
 
+fieldset {
+    display: flex;
+}
+
 legend {
     font-size: 3rem;
     margin: 1rem;
-}
-
-fieldset {
-    width: 60%;
 }
 
 label,
@@ -624,7 +634,7 @@ input:not([type="submit"]),
 textarea,
 select {
     border-radius: 1rem;
-    border: 1px solid #242121;
+    border: 1px solid var(--oscuro);
     padding: 0.5rem;
 }
 
@@ -652,9 +662,9 @@ input.btnEnviar {
     width: 100px;
     height: 100%;
     background: transparent;
-    border: 2px solid #242121;
+    border: 2px solid var(--oscuro);
     cursor: pointer;
-    color: #242121;
+    color: var(--oscuro);
     font-size: 1.8rem;
     margin: 0;
 }
@@ -695,7 +705,7 @@ input.btnEnviar {
 }
 
 input.btnEnviar:hover {
-    color: white;
+    color: var(--claro);
     transition: .5s ease-in-out;
 }
 

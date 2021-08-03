@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../fish.ico">
+    <link rel="shortcut icon" href="../public/fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="../public/css/estilos.css">
     <title>WorkFlow</title>
 </head>
+
 <body>
     <div class="contenedor-principal">
         <aside>
@@ -41,10 +43,10 @@
                 <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver al menú</a>
             </div>
             <div class="listadoproyectos">
-                <div class="formulario">
-                    <form action="">
-                        <fieldset>
-                            <legend>Nuevo proyecto</legend>
+                <form class="proyecto" action="">
+                    <fieldset>
+                        <legend>Nuevo proyecto</legend>
+                        <div>
                             <label for="nombreproyecto">¿Cuál es el nombre del proyecto?</label>
                             <input type="text" name="nombreproyecto">
                             <label for="descripcionproyecto">Agrega una descripción:</label>
@@ -53,21 +55,30 @@
                             <input type="date" name="fechaentrega">
                             <label for="color" class="color">Selecciona un color para identificarlo:</label>
                             <input type="color" id="color" name="color" value="000000">
-                        </fieldset>
-                        <div class="boton">
-                            <input type="submit" class="btnEnviar">
-                            <div class="bg"></div>
-                            <div class="bg"></div>
-                            <div class="bg"></div>
-                            <div class="bg"></div>
-                            <div class="bg"></div>
+                            <div class="boton">
+                                <input type="submit" class="btnEnviar">
+                                <div class="bg"></div>
+                                <div class="bg"></div>
+                                <div class="bg"></div>
+                                <div class="bg"></div>
+                                <div class="bg"></div>
+                            </div>
                         </div>
-                    </form>
-                </div>
-            </div><!-- Cierre de proyectos -->
-        </div> <!-- Cierre del contenido -->
+                        <div>
+                            <label for="areas">Indica las áreas de trabajo para este proyecto:</label>
+                            <div>
+                                <input type="text" class="area">
+                            </div>
+                            <button class="area-trabajo"><i class="fas fa-plus"></i>Agregar área</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- Cierre de proyectos -->
+        </div>
+        <!-- Cierre del contenido -->
 
-        <script src="../js/script.js"></script>
+        <script src="../public/js/script.js"></script>
 </body>
 
 </html>

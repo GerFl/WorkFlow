@@ -21,6 +21,7 @@ const Proyectos = database.define('proyectos', {
     },
     fecha_entrega: Sequelize.DATEONLY,
     porcentaje: Sequelize.STRING(10),
+    areas: Sequelize.STRING,
     color: Sequelize.STRING(10),
     url: Sequelize.STRING(100)
 }, {

@@ -14,10 +14,12 @@ exports.formularioTarea = async(req, res) => {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
+    const areas = proyecto.areas.split(',');
     res.render('agregarTarea', {
-        nombrePagina: 'WorkFlow - Agregar tarea',
+        nombrePagina: `${proyecto.nombre_proyecto}: Agregar tarea`,
         proyecto,
-        tareas
+        tareas,
+        areas
     });
 }
 

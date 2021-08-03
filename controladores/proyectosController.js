@@ -4,7 +4,7 @@ const Tareas = require('../modelos/Tareas');
 
 /* PROYECTOS */
 // HOME
-exports.mostrarProyectos = async(req, res) => {
+exports.paginaPrincipal = async(req, res) => {
     const usuarioId = res.locals.usuario.id_usuario;
     const proyectos = await Proyectos.findAll({
         where: {
@@ -33,11 +33,13 @@ exports.proyectoUrl = async(req, res, next) => {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
+    const areas = proyecto.areas.split(',');
     // Render a la vista
     res.render('proyecto', {
-        nombrePagina: "Tareas del proyecto",
+        nombrePagina: `Tareas del proyecto: ${proyecto.nombre_proyecto}`,
         proyecto,
-        tareas
+        tareas,
+        areas
     });
 }
 
@@ -61,11 +63,13 @@ exports.agregarProyecto = async(req, res, next) => {
     req.checkBody('nombre_proyecto').trim().notEmpty().withMessage("Debe especificar un nombre para el proyecto.");
     req.checkBody('descripcion_proyecto').trim();
     req.checkBody('fecha_entrega').trim().notEmpty().withMessage("Debe marcar la fecha de entrega.");
+    req.checkBody('areas').trim();
     req.checkBody('color').notEmpty().trim().withMessage("Elija un color para identificar el proyecto.");
     // SANITIZAR
     req.sanitizeBody('nombre_proyecto').escape();
     req.sanitizeBody('descripcion_proyecto').escape();
     req.sanitizeBody('fecha_entrega').escape();
+    req.sanitizeBody('areas').escape();
     req.sanitizeBody('color').escape();
     const errores = req.validationErrors();
     if (errores) {
@@ -82,12 +86,13 @@ exports.agregarProyecto = async(req, res, next) => {
         });
         return next();
     }
-    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, color } = req.body;
+    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color } = req.body;
     const porcentaje = 0;
     const completado = 0;
     const usuarioIdUsuario = res.locals.usuario.id_usuario;
-    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, color, completado, usuarioIdUsuario })
-    res.redirect('/');
+
+    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, areas, color, completado, usuarioIdUsuario })
+    return res.redirect('/');
 }
 
 exports.eliminarProyecto = async(req, res, next) => {

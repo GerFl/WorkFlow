@@ -5,18 +5,25 @@ const passport = require('passport');
 
 
 exports.loginPage = (req, res) => {
-    const colorCandado = "#ffffff";
-    res.render('login', {
-        nombrePagina: 'WorkFlow',
-        fondo: 'login.gif',
-        colorCandado
-    });
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    } else {
+        res.render('login', {
+            nombrePagina: 'WorkFlow',
+            fondo: 'login.gif',
+            loading: false
+        });
+    }
 }
 
 exports.formRegistro = (req, res) => {
-    res.render('registrarse', {
-        nombrePagina: "Registrarse en WorkFlow"
-    });
+    if (req.isAuthenticated()) {
+        return res.redirect('/');
+    } else {
+        res.render('registrarse', {
+            nombrePagina: "Registrarse en WorkFlow"
+        });
+    }
 }
 
 exports.crearCuenta = async(req, res, next) => {
@@ -52,39 +59,58 @@ exports.crearCuenta = async(req, res, next) => {
     }
 }
 
-exports.autenticacionFallida = (req, res, next) => {
-    const error = "ERROR";
-    const colorCandado = "#d93b5b";
-    res.render('login', {
-        nombrePagina: 'WorkFlow',
-        fondo: 'failedLogin.gif',
-        error,
-        colorCandado
-    });
-}
+// exports.autenticacionCorrecta = async(req, res, next) => {
+//     const usuarioId = res.locals.usuario.id_usuario;
+//     const proyectos = await Proyectos.findAll({
+//         where: {
+//             usuarioIdUsuario: usuarioId
+//         }
+//     });
+//     const loading = "success200.gif";
+//     res.render('index', {
+//         nombrePagina: 'WorkFlow',
+//         loading,
+//         proyectos
+//     });
+// }
 
-exports.autenticacionCorrecta = async(req, res, next) => {
-    const usuarioId = res.locals.usuario.id_usuario;
-    const proyectos = await Proyectos.findAll({
-        where: {
-            usuarioIdUsuario: usuarioId
-        }
-    });
-    const loading = "success200.gif";
-    res.render('index', {
-        nombrePagina: 'WorkFlow',
-        loading,
-        proyectos
-    });
-}
+// exports.autenticacionFallida = (req, res) => {
+//     res.render('login', {
+//         nombrePagina: 'WorkFlow',
+//         fondo: 'failedLogin.gif',
+//         error: true
+//     });
+// }
 
 // Verificar los datos del usuario
-exports.verificarUsuario = passport.authenticate('local', {
-    successRedirect: '/iniciar-sesion/success',
-    failureRedirect: '/iniciar-sesion/failure'
-});
+// exports.verificarUsuario = passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/iniciar-sesion/failure'
+// });
+exports.verificarUsuario = (req, res, next) => passport.authenticate('local', function(err, user, info) {
+    (err) ? console.log(err): '';
+    if (!user) {
+        // Failure message
+        res.render('login', {
+            nombrePagina: 'WorkFlow',
+            fondo: 'failedLogin.gif',
+            failedLogin: true
+        });
+        return next();
+    }
+    req.logIn(user, function(err) {
+        // Success
+        (err) ? console.log(err): '';
+        return res.render('login', {
+            nombrePagina: "WorkFlow",
+            fondo: 'login.gif',
+            loading: true
+        });
+    });
+})(req, res, next);
+
 // Verificar que haya sido autenticado para acceder a las paginas
-exports.usurioVerificado = (req, res, next) => {
+exports.usuarioVerificado = (req, res, next) => {
     // Autenticado
     if (req.isAuthenticated()) {
         return next();

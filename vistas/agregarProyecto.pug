@@ -14,7 +14,7 @@ html(lang="en")
               img(src='/fish.ico' alt='Profile Pic')
               h2
                 | Bienvenido, 
-                span User
+                span #{usuario.nombre_usuario}
             p Proyectos empezados: #{proyectos.length}
             -var terminados=0
             each proyecto in proyectos 
@@ -41,21 +41,30 @@ html(lang="en")
                 if errores
                   each error in errores
                     p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
-                label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
-                input(type='text' name='nombre_proyecto' required maxlength="50")
-                label(for='descripcion_proyecto') Agrega una descripción:
-                textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")
-                label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
-                input(type='date' name='fecha_entrega' required)
-                label(for="color" class="color") Selecciona un color para identificarlo:
-                input(type="color" id="color" name="color" value="000000" required)
-              .boton
-                input.btnEnviar(type='submit' value="Agregar")
-                .bg
-                .bg
-                .bg
-                .bg
-                .bg
+                div 
+                  label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
+                  input(type='text' name='nombre_proyecto' required maxlength="50")
+                  label(for='descripcion_proyecto') Agrega una descripción:
+                  textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")
+                  label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
+                  input(id='date' type='date' name='fecha_entrega' required min='2021-07-15')
+                  label(for="color" class="color") Selecciona un color para identificarlo:
+                  input(type="color" id="color" name="color" value="#000000" required)
+                  .boton
+                    input.btnEnviar(type='submit' value="Agregar")
+                    .bg
+                    .bg
+                    .bg
+                    .bg
+                    .bg
+                div
+                  label(for="areas") Indica las áreas para este proyecto:
+                  div
+                    input.area(type="text")
+                  button.areas-trabajo
+                    i.fas.fa-plus
+                    | Agregar área
+                  input.set-areas-trabajo(type="hidden" name="areas")
         //- Cierre de proyectos
         //- Cierre del contenido
   

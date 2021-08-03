@@ -16,10 +16,11 @@ body
           .detallesproyecto
             h2(data-url=proyecto.url) #{proyecto.nombre_proyecto}
             p Cantidad de tareas: #{tareas.length}
-            p Tareas terminadas: #{tareasCompletadas}
-            p Tareas pendientes: #{tareasNoCompletadas}
+            p Tareas terminadas: 0
+            p Tareas pendientes: 0
             p Inicio del proyecto: #{proyecto.fecha_inicio}
             p Entrega del proyecto: #{proyecto.fecha_entrega}
+            input#areas(type="hidden" disabled value=`${proyecto.areas}`)
             .opcionesproyecto
               a.eliminar(href='#') Eliminar proyecto
       .contenido
@@ -30,52 +31,22 @@ body
           a.volver(href='/')
             i.fas.fa-arrow-left
             | Volver al menú
+        
         .departamentos
-          .barraDepto
-            p Análisis:
-            .barraVacia
-              #barraAnalisis.progresoDepto
-            p 
-          .barraDepto
-            p Diseño:
-            .barraVacia
-              #barraDiseno.progresoDepto
-            p
-          .barraDepto
-            p Coding:
-            .barraVacia
-              #barraCoding.progresoDepto
-            p
-          .barraDepto
-            p Testing:
-            .barraVacia
-              #barraTesting.progresoDepto
-            p
-          .barraDepto
-            p Soporte:
-            .barraVacia
-              #barraSoporte.progresoDepto
-            p 
+          each area in areas
+            .barraDepto(data-departamento=area)
+              p #{area}:
+              .barraVacia
+                .progresoDepto(style=`background-color:${proyecto.color}`)
+              p
         
         if tareas.length
           .tareas
             each tarea in tareas 
-              .tarea(data-tarea=tarea.id_tarea id=`${tarea.departamento}`)
+              .tarea(data-tarea=tarea.id_tarea data-departamento=tarea.departamento)
                 h3 #{tarea.tarea_nombre}
                 p.descripcion #{tarea.descripcion_tarea}
-                case tarea.departamento
-                  when "analisis"
-                    p(id=`${tarea.departamento}`) Área: Análisis
-                  when "diseno"
-                    p(id=`${tarea.departamento}`) Área: Diseño
-                  when "coding"
-                    p(id=`${tarea.departamento}`) Área: Código
-                  when "testing"
-                    p(id=`${tarea.departamento}`) Área: Testing
-                  when "soporte"
-                    p(id=`${tarea.departamento}`) Área: Soporte
-                  default 
-                    p No se especificó ningún departamento
+                p #{tarea.departamento}
                 .selects
                   p Prioridad: #{tarea.prioridad}
                 .opcionestarea
@@ -96,7 +67,8 @@ body
                   a.basura.tooltip(href='#')
                     i.far.fa-trash-alt
                       span.tooltiptext Eliminar
+          h3#null-tareas(style="display:none;") No hay tareas en este proyecto aún.
         else 
-          h3 No hay tareas en este proyecto aún.
+          h3#null-tareas No hay tareas en este proyecto aún.
       
       include partials/footer
