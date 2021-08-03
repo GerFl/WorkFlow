@@ -350,18 +350,28 @@ div.acciones a i {
 
 .detallesproyecto .opcionesproyecto {
     display: flex;
+    align-items: center;
     justify-content: center;
     margin-top: 2rem;
 }
 
-.opcionesproyecto a {
+.opcionesproyecto>* {
+    text-align: center;
+    margin: 2rem auto;
     font-weight: 300;
-    padding: 1rem;
     font-size: 1.4rem;
-    border-radius: 2rem;
 }
 
-.opcionesproyecto a:hover {
+.opcionesproyecto button {
+    border: 1px solid var(--claro);
+    color: var(--claro);
+    padding: 1rem;
+    border-radius: 2rem;
+    background: transparent;
+    cursor: pointer;
+}
+
+.opcionesproyecto button.eliminar:hover {
     font-weight: 700;
     border: 1px solid var(--incorrecto);
     color: var(--incorrecto);
@@ -484,26 +494,6 @@ div.ended {
     border-radius: 2rem;
 }
 
-#barraAnalisis {
-    background-color: lime;
-}
-
-#barraDiseno {
-    background-color: blueviolet;
-}
-
-#barraCoding {
-    background-color: turquoise;
-}
-
-#barraTesting {
-    background-color: orange;
-}
-
-#barraSoporte {
-    background-color: gold;
-}
-
 
 /* GRID TAREAS  Y BARRA*/
 
@@ -521,8 +511,27 @@ div.tarea {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    color: var(--oscuro);
+    color: var(--light-gray);
     background-color: var(--claro);
+    position: relative;
+}
+
+.tarea i.fa-ellipsis-v,
+.tarea i.fa-bookmark {
+    position: absolute;
+    font-size: 2.4rem;
+    margin: 1rem 0.5rem;
+}
+
+.tarea i.fa-ellipsis-v {
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.tarea i.fa-bookmark {
+    top: 0;
+    left: 0;
 }
 
 div.tarea h3 {
@@ -533,7 +542,7 @@ div.tarea p.descripcion {
     margin: 1rem;
 }
 
-div.opcionestarea {
+div.iconos-tarea {
     display: flex;
     justify-content: space-evenly;
 }
@@ -552,7 +561,7 @@ div.opcionestarea {
     text-align: center;
     border-radius: 6px;
     padding: 1rem 0;
-    /* Position the tooltip */
+    /* Posicionar el tooltip */
     position: absolute;
     z-index: 1;
     top: 100%;
@@ -560,17 +569,27 @@ div.opcionestarea {
     margin-left: -60px;
 }
 
+.tooltip .tooltiptext>*:not(:last-child) {
+    padding: 0.5rem 2.5rem;
+    border-bottom: 1px solid var(--claro);
+}
+
+.tooltip .tooltiptext>*:last-child:hover {
+    color: var(--incorrecto);
+    transition: .3s ease-in-out;
+}
+
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
 
-div.opcionestarea a {
+div.iconos-tarea a {
     font-size: 2.5rem;
     margin: 1rem;
 }
 
 div.selects,
-.opcionestarea {
+.iconos-tarea {
     display: flex;
     justify-content: space-evenly;
 }
