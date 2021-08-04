@@ -40,6 +40,7 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/agregar-proyecto',
         authorizationController.usuarioVerificado,
+        proyectosController.validarProyecto,
         proyectosController.agregarProyecto
     );
     // Editar proyectos
@@ -49,6 +50,7 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/proyecto/:proyectourl/editar-proyecto',
         authorizationController.usuarioVerificado,
+        proyectosController.validarProyecto,
         proyectosController.editarProyecto
     );
     // Eliminar proyecto
@@ -65,6 +67,7 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usuarioVerificado,
+        tareasController.validarTareas,
         tareasController.agregarTarea
     );
     // Editar tarea
@@ -74,6 +77,7 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/proyecto/:proyectourl/editar-tarea/:idtarea',
         authorizationController.usuarioVerificado,
+        tareasController.validarTareas,
         tareasController.editarTarea
     );
     // Tarea completada

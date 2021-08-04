@@ -38,10 +38,10 @@ html(lang="en")
             form(action=actionForm method="POST")
               fieldset
                 legend #{titulo}
-                if errores
-                  each error in errores
-                    p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
                 div 
+                  if errores
+                    each error in errores
+                      p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
                   label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
                   input(type='text' name='nombre_proyecto' value= proyecto ? proyecto.nombre_proyecto:'' required maxlength="50")
                   label(for='descripcion_proyecto') Agrega una descripción:
