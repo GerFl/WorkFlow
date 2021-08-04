@@ -10,9 +10,6 @@ const authorizationController = require('../controladores/authorizationControlle
 
 module.exports = function() { // Para exportar todas las rutas al archivo de index.js
 
-    // TO-DO
-    // Eliminar proyectos
-
     // HOME
     // No podemos usar app como en el index.js porque no se puede crear
     // otra instancia de Express. Por eso se crea router arriba
@@ -28,11 +25,6 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     router.get('/iniciar-sesion', authorizationController.loginPage);
     router.post('/iniciar-sesion', authorizationController.verificarUsuario);
     router.get('/cerrar-sesion', authorizationController.cerrarSesion);
-    // router.get('/iniciar-sesion/failure', authorizationController.autenticacionFallida);
-    // router.get('/iniciar-sesion/success',
-    //     authorizationController.usuarioVerificado,
-    //     authorizationController.autenticacionCorrecta
-    // );
 
     /* PROYECTOS */
     // Listar proyectos
@@ -48,7 +40,18 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/agregar-proyecto',
         authorizationController.usuarioVerificado,
+        proyectosController.validarProyecto,
         proyectosController.agregarProyecto
+    );
+    // Editar proyectos
+    router.get('/proyecto/:proyectourl/editar-proyecto',
+        authorizationController.usuarioVerificado,
+        proyectosController.formularioEditarProyecto
+    );
+    router.post('/proyecto/:proyectourl/editar-proyecto',
+        authorizationController.usuarioVerificado,
+        proyectosController.validarProyecto,
+        proyectosController.editarProyecto
     );
     // Eliminar proyecto
     router.delete('/eliminar-proyecto/:url',
@@ -64,13 +67,25 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     );
     router.post('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usuarioVerificado,
+        tareasController.validarTareas,
         tareasController.agregarTarea
     );
-    // Actualizar tarea
+    // Editar tarea
+    router.get('/proyecto/:proyectourl/editar-tarea/:idtarea',
+        authorizationController.usuarioVerificado,
+        tareasController.formularioEditarTarea
+    );
+    router.post('/proyecto/:proyectourl/editar-tarea/:idtarea',
+        authorizationController.usuarioVerificado,
+        tareasController.validarTareas,
+        tareasController.editarTarea
+    );
+    // Tarea completada
     router.patch('/tarea-completada/:id',
         authorizationController.usuarioVerificado,
         tareasController.completarTarea
     );
+    // Tarea descompletada
     router.patch('/tarea-descompletada/:id',
         authorizationController.usuarioVerificado,
         tareasController.descompletarTarea

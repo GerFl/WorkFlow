@@ -113,8 +113,9 @@
 
         // Bloque para realizar las peticiones a Axios y DOMScripting
         if (totalTareas) {
-            const opcionesTarea = document.querySelectorAll('.opcionestarea');
-            opcionesTarea.forEach(tarea => {
+            // Seleccionar los iconos para completar o descompletar las tareas
+            const iconosTarea = document.querySelectorAll('.iconos-tarea');
+            iconosTarea.forEach(tarea => {
                 tarea.addEventListener('click', e => {
                     e.preventDefault();
                     if (e.target.classList.contains('fa-check-circle')) { // Al completar
@@ -137,7 +138,7 @@
                         const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-descompletada/${idTarea}`;
-                        // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
+                        // Indicar la url del patch y el ID
                         axios.patch(url, { idTarea })
                             .then(function(response) {
                                 if (response.status == 200) {
@@ -147,9 +148,16 @@
                                     conteoyPorcentaje(totalTareas, areas);
                                 }
                             })
-                    } else if (e.target.classList.contains('fa-trash-alt')) { // Al eliminar
-                        const icono = e.target;
-                        const idTarea = icono.parentElement.parentElement.parentElement.dataset.tarea;
+                    }
+                });
+            });
+            // Seleccionar los tres puntos de cada tarea para mostrar las opciones de editar o eliminar
+            const opcionesTarea = document.querySelectorAll('i.fa-ellipsis-v');
+            opcionesTarea.forEach(opcion => {
+                opcion.addEventListener('click', e => {
+                    if (e.target.classList.contains('eliminar-tarea')) { // Al eliminar
+                        const accion = e.target;
+                        const idTarea = accion.parentElement.parentElement.parentElement.dataset.tarea;
                         // Request hacia /tareas/:id
                         const url = `${location.origin}/tarea-eliminar/${idTarea}`;
                         swal({
@@ -164,11 +172,11 @@
                             })
                             .then((result) => {
                                 if (result.value == true) {
-                                    // No pasamos parametros como tal, sino indicamos la url donde se hara el patch
+                                    // Indicar la url del patch y pasar el ID
                                     axios.delete(url, { idTarea })
                                         .then(function(response) {
                                             if (response.status == 200) {
-                                                icono.parentElement.parentElement.parentElement.remove();
+                                                accion.parentElement.parentElement.parentElement.remove();
                                                 const totalTareas = document.querySelectorAll('.tarea').length;
                                                 conteoyPorcentaje(totalTareas, areas);
                                             }
@@ -177,7 +185,7 @@
                             });
                     }
                 });
-            });
+            })
         }
 
         // AREAS DE TRABAJO PERSONALIZABLES
@@ -212,7 +220,7 @@
         // FIN AREAS DE TRABAJO PERSONALIZABLES
 
         // ELIMINAR PROYECTO
-        const btnEliminar = document.querySelector('a.eliminar');
+        const btnEliminar = document.querySelector('button.eliminar');
         if (btnEliminar) {
             btnEliminar.addEventListener('click', e => {
                 e.preventDefault();

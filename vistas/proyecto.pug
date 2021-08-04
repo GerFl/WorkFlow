@@ -22,7 +22,8 @@ body
             p Entrega del proyecto: #{proyecto.fecha_entrega}
             input#areas(type="hidden" disabled value=`${proyecto.areas}`)
             .opcionesproyecto
-              a.eliminar(href='#') Eliminar proyecto
+              a(href=`/proyecto/${proyecto.url}/editar-proyecto`) Editar proyecto
+              button.eliminar(href='#') Eliminar proyecto
       .contenido
         .barra
           a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
@@ -49,7 +50,7 @@ body
                 p #{tarea.departamento}
                 .selects
                   p Prioridad: #{tarea.prioridad}
-                .opcionestarea
+                .iconos-tarea
                   if tarea.estatus==0
                     a.completo.tooltip(href='#')
                       i.far.fa-check-circle
@@ -64,9 +65,13 @@ body
                     a.nocompleto.tooltip(href='#')
                       i.far.fa-times-circle
                        span.tooltiptext Descompletar
-                  a.basura.tooltip(href='#')
-                    i.far.fa-trash-alt
-                      span.tooltiptext Eliminar
+                  //- a.basura.tooltip(href='#')
+                  //-   i.far.fa-trash-alt
+                  //-     span.tooltiptext Eliminar
+                i.fas.fa-ellipsis-v.tooltip
+                  .tooltiptext
+                    a(href=`/proyecto/${proyecto.url}/editar-tarea/${tarea.id_tarea}`) Editar
+                    p.eliminar-tarea Eliminar
           h3#null-tareas(style="display:none;") No hay tareas en este proyecto aún.
         else 
           h3#null-tareas No hay tareas en este proyecto aún.
