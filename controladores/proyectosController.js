@@ -1,21 +1,23 @@
 // Improtar modelos
 const Proyectos = require('../modelos/Proyectos');
 const Tareas = require('../modelos/Tareas');
+const Usuarios = require('../modelos/Usuarios');
 const slug = require('slug');
 const shortid = require('shortid');
 
 /* PROYECTOS */
 // HOME
 exports.paginaPrincipal = async(req, res) => {
-    const usuarioId = res.locals.usuario.id_usuario;
+    const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
     const proyectos = await Proyectos.findAll({
         where: {
-            usuarioIdUsuario: usuarioId
+            usuarioIdUsuario: usuario.id_usuario
         }
     });
     res.render('index', {
         nombrePagina: 'WorkFlow',
-        proyectos
+        proyectos,
+        usuario
     });
 }
 
@@ -50,12 +52,20 @@ exports.formularioProyecto = async(req, res) => {
     const usuarioId = res.locals.usuario.id_usuario;
     const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
     const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
+    const imagenPerfil = await Usuarios.findOne({
+        attributes: ['imagen_perfil'],
+        where: {
+            id_usuario: usuarioId
+        }
+    });
+    console.log(imagenPerfil);
     res.render('formulariosProyecto', {
         nombrePagina: 'WorkFlow - Agregar proyecto',
         titulo: "Agregar proyecto",
         actionForm: "/agregar-proyecto",
         totalProyectos,
-        proyectosCompletados
+        proyectosCompletados,
+        imagen: imagenPerfil.imagen_perfil
     });
 }
 
@@ -136,12 +146,6 @@ exports.validarProyecto = async(req, res, next) => {
     // VALIDAR LONGITUD
     req.checkBody('nombre_proyecto', 'El nombre del proyecto debe ser entre 3 y 50 caracteres.').isLength({ min: 3, max: 50 });
     req.checkBody('descripcion_proyecto', 'La descripción del proyecto no debe exceder los 200 caracteres.').isLength({ min: 0, max: 200 });
-    // SANITIZAR CAMPOS
-    req.sanitizeBody('nombre_proyecto').escape();
-    req.sanitizeBody('descripcion_proyecto').escape();
-    req.sanitizeBody('fecha_entrega').escape();
-    req.sanitizeBody('areas').escape();
-    req.sanitizeBody('color').escape();
     const errores = req.validationErrors();
     if (errores) {
         const usuarioId = res.locals.usuario.id_usuario;
@@ -179,5 +183,11 @@ exports.validarProyecto = async(req, res, next) => {
             return;
         }
     }
+    // SANITIZAR CAMPOS
+    req.sanitizeBody('nombre_proyecto').escape();
+    req.sanitizeBody('descripcion_proyecto').escape();
+    req.sanitizeBody('fecha_entrega').escape();
+    req.sanitizeBody('areas').escape();
+    req.sanitizeBody('color').escape();
     return next();
 }

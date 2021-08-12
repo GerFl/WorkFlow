@@ -11,7 +11,7 @@ html(lang="es")
               p WorkFlow
           .detallesproyectos
             .user
-              img(src='/fish.ico' alt='Profile Pic')
+              img(src=usuario.imagen_perfil?`/uploads/${usuario.imagen_perfil}`:'/fish.ico' alt='Profile Pic')
               h2
                 | Bienvenido, 
                 span #{usuario.nombre_usuario}
@@ -22,9 +22,9 @@ html(lang="es")
                 -terminados+=1 
             p Proyectos terminados: #{terminados}
             .acciones
-              a(href='#')
+              a(href='/mi-cuenta/editar')
                 i.fas.fa-tools
-                |  Configuración
+                |  Mi cuenta
               a(href='/cerrar-sesion')
                 i.fas.fa-sign-out-alt
                 |  Salir

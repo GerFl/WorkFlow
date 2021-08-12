@@ -20,11 +20,47 @@ module.exports = function() { // Para exportar todas las rutas al archivo de ind
     ); // Middleware de express
 
     // LOGIN Y REGISTRO
-    router.get('/registrarse', authorizationController.formRegistro);
-    router.post('/registrarse', authorizationController.crearCuenta);
-    router.get('/iniciar-sesion', authorizationController.loginPage);
+    router.get('/iniciar-sesion',
+        authorizationController.loginPage
+    );
     router.post('/iniciar-sesion', authorizationController.verificarUsuario);
+    // Crear cuenta
+    router.get('/registrarse',
+        authorizationController.formularioRegistro
+    );
+    router.post('/registrarse',
+        authorizationController.validarCuenta,
+        authorizationController.crearCuenta
+    );
+    // Editar cuenta
+    router.get('/mi-cuenta/editar',
+        authorizationController.usuarioVerificado,
+        authorizationController.formularioEditarCuenta
+    );
+    router.post('/mi-cuenta/editar',
+        authorizationController.usuarioVerificado,
+        authorizationController.validarImagen,
+        authorizationController.validarCuenta,
+        authorizationController.editarCuenta
+    );
     router.get('/cerrar-sesion', authorizationController.cerrarSesion);
+    // Reestablecer password
+    router.get('/reestablecer-password',
+        authorizationController.formularioReestablecerPassword
+    );
+    router.post('/reestablecer-password',
+        authorizationController.activarToken
+    );
+    router.get('/reestablecer-password/:token',
+        authorizationController.formularioReestablecerPassword
+    );
+    router.post('/reestablecer-password/:token',
+        authorizationController.reestablecerPassword
+    );
+    // Activar la cuenta
+    router.get('/mi-cuenta/activar/:token',
+        authorizationController.activarCuenta
+    );
 
     /* PROYECTOS */
     // Listar proyectos

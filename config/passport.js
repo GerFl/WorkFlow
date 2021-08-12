@@ -24,7 +24,7 @@ passport.use(
                 if (!usuario.verificarPassword(password)) {
                     return done(null, false);
                 }
-                // El email existe y el password es correcto
+                // El usuario existe y el password es correcto
                 return done(null, usuario);
             } catch (error) {
                 // Ese usuario no existe

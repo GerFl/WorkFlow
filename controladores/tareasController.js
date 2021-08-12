@@ -218,11 +218,6 @@ exports.validarTareas = async(req, res, next) => {
     // VALIDAR LONGITUD
     req.checkBody('tarea_nombre', 'El nombre de la tarea debe ser entre 3 y 30 caracteres.').isLength({ min: 3, max: 30 });
     req.checkBody('descripcion_tarea', 'La descripción de la tarea debe ser entre 2 y 100 caracteres.').isLength({ min: 2, max: 100 });
-    // SANITIZAR CAMPOS
-    req.sanitizeBody('tarea_nombre').escape();
-    req.sanitizeBody('descripcion_tarea').escape();
-    req.sanitizeBody('departamento').escape();
-    req.sanitizeBody('prioridad').escape();
     const errores = req.validationErrors();
     if (errores) {
 
@@ -278,6 +273,11 @@ exports.validarTareas = async(req, res, next) => {
             return;
         }
     } else {
+        // SANITIZAR CAMPOS
+        req.sanitizeBody('tarea_nombre').escape();
+        req.sanitizeBody('descripcion_tarea').escape();
+        req.sanitizeBody('departamento').escape();
+        req.sanitizeBody('prioridad').escape();
         return next();
     }
 }

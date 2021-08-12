@@ -613,9 +613,26 @@ select#prioridad {
 
 /* FORMULARIOS */
 
+form.flex-form {
+    display: flex;
+    justify-content: center;
+    width: 100rem;
+    align-self: center;
+}
+
+form.flex-form .form-child {
+    width: 50rem;
+}
+
 form {
     font-family: 'Lato', sans-serif;
     position: relative;
+}
+
+form img {
+    width: 20rem;
+    height: 20rem;
+    border: 1px solid var(--claro);
 }
 
 fieldset {
