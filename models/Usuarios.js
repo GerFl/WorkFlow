@@ -1,9 +1,8 @@
 const Sequelize = require('sequelize');
 const database = require('../config/database');
 const bcrypt = require('bcrypt-nodejs');
-const Proyectos = require('../modelos/Proyectos');
+const Proyectos = require('./Proyectos');
 
-// Construir la tabla
 const Usuarios = database.define('usuarios', {
     id_usuario: {
         type: Sequelize.INTEGER(11),
@@ -42,16 +41,18 @@ const Usuarios = database.define('usuarios', {
     hooks: {
         beforeCreate(usuario) {
             usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
+        },
+        beforeUpdate(usuario) {
+            console.log("Corriendo el beforeUpdate");
+            console.log(usuario);
         }
     }
 });
 
 Usuarios.hasMany(Proyectos);
 
-// Métodos personalizados
 Usuarios.prototype.verificarPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 }
 
-// Exportar los usuarios
 module.exports = Usuarios;

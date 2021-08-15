@@ -1,137 +1,132 @@
 // Express Router. Si no pones esto entonces las rutas no funcionan
-// Importa
 const express = require('express'); // Se trae todas las funciones de express a este archivo
 const router = express.Router();
 
-// Importar los controladores
-const proyectosController = require('../controladores/proyectosController');
-const tareasController = require('../controladores/tareasController');
-const authorizationController = require('../controladores/authorizationController');
+const proyectosController = require('../controllers/proyectosController');
+const tareasController = require('../controllers/tareasController');
+const authorizationController = require('../controllers/authorizationController');
+const usersController = require('../controllers/usersController');
 
-module.exports = function() { // Para exportar todas las rutas al archivo de index.js
-
-    // HOME
-    // No podemos usar app como en el index.js porque no se puede crear
-    // otra instancia de Express. Por eso se crea router arriba
-    // Usamos .get en vez de .use, porque trae información...creo
+module.exports = function() { // Exportar rutas
     router.get('/',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.paginaPrincipal
-    ); // Middleware de express
-
-    // LOGIN Y REGISTRO
+    );
+    /* LOGIN Y REGISTRO */
     router.get('/iniciar-sesion',
+        authorizationController.usuarioVerificado,
         authorizationController.loginPage
     );
-    router.post('/iniciar-sesion', authorizationController.verificarUsuario);
-    // Crear cuenta
+    router.post('/iniciar-sesion',
+        authorizationController.usuarioVerificado,
+        authorizationController.verificarUsuario
+    );
     router.get('/registrarse',
-        authorizationController.formularioRegistro
+        authorizationController.usuarioVerificado,
+        usersController.formularioRegistro
     );
     router.post('/registrarse',
-        authorizationController.validarCuenta,
-        authorizationController.crearCuenta
-    );
-    // Editar cuenta
-    router.get('/mi-cuenta/editar',
         authorizationController.usuarioVerificado,
-        authorizationController.formularioEditarCuenta
+        usersController.validarCuenta,
+        usersController.crearCuenta
+    );
+    /* EDICION DE LA CUENTA Y REESTABLECIMIENTO DE PASSWORD */
+    router.get('/mi-cuenta/editar',
+        authorizationController.usuarioAutenticado,
+        usersController.formularioEditarCuenta
     );
     router.post('/mi-cuenta/editar',
-        authorizationController.usuarioVerificado,
-        authorizationController.validarImagen,
-        authorizationController.validarCuenta,
-        authorizationController.editarCuenta
+        authorizationController.usuarioAutenticado,
+        usersController.validarImagen,
+        usersController.validarCuenta,
+        usersController.editarCuenta
     );
-    router.get('/cerrar-sesion', authorizationController.cerrarSesion);
-    // Reestablecer password
     router.get('/reestablecer-password',
+        authorizationController.usuarioVerificado,
         authorizationController.formularioReestablecerPassword
     );
     router.post('/reestablecer-password',
+        authorizationController.usuarioVerificado,
         authorizationController.activarToken
     );
     router.get('/reestablecer-password/:token',
+        authorizationController.usuarioVerificado,
         authorizationController.formularioReestablecerPassword
     );
     router.post('/reestablecer-password/:token',
+        authorizationController.usuarioVerificado,
         authorizationController.reestablecerPassword
     );
-    // Activar la cuenta
     router.get('/mi-cuenta/activar/:token',
+        authorizationController.usuarioVerificado,
         authorizationController.activarCuenta
     );
+    router.get('/cerrar-sesion', authorizationController.cerrarSesion);
 
     /* PROYECTOS */
     // Listar proyectos
     // Usa proyectourl como comodin, puesto que no sabemos a cuál url va ir. Dicha url se asigna en la vista del index en cada etiqueta a generada por los proyectos listados
     router.get('/proyecto/:proyectourl',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.proyectoUrl
     );
-    // Agregar proyectos - Cada uno reacciona a un método diferente
+    /* AGREGAR Y EDITAR PROYECTOS */
     router.get('/agregar-proyecto',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.formularioProyecto
     );
     router.post('/agregar-proyecto',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.validarProyecto,
         proyectosController.agregarProyecto
     );
-    // Editar proyectos
     router.get('/proyecto/:proyectourl/editar-proyecto',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.formularioEditarProyecto
     );
     router.post('/proyecto/:proyectourl/editar-proyecto',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.validarProyecto,
         proyectosController.editarProyecto
     );
-    // Eliminar proyecto
+    // ELIMINAR PROYECTOS
     router.delete('/eliminar-proyecto/:url',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         proyectosController.eliminarProyecto
     );
 
-    /* TAREAS */
-    // Agregar tareas
+    /* AGREGAR Y EDITAR TAREAS */
     router.get('/proyecto/:proyectourl/agregar-tarea',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.formularioTarea
     );
     router.post('/proyecto/:proyectourl/agregar-tarea',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.validarTareas,
         tareasController.agregarTarea
     );
-    // Editar tarea
     router.get('/proyecto/:proyectourl/editar-tarea/:idtarea',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.formularioEditarTarea
     );
     router.post('/proyecto/:proyectourl/editar-tarea/:idtarea',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.validarTareas,
         tareasController.editarTarea
     );
-    // Tarea completada
+    /* COMPLETAR, DESCOMPLETAR Y ELIMINAR TAREAS */
     router.patch('/tarea-completada/:id',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.completarTarea
     );
-    // Tarea descompletada
     router.patch('/tarea-descompletada/:id',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.descompletarTarea
     );
-    // Eliminar tarea
     router.delete('/tarea-eliminar/:id',
-        authorizationController.usuarioVerificado,
+        authorizationController.usuarioAutenticado,
         tareasController.eliminarTarea
     );
-
 
     return router;
 }

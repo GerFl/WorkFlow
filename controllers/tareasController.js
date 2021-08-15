@@ -1,9 +1,7 @@
-// Importar modelos
-const Proyectos = require('../modelos/Proyectos');
-const Tareas = require('../modelos/Tareas');
+const Proyectos = require('../models/Proyectos');
+const Tareas = require('../models/Tareas');
 
 exports.formularioTarea = async(req, res) => {
-    // Con esto obtenemos el proyecto actual
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
@@ -30,7 +28,7 @@ exports.formularioTarea = async(req, res) => {
     });
 }
 
-exports.formularioEditarTarea = async(req, res, next) => {
+exports.formularioEditarTarea = async(req, res) => {
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
@@ -89,69 +87,43 @@ exports.editarTarea = async(req, res) => {
             id_tarea
         }
     });
-
-    if (tarea) {
-        res.redirect(`/proyecto/${req.params.proyectourl}`);
-    }
+    if (tarea) res.redirect(`/proyecto/${req.params.proyectourl}`);
 
 }
 
 exports.completarTarea = async(req, res) => {
-    /* Se filtra de una manera sencilla, insertando el id en un data dentro de la etiqueta en PUG. Luego de esto lo mandamos con una petición con axios en el script
-    principal. Eso hace que se envie al backend y llega aqui a esta funcion. Lo extramos del req.params y hacemos una consulta teniendo ese valor de
-    id_tarea como referencia, una vez encontrado cambiamos el estado por el lado del backend y en el frontend hacemos un toggle sin necesidad de
-    recargar la pagina. Sencillo, no?
-    */
-    // GUARDAR EL ESTATUS DE LA TAREA //
     const { id } = req.params;
     const tarea = await Tareas.findOne({ where: { id_tarea: id } });
-
-    // Buscar toooodas las tareas
-    // Cambiar el estado de la tarea
-    if (tarea.estatus === 0) {
-        tarea.estatus = 1;
-    }
-    // Tareas.patch({ where: { id_tarea: id } });
-    // Al hacer la petición con axios a esta parte nos retorna la respuesta de abajo
-
+    (tarea.estatus === 0) ? tarea.estatus = 1: tarea.estatus = 0;
     const guardarTarea = await tarea.save();
     if (!guardarTarea) return next();
-
     // GUARDAR EL PORCENTAJE DEL PROYECTO //
     const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
-
     const tareasCompletadas = await Tareas.count({
         where: {
             proyectoIdProyecto: tarea.proyectoIdProyecto,
             estatus: 1
         }
     });
-
     const totalTareas = await Tareas.count({
         where: {
             proyectoIdProyecto: tarea.proyectoIdProyecto,
         }
     });
-
     proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
+    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
+    console.log(proyecto.porcentaje);
     const guardarProyecto = await proyecto.save();
     if (!guardarProyecto) return next();
     res.send().status(200);
 }
 
 exports.descompletarTarea = async(req, res) => {
-    // GUARDAR EL ESTADO DE LA TAREA //
     const { id } = req.params;
     const tarea = await Tareas.findOne({ where: { id_tarea: id } });
-    // Cambiar el estado de la tarea
-    if (tarea.estatus === 1) {
-        tarea.estatus = 0;
-    }
-    // Tareas.patch({ where: { id_tarea: id } });
-    // Al hacer la petición con axios a esta parte nos retorna la respuesta de abajo
+    (tarea.estatus === 1) ? tarea.estatus = 0: tarea.estatus === 1;
     const guardarTarea = await tarea.save();
     if (!guardarTarea) return next();
-
     /* GUARDAR EL PORCENTAJE DEL PROYECTO */
     const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
     const tareasCompletadas = await Tareas.count({
@@ -160,51 +132,39 @@ exports.descompletarTarea = async(req, res) => {
             estatus: 1
         }
     });
-
     const totalTareas = await Tareas.count({
         where: {
             proyectoIdProyecto: tarea.proyectoIdProyecto,
         }
     });
     proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
+    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
+    console.log(proyecto.porcentaje);
     const guardarProyecto = await proyecto.save();
-
     if (!guardarProyecto) return next();
-
     res.send().status(200);
 }
 
 exports.eliminarTarea = async(req, res, next) => {
-    /* ELIMINAR LA TAREA */
     const { id } = req.params;
-    const tarea = await Tareas.findOne({ where: { id_tarea: id } }); // Buscar toooodas las tareas
+    const tarea = await Tareas.findOne({ where: { id_tarea: id } });
     const resultado = await Tareas.destroy({ where: { id_tarea: id } });
     if (!resultado) return next();
-
     /* GUARDAR EL PORCENTAJE DEL PROYECTO */
     const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
-
     const tareasCompletadas = await Tareas.count({
         where: {
             proyectoIdProyecto: tarea.proyectoIdProyecto,
             estatus: 1
         }
     });
-
     const totalTareas = await Tareas.count({
         where: {
             proyectoIdProyecto: tarea.proyectoIdProyecto,
         }
     });
-
-    if (totalTareas == 0) {
-        proyecto.porcentaje = 0;
-    } else {
-        proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
-    }
-
+    (totalTareas == 0) ? proyecto.porcentaje = 0: proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
     const guardarProyecto = await proyecto.save();
-
     if (!guardarProyecto) return next();
     res.send().status(200);
 }
@@ -213,29 +173,21 @@ exports.validarTareas = async(req, res, next) => {
     // VALIDAR ESPACIOS VACIOS
     req.checkBody('tarea_nombre').trim().notEmpty().withMessage("Indica un nombre para la tarea");
     req.checkBody('descripcion_tarea').trim().notEmpty().withMessage('Debes escribir una descripción');
-    req.checkBody('departamento').trim().notEmpty().withMessage("Indica el departamento");
+    req.checkBody('departamento').trim();
     req.checkBody('prioridad').trim().notEmpty().withMessage("Indica la prioridad");
     // VALIDAR LONGITUD
     req.checkBody('tarea_nombre', 'El nombre de la tarea debe ser entre 3 y 30 caracteres.').isLength({ min: 3, max: 30 });
     req.checkBody('descripcion_tarea', 'La descripción de la tarea debe ser entre 2 y 100 caracteres.').isLength({ min: 2, max: 100 });
     const errores = req.validationErrors();
     if (errores) {
-
         const proyecto = await Proyectos.findOne({
-            where: {
-                url: req.params.proyectourl
-            }
+            where: { url: req.params.proyectourl }
         });
         const totalTareas = await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto
-            }
+            where: { proyectoIdProyecto: proyecto.id_proyecto }
         });
         const tareasCompletadas = await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto,
-                estatus: 1
-            }
+            where: { proyectoIdProyecto: proyecto.id_proyecto, estatus: 1 }
         });
         const areas = proyecto.areas.split(',');
 

@@ -13,13 +13,6 @@ html(lang="en")
           .detallesproyecto
             h2 #{proyecto.nombre_proyecto}
             p Cantidad de tareas: #{totalTareas}
-            //- -var tareasTerminadas=0
-            //- -var tareasNoTerminadas=0
-            //- each tarea in tareas 
-            //-   if tarea.estatus==1
-            //-     -tareasTerminadas+=1
-            //-   else 
-            //-     -tareasNoTerminadas+=1
             p Tareas terminadas: #{tareasCompletadas}
             p Tareas pendientes: #{totalTareas-tareasCompletadas}
             p Inicio del proyecto: #{proyecto.fecha_inicio}
@@ -44,7 +37,7 @@ html(lang="en")
                   label(for='descripcion_tarea') Agrega una pequeña descripción:
                   input(type='text' name='descripcion_tarea' maxlength="100" value=tarea ? `${tarea.descripcion_tarea}` : '' required)
                   label(for='departamento') ¿A qué área de trabajo pertenece?
-                  select#departamento(name="departamento" required)
+                  select#departamento(name="departamento")
                     option(value="" disabled selected) -- Seleccione --
                     each area in areas
                       if tarea

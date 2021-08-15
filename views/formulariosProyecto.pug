@@ -11,7 +11,7 @@ html(lang="en")
               p WorkFlow
           .detallesproyectos
             .user
-              img(src=imagen?`/uploads/${imagen}`:'/fish.ico' alt='Profile Pic')
+              img(src=usuario.imagen_perfil?`/uploads/${usuario.imagen_perfil}`:'/fish.ico' alt='Profile Pic')
               h2
                 | Bienvenido, 
                 span #{usuario.nombre_usuario}

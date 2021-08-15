@@ -1,12 +1,9 @@
-// Se ocupa el ORM
 const Sequelize = require('sequelize');
-// Traer la BD
 const database = require('../config/database');
-// Importar las librerias para la url
+// Librerias para la url
 const slug = require('slug');
 const shortid = require('shortid');
 
-// Construir la tabla
 const Proyectos = database.define('proyectos', {
     id_proyecto: {
         type: Sequelize.INTEGER(11),
@@ -27,15 +24,17 @@ const Proyectos = database.define('proyectos', {
 }, {
     hooks: {
         beforeCreate(proyecto) {
-            // Con slug recortamos la url de manera que no haya espacios ni cosas raras
+            // Slug recorta espacios
             const url = slug(proyecto.nombre_proyecto);
-            // Después aplicamos un shortid.generate para que le de valores random
             proyecto.url = `${url}-${shortid.generate()}`;
+        },
+        beforeUpdate(proyecto) {
+            console.log("Corriendo el beforeUpdate");
+            console.log(proyecto);
         }
     }
 });
 
-// Exportar los proyectos
 module.exports = Proyectos;
 
 /*

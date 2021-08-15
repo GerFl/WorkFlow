@@ -1,12 +1,9 @@
-// Improtar modelos
-const Proyectos = require('../modelos/Proyectos');
-const Tareas = require('../modelos/Tareas');
-const Usuarios = require('../modelos/Usuarios');
+const Proyectos = require('../models/Proyectos');
+const Tareas = require('../models/Tareas');
+const Usuarios = require('../models/Usuarios');
 const slug = require('slug');
 const shortid = require('shortid');
 
-/* PROYECTOS */
-// HOME
 exports.paginaPrincipal = async(req, res) => {
     const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
     const proyectos = await Proyectos.findAll({
@@ -23,22 +20,19 @@ exports.paginaPrincipal = async(req, res) => {
 
 // Listar proyecto
 exports.proyectoUrl = async(req, res, next) => {
-    // Consultar los proyectos para que nos retorne el que queremos
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
         }
     });
     if (!proyecto) return next();
-    // PROYECTO EXISTE
-    // Se pasa como parametro el id del proyecto. Se accede a el gracias a que hicimos la consulta para traer ese proyecto
+    // SI PROYECTO EXISTE
     const tareas = await Tareas.findAll({
         where: {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
     const areas = proyecto.areas.split(',');
-    // Render a la vista UPDATE: AJAJJAJAA no lo habia leido bien
     res.render('proyecto', {
         nombrePagina: `Tareas del proyecto: ${proyecto.nombre_proyecto}`,
         proyecto,
@@ -50,26 +44,19 @@ exports.proyectoUrl = async(req, res, next) => {
 // Vista formulario para agregar
 exports.formularioProyecto = async(req, res) => {
     const usuarioId = res.locals.usuario.id_usuario;
+    const usuario = await Usuarios.findOne({ where: { id_usuario: usuarioId } });
     const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
     const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
-    const imagenPerfil = await Usuarios.findOne({
-        attributes: ['imagen_perfil'],
-        where: {
-            id_usuario: usuarioId
-        }
-    });
-    console.log(imagenPerfil);
     res.render('formulariosProyecto', {
         nombrePagina: 'WorkFlow - Agregar proyecto',
         titulo: "Agregar proyecto",
         actionForm: "/agregar-proyecto",
         totalProyectos,
         proyectosCompletados,
-        imagen: imagenPerfil.imagen_perfil
+        usuario
     });
 }
 
-// Vista formulario para editar
 exports.formularioEditarProyecto = async(req, res, next) => {
     const usuarioId = res.locals.usuario.id_usuario;
     const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
@@ -85,31 +72,36 @@ exports.formularioEditarProyecto = async(req, res, next) => {
         titulo: `Editar proyecto:${proyecto.nombre_proyecto}`,
         actionForm: `/proyecto/${proyecto.url}/editar-proyecto`,
         proyecto,
-        areas,
         totalProyectos,
-        proyectosCompletados
+        proyectosCompletados,
+        areas
     });
 }
 
-// Agregar proyecto
 exports.agregarProyecto = async(req, res) => {
     const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color } = req.body;
     const porcentaje = 0;
     const completado = 0;
     const usuarioIdUsuario = res.locals.usuario.id_usuario;
-
-    await Proyectos.create({ nombre_proyecto, descripcion_proyecto, fecha_entrega, porcentaje, areas, color, completado, usuarioIdUsuario })
+    await Proyectos.create({
+        nombre_proyecto,
+        descripcion_proyecto,
+        fecha_entrega,
+        porcentaje,
+        areas,
+        color,
+        completado,
+        usuarioIdUsuario
+    })
     return res.redirect('/');
 }
 
 exports.editarProyecto = async(req, res) => {
-    const proyecto = await Proyectos.findOne({ where: { url: req.params.proyectourl } });
+    var url = req.params.proyectourl
+    const proyecto = await Proyectos.findOne({ where: { url } });
     const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color } = req.body;
-    if (proyecto.nombre_proyecto === nombre_proyecto) {
-        var url = req.params.proyectourl
-    } else {
-        const slugurl = slug(nombre_proyecto);
-        var url = `${slugurl}-${shortid.generate()}`;
+    if (proyecto.nombre_proyecto != nombre_proyecto) {
+        var url = `${slug(nombre_proyecto)}-${shortid.generate()}`;
     }
     const proyectoActualizado = await Proyectos.update({
         nombre_proyecto,
@@ -174,9 +166,9 @@ exports.validarProyecto = async(req, res, next) => {
                 titulo: `Editar proyecto:${proyecto.nombre_proyecto}`,
                 actionForm: `/proyecto/${proyecto.url}/editar-proyecto`,
                 proyecto,
-                areas,
                 totalProyectos,
                 proyectosCompletados,
+                areas,
                 errores
             });
             res.status(401);

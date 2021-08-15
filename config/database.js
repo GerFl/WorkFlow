@@ -1,13 +1,9 @@
-// Hay que importar Sequelize para poder utilizar ese ORM
 const Sequelize = require('sequelize');
-
-// Bueno, no pude hacerlo en otro puerto jaja estoy bien puñetas
-// Configuramos los datos de la BD
-// Por lo que entiendo, es un objeto
-const database = new Sequelize('workflow', 'root', 'root', {
-    host: 'localhost',
+require('dotenv').config({ path: 'variables.env' });
+const database = new Sequelize(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
+    host: process.env.HOST,
     dialect: 'mysql',
-    port: '3307',
+    port: process.env.PORT,
     operatorAliases: false,
     define: {
         timestamps: false
@@ -22,7 +18,4 @@ const database = new Sequelize('workflow', 'root', 'root', {
 // El pool indica basicamente:
 // número máximo de conexiones abiertas->número mínimo->tiempo de espera
 // antes de cerrar la conexión
-
 module.exports = database;
-
-// Después de configurar la BD se exporta para llamarla en el index.js
