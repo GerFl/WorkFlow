@@ -216,8 +216,9 @@
                 const areas = document.querySelectorAll('input.area');
                 const setAreas = new Set();
                 areas.forEach(area => {
-                    if (area.value.replaceAll(',', '').replaceAll(' ', '') != '') {
-                        setAreas.add(area.value.replaceAll(',', '').replaceAll(' ', ''))
+                    const areaValor = area.value.replaceAll(',', '').replaceAll(' ', '');
+                    if (areaValor != '') {
+                        setAreas.add(areaValor);
                     }
                 })
                 inputAreas.value = [...setAreas];

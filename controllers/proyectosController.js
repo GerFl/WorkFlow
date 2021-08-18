@@ -122,8 +122,6 @@ exports.editarProyecto = async(req, res) => {
 }
 
 exports.actualizarProyecto = async(req, res, next) => {
-    console.log("MIDDLEWARE DE ACTUALIZAR PROYECTO");
-    console.log(req.body);
     // GUARDAR EL PORCENTAJE DEL PROYECTO //
     const proyecto = await Proyectos.findOne({ where: { id_proyecto: req.body.id_proyecto } });
     const tareasCompletadas = await Tareas.count({
@@ -137,9 +135,11 @@ exports.actualizarProyecto = async(req, res, next) => {
             proyectoIdProyecto: proyecto.id_proyecto,
         }
     });
-    proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
-    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
-    console.log(proyecto.porcentaje);
+    if (totalTareas == 0) {
+        proyecto.porcentaje = 0;
+    } else {
+        proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
+    }
     const guardarProyecto = await proyecto.save();
     if (!guardarProyecto) return next();
     res.send().status(200);
@@ -159,11 +159,25 @@ exports.validarProyecto = async(req, res, next) => {
     req.checkBody('nombre_proyecto').trim().notEmpty().withMessage("Debe especificar un nombre para el proyecto.");
     req.checkBody('descripcion_proyecto').trim();
     req.checkBody('fecha_entrega').trim().notEmpty().withMessage("Debe marcar la fecha de entrega.");
-    req.checkBody('areas').trim();
+    req.checkBody('areas').trim().not().isNumeric().withMessage("El nombre del departamento no puede ser solo números.");
     req.checkBody('color').notEmpty().trim().withMessage("Elija un color para identificar el proyecto.");
     // VALIDAR LONGITUD
     req.checkBody('nombre_proyecto', 'El nombre del proyecto debe ser entre 3 y 50 caracteres.').isLength({ min: 3, max: 50 });
     req.checkBody('descripcion_proyecto', 'La descripción del proyecto no debe exceder los 200 caracteres.').isLength({ min: 0, max: 200 });
+    const areasArray = req.body.areas.split(',');
+    const set = new Set();
+    areasArray.forEach(area => {
+        let areaValor = area.replaceAll(',', '').replaceAll(' ', '');
+        if (areaValor == '') {
+            return;
+        } else if (areaValor < 0 || areaValor > 0) {
+            areaValor = "area" + areaValor;
+            set.add(areaValor);
+        } else {
+            set.add(areaValor);
+        }
+    });
+    req.body.areas = [...set].toString();
     const errores = req.validationErrors();
     if (errores) {
         const usuarioId = res.locals.usuario.id_usuario;
