@@ -103,7 +103,8 @@ module.exports = function() { // Exportar rutas
     router.post('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usuarioAutenticado,
         tareasController.validarTareas,
-        tareasController.agregarTarea
+        tareasController.agregarTarea,
+        proyectosController.actualizarProyecto
     );
     router.get('/proyecto/:proyectourl/editar-tarea/:idtarea',
         authorizationController.usuarioAutenticado,
@@ -117,15 +118,18 @@ module.exports = function() { // Exportar rutas
     /* COMPLETAR, DESCOMPLETAR Y ELIMINAR TAREAS */
     router.patch('/tarea-completada/:id',
         authorizationController.usuarioAutenticado,
-        tareasController.completarTarea
+        tareasController.completarTarea,
+        proyectosController.actualizarProyecto
     );
     router.patch('/tarea-descompletada/:id',
         authorizationController.usuarioAutenticado,
-        tareasController.descompletarTarea
+        tareasController.descompletarTarea,
+        proyectosController.actualizarProyecto
     );
     router.delete('/tarea-eliminar/:id',
         authorizationController.usuarioAutenticado,
-        tareasController.eliminarTarea
+        tareasController.eliminarTarea,
+        proyectosController.actualizarProyecto
     );
 
     return router;

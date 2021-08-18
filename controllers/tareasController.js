@@ -61,7 +61,7 @@ exports.formularioEditarTarea = async(req, res) => {
     });
 }
 
-exports.agregarTarea = async(req, res) => {
+exports.agregarTarea = async(req, res, next) => {
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
@@ -70,9 +70,11 @@ exports.agregarTarea = async(req, res) => {
     const { tarea_nombre, descripcion_tarea, departamento, prioridad } = req.body;
     const estatus = 0;
     const proyectoIdProyecto = proyecto.id_proyecto;
-
-    await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
-    res.redirect(`/proyecto/${proyecto.url}`);
+    const tarea = await Tareas.create({ tarea_nombre, descripcion_tarea, departamento, prioridad, estatus, proyectoIdProyecto });
+    if (!tarea) return res.redirect(`/proyecto/${proyecto.url}`);
+    req.body.id_proyecto = proyecto.id_proyecto;
+    res.redirect(`/proyecto/${proyecto.url}`)
+    return next();
 }
 
 exports.editarTarea = async(req, res) => {
@@ -88,85 +90,37 @@ exports.editarTarea = async(req, res) => {
         }
     });
     if (tarea) res.redirect(`/proyecto/${req.params.proyectourl}`);
-
 }
 
-exports.completarTarea = async(req, res) => {
+exports.completarTarea = async(req, res, next) => {
     const { id } = req.params;
     const tarea = await Tareas.findOne({ where: { id_tarea: id } });
     (tarea.estatus === 0) ? tarea.estatus = 1: tarea.estatus = 0;
     const guardarTarea = await tarea.save();
-    if (!guardarTarea) return next();
-    // GUARDAR EL PORCENTAJE DEL PROYECTO //
-    const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
-    const tareasCompletadas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-            estatus: 1
-        }
-    });
-    const totalTareas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-        }
-    });
-    proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
-    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
-    console.log(proyecto.porcentaje);
-    const guardarProyecto = await proyecto.save();
-    if (!guardarProyecto) return next();
-    res.send().status(200);
+    if (!guardarTarea) return res.send().status(401);
+    req.body.id_tarea = tarea.id_tarea;
+    req.body.id_proyecto = tarea.proyectoIdProyecto;
+    return next();
 }
 
-exports.descompletarTarea = async(req, res) => {
+exports.descompletarTarea = async(req, res, next) => {
     const { id } = req.params;
     const tarea = await Tareas.findOne({ where: { id_tarea: id } });
     (tarea.estatus === 1) ? tarea.estatus = 0: tarea.estatus === 1;
     const guardarTarea = await tarea.save();
-    if (!guardarTarea) return next();
-    /* GUARDAR EL PORCENTAJE DEL PROYECTO */
-    const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
-    const tareasCompletadas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-            estatus: 1
-        }
-    });
-    const totalTareas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-        }
-    });
-    proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
-    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
-    console.log(proyecto.porcentaje);
-    const guardarProyecto = await proyecto.save();
-    if (!guardarProyecto) return next();
-    res.send().status(200);
+    if (!guardarTarea) return res.send().status(401);
+    req.body.id_proyecto = tarea.proyectoIdProyecto;
+    return next();
 }
 
 exports.eliminarTarea = async(req, res, next) => {
     const { id } = req.params;
     const tarea = await Tareas.findOne({ where: { id_tarea: id } });
-    const resultado = await Tareas.destroy({ where: { id_tarea: id } });
-    if (!resultado) return next();
-    /* GUARDAR EL PORCENTAJE DEL PROYECTO */
-    const proyecto = await Proyectos.findOne({ where: { id_proyecto: tarea.proyectoIdProyecto } });
-    const tareasCompletadas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-            estatus: 1
-        }
-    });
-    const totalTareas = await Tareas.count({
-        where: {
-            proyectoIdProyecto: tarea.proyectoIdProyecto,
-        }
-    });
-    (totalTareas == 0) ? proyecto.porcentaje = 0: proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
-    const guardarProyecto = await proyecto.save();
-    if (!guardarProyecto) return next();
-    res.send().status(200);
+    if (!tarea) return res.send().status(401);
+    req.body.id_tarea = tarea.id_tarea;
+    req.body.id_proyecto = tarea.proyectoIdProyecto;
+    tarea.destroy();
+    return next();
 }
 
 exports.validarTareas = async(req, res, next) => {

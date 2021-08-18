@@ -121,10 +121,36 @@ exports.editarProyecto = async(req, res) => {
     }
 }
 
+exports.actualizarProyecto = async(req, res, next) => {
+    console.log("MIDDLEWARE DE ACTUALIZAR PROYECTO");
+    console.log(req.body);
+    // GUARDAR EL PORCENTAJE DEL PROYECTO //
+    const proyecto = await Proyectos.findOne({ where: { id_proyecto: req.body.id_proyecto } });
+    const tareasCompletadas = await Tareas.count({
+        where: {
+            proyectoIdProyecto: proyecto.id_proyecto,
+            estatus: 1
+        }
+    });
+    const totalTareas = await Tareas.count({
+        where: {
+            proyectoIdProyecto: proyecto.id_proyecto,
+        }
+    });
+    proyecto.porcentaje = ((tareasCompletadas / totalTareas).toFixed(2)) * 100;
+    console.log(((tareasCompletadas / totalTareas).toFixed(2)) * 100);
+    console.log(proyecto.porcentaje);
+    const guardarProyecto = await proyecto.save();
+    if (!guardarProyecto) return next();
+    res.send().status(200);
+}
+
 exports.eliminarProyecto = async(req, res, next) => {
     const { url } = req.params;
-    const proyecto = await Proyectos.destroy({ where: { url } });
+    const proyecto = await Proyectos.findOne({ where: { url } });
     if (!proyecto) return next();
+    const tareas = await Tareas.destroy({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
+    proyecto.destroy();
     res.send().status(200);
 }
 

@@ -85,7 +85,7 @@
                 if (tarea.children[4].children[0].classList.contains('activo')) {
                     totalCompletadas += 1;
                 } else {
-                    totalNoCompletadas += 0;
+                    totalNoCompletadas += 1;
                 }
             })
 
@@ -135,6 +135,8 @@
                                     icono.parentElement.nextElementSibling.classList.remove("activo");
                                     const totalTareas = document.querySelectorAll('.tarea');
                                     conteoyPorcentaje(totalTareas, areas);
+                                } else if (response.status == 401) {
+                                    alert("OHOH");
                                 }
                             })
                     } else if (e.target.classList.contains('fa-times-circle')) { // Al descompletar
@@ -148,6 +150,8 @@
                                     icono.parentElement.previousElementSibling.classList.remove("activo");
                                     const totalTareas = document.querySelectorAll('.tarea');
                                     conteoyPorcentaje(totalTareas, areas);
+                                } else if (response.status == 401) {
+                                    alert("OHOH");
                                 }
                             })
                     }
@@ -179,6 +183,8 @@
                                                 accion.parentElement.parentElement.parentElement.remove();
                                                 const totalTareas = document.querySelectorAll('.tarea');
                                                 conteoyPorcentaje(totalTareas, areas);
+                                            } else if (response.status == 401) {
+                                                alert("OHOH");
                                             }
                                         });
                                 }
@@ -246,6 +252,8 @@
                                         setTimeout(() => {
                                             window.location.href = '/'
                                         }, 3000);
+                                    } else if (response.status == 401) {
+                                        alert("OHOH");
                                     }
                                 })
                         }
