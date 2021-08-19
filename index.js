@@ -1,45 +1,40 @@
-// Importar
 const express = require('express');
-const routes = require('./rutas');
+const routes = require('./routes');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const passport = require('./config/passport');
+require('dotenv').config({ path: 'variables.env' });
 
 // Inicializar la BD
 const database = require('./config/database');
-// Importar modelos
-require('./modelos/Proyectos');
-require('./modelos/Tareas');
-require('./modelos/Usuarios');
-// Probar conexion con la BD
+require('./models/Proyectos');
+require('./models/Tareas');
+require('./models/Usuarios');
+// Probar conexion
 database.sync()
     .then(() => console.log("Conectado al servidor."))
     .catch(error => console.log(error));
 
 // .use - Para cualquier request, se correra el codigo de ese bloque
 // .send - Imprime un resultado
-// Crea la aplicacion de express porque si no nada sirve gg
-const app = express(); // La variable de arriba pasa como funcion. Se crea el servidor
+// Crea la aplicacion de express porque si no nada sirve
+const app = express();
 
-// Habilitar BodyParser
+// Habilitar bodyParser y expressValidator
 app.use(bodyParser.urlencoded({ extended: true }));
-// Validacion de campos
 app.use(expressValidator());
-
-// Habilitar archivos estaticos de CSS y JS
+// Habilitar archivos estaticos, template engine y archivos de vistas
 app.use(express.static('public'));
-// Habilitar el Template Engine
 app.set('view engine', 'pug');
-// Enlazar el path hacia las vistas
-app.set('views', path.join(__dirname, './vistas'));
+app.set('views', path.join(__dirname, './views'));
 
 // Sesiones
 app.use(cookieParser());
 app.use(session({
-    secret: 'supersecreto',
+    secret: 'itsasecret',
     resave: false,
     saveUninitialized: false
 }));
@@ -51,7 +46,7 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/', routes()); // Se llama como función porque precisamente se exporto como funcion
+app.use('/', routes());
 
-// Que no se te olvide decir el puerto en el cual correr
-app.listen(3001); // .listen es un método de express
+// Indicar puerto de ejecucion
+app.listen(3001);

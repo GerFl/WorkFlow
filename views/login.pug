@@ -15,7 +15,8 @@ html(lang='es')
           else 
             h2 Login
             i.fas.fa-lock(style="color:#fbfbfb")
-          //- i.fas.fa-unlock
+          if mensaje
+            p(style="color:var(--correcto)") #{mensaje}
         form(action='/iniciar-sesion' method="POST")
           .campo
             label(for='email') E-mail:
@@ -27,7 +28,9 @@ html(lang='es')
             input.btn-login(type='submit' value='Iniciar sesión')
         p ¿Aún no tienes una cuenta? 
           a(href="/registrarse" style="color:#8de4af") Regístrate
+        if failedLogin
+          a(href="/reestablecer-password" style="color:#8de4af") Olvidé mi contraseña D:
       .contenido
-        img(src=`../${fondo}` alt="El gif")
+        img(src=`/${fondo}` alt="El gif")
     
     include partials/footer
