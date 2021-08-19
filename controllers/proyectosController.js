@@ -165,19 +165,23 @@ exports.validarProyecto = async(req, res, next) => {
     req.checkBody('nombre_proyecto', 'El nombre del proyecto debe ser entre 3 y 50 caracteres.').isLength({ min: 3, max: 50 });
     req.checkBody('descripcion_proyecto', 'La descripción del proyecto no debe exceder los 200 caracteres.').isLength({ min: 0, max: 200 });
     const areasArray = req.body.areas.split(',');
+    const weirdCharacters = [',', ' ', '|', '¬', '°', '!', '"', '#', '$', '%', '&', '/', '(', ')', '=', '?', '¡', '¨', '*', '[', ']', ':', ';', '<', '>', "'", '\\', '¿', '´', '~', '+', '{', '}', '^', '`', '"'];
     const set = new Set();
     areasArray.forEach(area => {
-        let areaValor = area.replaceAll(',', '').replaceAll(' ', '');
-        if (areaValor == '') {
+        for (let i = 0; i < weirdCharacters.length; i++) {
+            area = area.replaceAll(weirdCharacters[i], '');
+        }
+        if (area == '') {
             return;
-        } else if (areaValor < 0 || areaValor > 0) {
-            areaValor = "area" + areaValor;
-            set.add(areaValor);
+        } else if (area < 0 || area > 0) {
+            area = "area" + area;
+            set.add(area);
         } else {
-            set.add(areaValor);
+            set.add(area);
         }
     });
     req.body.areas = [...set].toString();
+    console.log(req.body.areas);
     const errores = req.validationErrors();
     if (errores) {
         const usuarioId = res.locals.usuario.id_usuario;
