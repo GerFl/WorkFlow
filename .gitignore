@@ -1,5 +1,6 @@
 # Mine
 uploads/
+*.env
 
 # Logs
 logs

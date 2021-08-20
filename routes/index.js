@@ -132,5 +132,10 @@ module.exports = function() { // Exportar rutas
         proyectosController.actualizarProyecto
     );
 
+    // ERROR 404
+    router.get('*',function(req,res){
+        res.status(404).send("¿Qué?");
+    });
+
     return router;
 }
