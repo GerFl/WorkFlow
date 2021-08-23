@@ -1,41 +1,44 @@
 {
-  "name": "workflow",
-  "version": "2.0.0",
-  "description": "Administrador de proyectos personal. Realizado en Node.",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon ./index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GerFl/WorkFlow.git"
-  },
-  "author": "Gerardo Flores",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GerFl/WorkFlow/issues"
-  },
-  "homepage": "https://github.com/GerFl/WorkFlow#readme",
-  "dependencies": {
-    "bcrypt-nodejs": "^0.0.3",
-    "cookie-parser": "^1.4.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "express-validator": "^5.3.1",
-    "multer": "^1.4.3",
-    "mysql2": "^2.2.5",
-    "nodemailer": "^6.6.3",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "pug": "^3.0.0",
-    "sequelize": "^6.5.0",
-    "shortid": "^2.2.16",
-    "slug": "^4.0.3",
-    "sweetalert2": "^10.15.7"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7",
-    "sequelize-cli": "^6.2.0"
-  }
+    "name": "workflow",
+    "version": "2.0.0",
+    "description": "Administrador de proyectos personal. Realizado en Node.",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon ./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GerFl/WorkFlow.git"
+    },
+    "author": "Gerardo Flores",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/GerFl/WorkFlow/issues"
+    },
+    "homepage": "https://github.com/GerFl/WorkFlow#readme",
+    "dependencies": {
+        "bcrypt-nodejs": "^0.0.3",
+        "cookie-parser": "^1.4.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "express-validator": "^5.3.1",
+        "multer": "^1.4.3",
+        "mysql2": "^2.2.5",
+        "nodemailer": "^6.6.3",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "pug": "^3.0.0",
+        "sequelize": "^6.5.0",
+        "shortid": "^2.2.16",
+        "slug": "^4.0.3",
+        "sweetalert2": "^10.15.7"
+    },
+    "devDependencies": {
+        "dart-sass": "^1.25.0",
+        "gulp": "^4.0.2",
+        "gulp-sass": "^5.0.0",
+        "nodemon": "^2.0.7",
+        "sequelize-cli": "^6.2.0"
+    }
 }

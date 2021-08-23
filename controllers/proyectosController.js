@@ -67,6 +67,8 @@ exports.formularioEditarProyecto = async(req, res, next) => {
         }
     });
     const areas = proyecto.areas.split(',');
+    const totalTareas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
+    const tareasCompletadas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto, estatus: 1 } });
     res.render('formulariosProyecto', {
         nombrePagina: `WorkFlow - Editar proyecto: ${proyecto.nombre_proyecto}`,
         titulo: `Editar proyecto:${proyecto.nombre_proyecto}`,
@@ -74,7 +76,9 @@ exports.formularioEditarProyecto = async(req, res, next) => {
         proyecto,
         totalProyectos,
         proyectosCompletados,
-        areas
+        areas,
+        totalTareas,
+        tareasCompletadas
     });
 }
 
