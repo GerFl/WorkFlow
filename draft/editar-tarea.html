@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../public/css/normalize.css">
     <link rel="stylesheet" href="../public/css/estilos.css">
     <link rel="stylesheet" href="../public/css/sweetalert2.min.css">
-    <title>WorkFlow: Agregar tarea</title>
+    <title>WorkFlow: Editar tarea</title>
 </head>
 
 <body>
@@ -37,10 +37,10 @@
                 <div class="formulario">
                     <form action="" method="">
                         <fieldset>
-                            <legend>Nueva Tarea</legend>
-                            <div><input type="hidden" name="id_tarea" value=""><label for="tarea_nombre">¿Cuál es el nombre de la tarea?</label><input type="text" name="tarea_nombre" maxlength="30" value="" required><label for="descripcion_tarea">Agrega una pequeña descripción:</label>
-                                <input type="text" name="descripcion_tarea" maxlength="100" value="" required><label for="departamento">¿A qué área de trabajo pertenece?</label><select id="departamento" name="departamento"><option value="" disabled selected>-- Seleccione --</option><option value="area7887">area7887</option><option value="area34567890">area34567890</option></select>
-                                <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label><select id="prioridad" name="prioridad" required><option value disabled selected>--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+                            <legend>Editar Tarea: Migraciones</legend>
+                            <div><input type="hidden" name="id_tarea" value="47"><label for="tarea_nombre">¿Cuál es el nombre de la tarea?</label><input type="text" name="tarea_nombre" maxlength="30" value="Migraciones" required><label for="descripcion_tarea">Agrega una pequeña descripción:</label>
+                                <input type="text" name="descripcion_tarea" maxlength="100" value="Probar migraciones" required><label for="departamento">¿A qué área de trabajo pertenece?</label><select id="departamento" name="departamento"><option value="" disabled selected>-- Seleccione --</option><option value="area7887" selected>area7887</option><option value="area34567890">area34567890</option></select>
+                                <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label><select id="prioridad" name="prioridad" required><option value disabled selected>--</option><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
                         </fieldset>
                         <div class="boton"><input class="btnEnviar" type="submit" value="Agregar">
                             <div class="bg"></div>

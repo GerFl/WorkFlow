@@ -13,7 +13,7 @@ html(lang='es')
           if error
             p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error}
         if !editar
-          img(style="margin:0 auto;" src="/joinUs.gif" alt="El gif")
+          img(style="margin:0 auto;" src="/assets/joinUs.gif" alt="El gif")
         form(action=actionForm class=editar?'flex-form':'' method='POST' enctype=editar?"multipart/form-data":"")
           if editar
             div.form-child
