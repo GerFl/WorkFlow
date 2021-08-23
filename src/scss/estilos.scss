@@ -116,7 +116,7 @@ div.barra {
     }
     a.volver {
         font-weight: 700;
-         :hover {
+        &:hover {
             filter: drop-shadow(0 0 1rem var(--oscuro));
             transition: .2s ease-in-out;
             i {
@@ -130,14 +130,14 @@ div.barra {
     }
 }
 
-.botonazul {
+a.botonazul {
     display: inline-flex;
     justify-content: space-evenly;
     border: 1px solid var(--oscuro);
     border-radius: 2rem;
     padding: 1rem 1.2rem;
     align-items: center;
-     :hover {
+    &:hover {
         background-color: var(--btn-proyecto-tarea);
         border: 1px solid var(--btn-proyecto-tarea);
         transform: scale(1.15);
@@ -195,7 +195,7 @@ div.barra {
         background: none;
         border-radius: 2rem;
         color: var(--claro);
-         :hover {
+        &:hover {
             transition: .3s ease-in-out;
             transform: scale(1.050);
             background-color: var(--claro);
@@ -369,7 +369,7 @@ div.listadoproyectos {
 }
 
 div.proyecto {
-     :hover {
+    &:hover {
         transform: scale(1.045);
         transition: .3s all;
         box-shadow: 1px 1px 10px 0.5rem var(--light-gray);
@@ -447,7 +447,7 @@ div.ended {
     border-radius: 2rem;
     margin: 0 1rem;
     background-color: var(--light-gray);
-     :hover {
+    &:hover {
         filter: drop-shadow(0 0 1rem gold);
         transition: .3s ease-in-out;
     }
@@ -536,7 +536,7 @@ div.selects {
             transition: .3s ease-in-out;
         }
     }
-     :hover .tooltiptext {
+    &:hover .tooltiptext {
         visibility: visible;
     }
 }
@@ -635,6 +635,9 @@ select {
     left: 2rem;
     margin: 1rem;
     overflow: hidden;
+    &:hover .bg {
+        transform: translateY(0);
+    }
 }
 
 input.btnEnviar {
@@ -647,7 +650,7 @@ input.btnEnviar {
     color: var(--oscuro);
     font-size: 1.8rem;
     margin: 0;
-    :hover {
+    &:hover {
         color: var(--claro);
         transition: .5s ease-in-out;
     }
@@ -661,27 +664,24 @@ input.btnEnviar {
     z-index: -1;
     transform: translateY(100%);
     transition: all .5s;
-     :nth-child(3) {
+    &:nth-child(3) {
         left: 20px;
         transition-delay: .1s;
     }
-     :nth-child(4) {
+    &:nth-child(4) {
         left: 40px;
         transition-delay: .2s;
     }
-     :nth-child(5) {
+    &:nth-child(5) {
         left: 60px;
         transition-delay: .3s;
     }
-     :nth-child(6) {
+    &:nth-child(6) {
         left: 80px;
         transition-delay: .4s;
     }
-     :nth-child(7) {
+    &:nth-child(7) {
         left: 100px;
         transition-delay: .5s;
-    }
-    :hover .bg {
-        transform: translateY(0);
     }
 }
