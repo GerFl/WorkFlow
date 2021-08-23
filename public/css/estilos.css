@@ -117,11 +117,11 @@ div.barra a {
 div.barra a.volver {
   font-weight: 700;
 }
-div.barra a.volver :hover {
+div.barra a.volver:hover {
   filter: drop-shadow(0 0 1rem var(--oscuro));
   transition: 0.2s ease-in-out;
 }
-div.barra a.volver :hover i {
+div.barra a.volver:hover i {
   padding-right: 0.3rem;
   transition: 0.2s ease-in-out;
 }
@@ -129,7 +129,7 @@ div.barra a i {
   margin-right: 0.5rem;
 }
 
-.botonazul {
+a.botonazul {
   display: inline-flex;
   justify-content: space-evenly;
   border: 1px solid var(--oscuro);
@@ -137,7 +137,7 @@ div.barra a i {
   padding: 1rem 1.2rem;
   align-items: center;
 }
-.botonazul :hover {
+a.botonazul:hover {
   background-color: var(--btn-proyecto-tarea);
   border: 1px solid var(--btn-proyecto-tarea);
   transform: scale(1.15);
@@ -192,7 +192,7 @@ div.barra a i {
   border-radius: 2rem;
   color: var(--claro);
 }
-.login input[type=submit] :hover {
+.login input[type=submit]:hover {
   transition: 0.3s ease-in-out;
   transform: scale(1.05);
   background-color: var(--claro);
@@ -351,7 +351,7 @@ div.listadoproyectos {
   margin-top: 3rem;
 }
 
-div.proyecto :hover {
+div.proyecto:hover {
   transform: scale(1.045);
   transition: 0.3s all;
   box-shadow: 1px 1px 10px 0.5rem var(--light-gray);
@@ -427,7 +427,7 @@ div.ended {
   margin: 0 1rem;
   background-color: var(--light-gray);
 }
-.barraVacia :hover {
+.barraVacia:hover {
   filter: drop-shadow(0 0 1rem gold);
   transition: 0.3s ease-in-out;
 }
@@ -514,7 +514,7 @@ div.selects {
   color: var(--incorrecto);
   transition: 0.3s ease-in-out;
 }
-.tooltip :hover .tooltiptext {
+.tooltip:hover .tooltiptext {
   visibility: visible;
 }
 
@@ -607,6 +607,9 @@ select {
   margin: 1rem;
   overflow: hidden;
 }
+.boton:hover .bg {
+  transform: translateY(0);
+}
 
 input.btnEnviar {
   position: absolute;
@@ -619,7 +622,7 @@ input.btnEnviar {
   font-size: 1.8rem;
   margin: 0;
 }
-input.btnEnviar :hover {
+input.btnEnviar:hover {
   color: var(--claro);
   transition: 0.5s ease-in-out;
 }
@@ -633,26 +636,23 @@ input.btnEnviar :hover {
   transform: translateY(100%);
   transition: all 0.5s;
 }
-.bg :nth-child(3) {
+.bg:nth-child(3) {
   left: 20px;
   transition-delay: 0.1s;
 }
-.bg :nth-child(4) {
+.bg:nth-child(4) {
   left: 40px;
   transition-delay: 0.2s;
 }
-.bg :nth-child(5) {
+.bg:nth-child(5) {
   left: 60px;
   transition-delay: 0.3s;
 }
-.bg :nth-child(6) {
+.bg:nth-child(6) {
   left: 80px;
   transition-delay: 0.4s;
 }
-.bg :nth-child(7) {
+.bg:nth-child(7) {
   left: 100px;
   transition-delay: 0.5s;
-}
-.bg :hover .bg {
-  transform: translateY(0);
 }
