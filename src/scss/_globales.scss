@@ -52,6 +52,15 @@ h2 {
     color: var(--color-principal);
 }
 
+.menu-movil {
+    h2 {
+        color: var(--claro)
+    }
+    span {
+        color: var(--color-principal)
+    }
+}
+
 h3 {
     color: var(--light-gray);
 }
@@ -163,6 +172,7 @@ button.area-trabajo {
     border-radius: 2rem;
     padding: 0.75rem;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 
 

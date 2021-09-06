@@ -247,6 +247,7 @@
                 e.preventDefault();
                 if (btnAgregarArea.previousElementSibling.lastElementChild.value === '') {
                     btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--incorrecto)';
+                    alert("Llene el campo")
                 } else {
                     btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
                     const nuevaArea =
