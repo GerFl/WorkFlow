@@ -8,31 +8,55 @@
     <link rel="shortcut icon" href="/assets/fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/normalize.css">
-    <link rel="stylesheet" href="../public/css/estilos.css">
+    <link rel="stylesheet" href="../public/css/app.css">
     <link rel="stylesheet" href="../public/css/sweetalert2.min.css">
     <title>WorkFlow - Editar cuenta</title>
 </head>
 
 <body>
-    <div class="contenedor-principal login">
+    <div class="contenedor-principal login mobile">
         <div class="caja-login">
             <div class="encabezado">
                 <h2>Editar cuenta</h2>
+                <p>Para guardar cualquier cambio, es necesario dar click en el botón "Editar mi cuenta"</p>
             </div>
-            <form class="flex-form" action="" method="" enctype="">
+            <form class="flex-form feedback" action="" method="" enctype="">
                 <div class="form-child">
                     <label>Imagen de perfil:</label>
                     <img src="../public/uploads/fbe323d0-358d-4256-b437-9f4f7a019146.jpeg" alt="Profile Pic">
                     <input type="file" name="imagen">
                 </div>
                 <div class="form-child">
-                    <div class="campo"><label>Nombre de usuario:</label><input type="text" name="nombre_usuario" value="Gerardo" required maxlength="60"></div>
-                    <div class="campo"><label for="email">E-mail:</label><input type="email" name="email" value="correo@correo.com" required maxlength="60"></div>
-                    <div class="campo"><label for="password">Contraseña:</label><input type="password" name="password" required maxlength="60"></div>
-                    <div class="campo"><label for="confirmarpassword">Confirmar contraseña:</label><input type="password" name="confirmarpassword" required maxlength="60"></div>
-                    <div class="campo"><input class="btn-login" type="submit" value="Editar mi cuenta"></div>
+                    <div class="campo">
+                        <label>Nombre de usuario:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="text" name="nombre_usuario" value="Gerardo" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="email">E-mail:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="email" name="email" value="correo@correo.com" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="password">Contraseña:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="password" name="password" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="confirmarpassword">Confirmar contraseña:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="password" name="confirmarpassword" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <input class="btn-login" type="submit" value="Editar mi cuenta">
+                    </div>
                 </div>
-            </form><a href="index.html" style="color:#8de4af">Regresar a la página principal </a></div>
+            </form>
+            <a class="uwu" href="index.html" style="color:#8de4af">Regresar a la página principal </a></div>
     </div>
     <script src="../public/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

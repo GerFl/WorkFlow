@@ -133,8 +133,10 @@ module.exports = function() { // Exportar rutas
     );
 
     // ERROR 404
-    router.get('*',function(req,res){
-        res.status(404).send("¿Qué?");
+    router.get('*', function(req, res) {
+        res.render('404', {
+            nombrePagina: "WorkFlow"
+        });
     });
 
     return router;

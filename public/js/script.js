@@ -12,6 +12,52 @@
         }
         (document.querySelector('input#date')) ? (document.querySelector('input#date')).min = date: '';
         // FIN CALENDARIO
+        // CONTEO CARACTERES
+        const textInputs = document.querySelectorAll('form.feedback input[type="text"]');
+        const textAreas = document.querySelectorAll('form.feedback textarea');
+        const textEmail = document.querySelector('form.feedback input[type="email"]');
+        const textPasswords = document.querySelectorAll('form.feedback input[type="password"]');
+        conteoCaracteres(textInputs, textAreas, textEmail, textPasswords);
+
+        function conteoCaracteres(textInputs, textAreas, textEmail, textPasswords) {
+            textInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    e.target.previousElementSibling.childNodes[1].innerText = `${input.value.length}/${input.maxLength}`
+                });
+            });
+            textAreas.forEach(area => {
+                area.addEventListener('input', function(e) {
+                    e.target.previousElementSibling.childNodes[1].innerText = `${area.value.length}/${area.maxLength}`
+                });
+            });
+            if (textEmail) {
+                textEmail.addEventListener('input', function(e) {
+                    e.target.previousElementSibling.childNodes[1].innerText = `${textEmail.value.length}/${textEmail.maxLength}`
+                });
+            }
+            if (textPasswords) {
+                textPasswords.forEach(password => {
+                    password.addEventListener('input', function(e) {
+                        e.target.previousElementSibling.childNodes[1].innerText = `${password.value.length}/${password.maxLength}`
+                    });
+                });
+            }
+        }
+        // FIN CONTEO CARACTERES
+
+        // HAMBURGER
+        const btnMenu = document.querySelector('i.fas.fa-bars');
+        const sidebar = document.querySelector('aside');
+        if (btnMenu && sidebar) {
+            btnMenu.addEventListener('click', e => {
+                sidebar.style.display = "block";
+                const btnCerrarMenu = document.querySelector('i.fas.fa-times');
+                btnCerrarMenu.addEventListener('click', e => {
+                    (e.target == btnCerrarMenu) ? sidebar.style.display = "none": '';
+                });
+            });
+        }
+        // FINHAMBURGER
 
         // MODULE INITIALIZED
         const animacionCargando = document.querySelector('.loading');
@@ -195,16 +241,24 @@
         }
 
         // AREAS DE TRABAJO PERSONALIZABLES
-        const agregarArea = document.querySelector('button.areas-trabajo');
-        if (agregarArea) {
-            agregarArea.addEventListener('click', e => {
+        const btnAgregarArea = document.querySelector('button.area-trabajo');
+        if (btnAgregarArea) {
+            btnAgregarArea.addEventListener('click', e => {
                 e.preventDefault();
-                if (agregarArea.previousElementSibling.lastElementChild.value === '') {
-                    agregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--incorrecto)';
+                if (btnAgregarArea.previousElementSibling.lastElementChild.value === '') {
+                    btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--incorrecto)';
                 } else {
-                    agregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
-                    const nuevaArea = document.createElement('INPUT');
-                    agregarArea.previousElementSibling.appendChild(nuevaArea).classList.add('area');
+                    btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
+                    const nuevaArea =
+                        `<div>
+                            <label>->
+                                <span class="feedback">0/25</span>
+                            </label>
+                            <input type="text" class="area" maxlength="25">
+                        </div>`;
+                    btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', nuevaArea);
+                    const textInputs = document.querySelectorAll('form.feedback input[type="text"');
+                    conteoCaracteres(textInputs);
                 }
             });
         }

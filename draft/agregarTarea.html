@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="../public/assets/fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/normalize.css">
-    <link rel="stylesheet" href="../public/css/estilos.css">
+    <link rel="stylesheet" href="../public/css/app.css">
     <link rel="stylesheet" href="../public/css/sweetalert2.min.css">
     <title>WorkFlow: Agregar tarea</title>
 </head>
@@ -17,6 +17,7 @@
     <div class="contenedor-principal">
         <aside>
             <div class="sidebar">
+                <i class="fas fa-times"></i>
                 <div class="barraprogreso">
                     <div class="circulo" style="border: 7px solid #32d2b2">
                         <p>75%</p><span>COMPLETADO</span></div>
@@ -32,15 +33,42 @@
             </div>
         </aside>
         <div class="contenido">
-            <div class="barra"><a class="volver" href="proyecto.html"><i class="fas fa-arrow-left"></i>Volver</a></div>
+            <div class="barra">
+                <i class="fas fa-bars">Menuwu</i>
+                <a class="volver" href="proyecto.html"><i class="fas fa-arrow-left"></i>Volver</a>
+            </div>
             <div class="listadoproyectos">
                 <div class="formulario">
-                    <form action="" method="">
+                    <form class="feedback" action="" method="">
                         <fieldset>
                             <legend>Nueva Tarea</legend>
-                            <div><input type="hidden" name="id_tarea" value=""><label for="tarea_nombre">¿Cuál es el nombre de la tarea?</label><input type="text" name="tarea_nombre" maxlength="30" value="" required><label for="descripcion_tarea">Agrega una pequeña descripción:</label>
-                                <input type="text" name="descripcion_tarea" maxlength="100" value="" required><label for="departamento">¿A qué área de trabajo pertenece?</label><select id="departamento" name="departamento"><option value="" disabled selected>-- Seleccione --</option><option value="area7887">area7887</option><option value="area34567890">area34567890</option></select>
-                                <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label><select id="prioridad" name="prioridad" required><option value disabled selected>--</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div>
+                            <div>
+                                <input type="hidden" name="id_tarea" value="">
+                                <label for="tarea_nombre">¿Cuál es el nombre de la tarea?
+                                    <span class="feedback">0/30</span>
+                                </label>
+                                <input type="text" name="tarea_nombre" maxlength="30" value="" required>
+                                <label for="descripcion_tarea">Agrega una pequeña descripción:
+                                    <span class="feedback">0/100</span>
+                                </label>
+                                <textarea name="descripcion_tarea" cols="50" rows="3" maxlength="100" required></textarea>
+                                <label for="departamento">¿A qué área de trabajo pertenece?</label>
+                                <select id="departamento" name="departamento">
+                                    <option value="" disabled selected>-- Seleccione --</option>
+                                    <option value="area7887">area7887</option>
+                                    <option value="area34567890">area34567890</option>
+                                </select>
+                                <label for="prioridad">Indica la prioridad (la puedes cambiar después):</label>
+                                <select id="prioridad" name="prioridad" required>
+                                    <option value disabled selected>--</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div>
                         </fieldset>
                         <div class="boton"><input class="btnEnviar" type="submit" value="Agregar">
                             <div class="bg"></div>

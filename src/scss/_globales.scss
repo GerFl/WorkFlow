@@ -1,0 +1,234 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    /**Reset para REMS - 62.5% = 10px de 16px*/
+    background-color: var(--fondo);
+    user-select: none;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+:root {
+    --fondo: #e7e7e7;
+    --correcto: #3bd964;
+    --incorrecto: #d93b5b;
+    --warning: #d99c3b;
+    --claro: #fbfbfb;
+    --oscuro: #242121;
+    --black: #000000;
+    --btn-proyecto-tarea: #0085ff;
+    --sidebar: #23374d;
+    --light-gray: #5d5c61;
+    --color-principal: #8de4af;
+}
+
+body {
+    position: relative;
+}
+
+h1,
+h2,
+h3,
+a,
+p,
+i,
+select,
+span,
+button,
+.tooltiptext {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2,
+h3 {
+    font-size: 2.8rem;
+}
+
+h2 {
+    color: var(--color-principal);
+}
+
+h3 {
+    color: var(--light-gray);
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--claro);
+    font-size: 1.5rem;
+}
+
+.contenedor-principal {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media only screen and (max-width: 768px) {
+    .contenedor-principal {
+        width: 100%;
+        display: block;
+        margin: 0;
+    }
+}
+
+
+/* GLOBALES */
+
+.campo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem auto;
+}
+
+@media only screen and (max-width: 768px) {
+    .campo {
+        display: block;
+        input {
+            width: 100%;
+            margin: 0;
+        }
+    }
+}
+
+.sidebar {
+    background-color: var(--sidebar);
+}
+
+i.fas.fa-bars,
+i.fas.fa-times,
+i.fas.fa-arrow-up {
+    display: none;
+}
+
+div.menu-movil {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    i.fas.fa-bars,
+    i.fas.fa-times,
+    i.fas.fa-arrow-up {
+        display: block;
+        font-size: 3rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    a i.fas.fa-arrow-up {
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1;
+        color: var(--oscuro)
+    }
+}
+
+a.completo,
+a.nocompleto {
+    color: var(--oscuro);
+}
+
+a.completo.activo {
+    color: var(--correcto);
+}
+
+a.nocompleto.activo {
+    color: var(--incorrecto);
+}
+
+a.completo:hover {
+    color: var(--correcto);
+    transition: .2s ease-in-out;
+}
+
+a.nocompleto:hover {
+    color: var(--incorrecto);
+    transition: .2s ease-in-out;
+}
+
+button.area-trabajo {
+    background-color: transparent;
+    border: 1px solid var(--oscuro);
+    border-radius: 2rem;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+}
+
+
+/*
+    Esta pequeña animación.
+    Si se quita el overflow hidden, se verán las barras debajo del botón. Por eso es "hidden".
+    Mueves las posiciones del position.
+    Background-transparent quién sabe que sea, pero se ocupa.
+    z-index es para declarar capas.
+*/
+
+.boton {
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    bottom: -7rem;
+    left: 2rem;
+    margin: 1rem;
+    overflow: hidden;
+    &:hover .bg {
+        transform: translateY(0);
+    }
+}
+
+input.btnEnviar {
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background: transparent;
+    border: 2px solid var(--oscuro);
+    cursor: pointer;
+    color: var(--oscuro);
+    font-size: 1.8rem;
+    margin: 0;
+    &:hover {
+        color: var(--claro);
+        transition: .5s ease-in-out;
+    }
+}
+
+.bg {
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    background: #ea2c62;
+    z-index: -1;
+    transform: translateY(100%);
+    transition: all .5s;
+    &:nth-child(3) {
+        left: 20px;
+        transition-delay: .1s;
+    }
+    &:nth-child(4) {
+        left: 40px;
+        transition-delay: .2s;
+    }
+    &:nth-child(5) {
+        left: 60px;
+        transition-delay: .3s;
+    }
+    &:nth-child(6) {
+        left: 80px;
+        transition-delay: .4s;
+    }
+    &:nth-child(7) {
+        left: 100px;
+        transition-delay: .5s;
+    }
+}

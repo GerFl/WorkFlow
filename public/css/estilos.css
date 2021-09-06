@@ -27,6 +27,7 @@ html {
   --color-principal: #8de4af;
 }
 
+h1,
 h2,
 h3,
 a,
@@ -143,6 +144,25 @@ a.botonazul:hover {
   transform: scale(1.15);
   transition: 0.3s all;
   color: var(--claro);
+}
+
+/* 404 */
+div.error-404 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+div.error-404 h2 {
+  color: var(--incorrecto);
+  font-size: 3rem;
+}
+div.error-404 img {
+  width: 40rem;
+}
+div.error-404 a {
+  color: var(--color-principal);
+  text-decoration: underline;
 }
 
 /* LOGIN */
@@ -362,6 +382,9 @@ div.proyecto a {
   margin: 1rem 0;
   background-color: var(--claro);
 }
+div.proyecto .color {
+  width: 5%;
+}
 div.proyecto h2.nombreproyecto {
   width: 25%;
   color: var(--light-gray);
@@ -569,6 +592,18 @@ select {
   margin: 1rem;
   font-size: 2rem;
   width: 70%;
+}
+
+label {
+  position: relative;
+}
+
+span.feedback {
+  position: absolute;
+  font-weight: 300;
+  font-size: 1.5rem;
+  right: 0;
+  top: 50%;
 }
 
 label.color {
