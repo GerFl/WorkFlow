@@ -213,6 +213,7 @@ const configMulter = {
         } else {
             cb(null, false);
         }
+        // Poner filtro de 368px por 368px
     }
 }
 const upload = multer(configMulter).single('imagen');

@@ -2,10 +2,16 @@ doctype html
 html(lang="en")
   head
     include partials/header
-  body
+  body#arriba
+    .menu-movil
+      h2 Proyecto: 
+        span(style=`color:${proyecto.color}`) #{proyecto.nombre_proyecto}
+    a(href="#arriba") 
+      i.fas.fa-arrow-up
     .contenedor-principal
       aside
         .sidebar
+          i.fas.fa-times
           .barraprogreso
             .circulo(style=`border: 7px solid ${proyecto.color}`)
               p #{proyecto.porcentaje}%
@@ -19,51 +25,53 @@ html(lang="en")
             p Entrega del proyecto: #{proyecto.fecha_entrega}
       .contenido
         .barra
+          i.fas.fa-bars Menuwu
           a.volver(href=`/proyecto/${proyecto.url}`)
             i.fas.fa-arrow-left
-            | Volver
+            | Volver al proyecto
         .listadoproyectos
-          .formulario
-            form(action=`${actionForm}` method="POST")
-              fieldset
-                legend #{titulo}
-                div
-                  if errores
-                    each error in errores
-                      p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
-                  input(type="hidden" name="id_tarea" value=tarea? tarea.id_tarea:'')
-                  label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
-                  input(type='text' name='tarea_nombre' maxlength="30" value=tarea ? `${tarea.tarea_nombre}` : '' required)
-                  label(for='descripcion_tarea') Agrega una pequeña descripción:
-                  input(type='text' name='descripcion_tarea' maxlength="100" value=tarea ? `${tarea.descripcion_tarea}` : '' required)
-                  label(for='departamento') ¿A qué área de trabajo pertenece?
-                  select#departamento(name="departamento")
-                    option(value="" disabled selected) -- Seleccione --
-                    each area in areas
-                      if tarea
-                        if tarea.departamento==area
-                          option(value=`${area}` selected) #{area}
-                        else
-                          option(value=`${area}`) #{area}
+          form.feedback(action=`${actionForm}` method="POST")
+            fieldset
+              legend #{titulo}
+              div
+                if errores
+                  each error in errores
+                    p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+                input(type="hidden" name="id_tarea" value=tarea? tarea.id_tarea:'')
+                label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
+                  span.feedback 0/30
+                input(type='text' name='tarea_nombre' maxlength="30" value=tarea ? `${tarea.tarea_nombre}` : '' required)
+                label(for='descripcion_tarea') Agrega una pequeña descripción:
+                  span.feedback 0/100
+                input(type='text' name='descripcion_tarea' maxlength="100" value=tarea ? `${tarea.descripcion_tarea}` : '' required)
+                label(for='departamento') ¿A qué área de trabajo pertenece?
+                select#departamento(name="departamento")
+                  option(value="" disabled selected) -- Seleccione --
+                  each area in areas
+                    if tarea
+                      if tarea.departamento==area
+                        option(value=`${area}` selected) #{area}
                       else
                         option(value=`${area}`) #{area}
-                  label(for='prioridad') Indica la prioridad (la puedes cambiar después):
-                  select#prioridad(name='prioridad' required)
-                    option(value disabled selected) --
-                    option(value='1' selected=tarea ? (tarea.prioridad==1)?true:false : false) 1
-                    option(value='2' selected=tarea ? (tarea.prioridad==2)?true:false : false) 2
-                    option(value='3' selected=tarea ? (tarea.prioridad==3)?true:false : false) 3
-                    option(value='4' selected=tarea ? (tarea.prioridad==4)?true:false : false) 4
-                    option(value='5' selected=tarea ? (tarea.prioridad==5)?true:false : false) 5
-                    option(value='6' selected=tarea ? (tarea.prioridad==6)?true:false : false) 6
-              .boton
-                input.btnEnviar(type='submit' value="Agregar")
-                .bg
-                .bg
-                .bg
-                .bg
-                .bg
-        //- Cierre de proyectos
-        //- Cierre del contenido
-  
+                    else
+                      option(value=`${area}`) #{area}
+                label(for='prioridad') Indica la prioridad (la puedes cambiar después):
+                select#prioridad(name='prioridad' required)
+                  option(value disabled selected) --
+                  option(value='1' selected=tarea ? (tarea.prioridad==1)?true:false : false) 1
+                  option(value='2' selected=tarea ? (tarea.prioridad==2)?true:false : false) 2
+                  option(value='3' selected=tarea ? (tarea.prioridad==3)?true:false : false) 3
+                  option(value='4' selected=tarea ? (tarea.prioridad==4)?true:false : false) 4
+                  option(value='5' selected=tarea ? (tarea.prioridad==5)?true:false : false) 5
+                  option(value='6' selected=tarea ? (tarea.prioridad==6)?true:false : false) 6
+            .boton
+              input.btnEnviar(type='submit' value="Agregar")
+              .bg
+              .bg
+              .bg
+              .bg
+              .bg
+      //- Cierre de proyectos
+      //- Cierre del contenido
+
   include partials/footer

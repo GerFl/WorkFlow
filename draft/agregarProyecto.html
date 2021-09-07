@@ -10,14 +10,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../public/css/normalize.css">
-    <link rel="stylesheet" href="../public/css/estilos.css">
-    <title>WorkFlow</title>
+    <link rel="stylesheet" href="../public/css/app.css">
+    <title>WorkFlow: Agregar proyecto</title>
 </head>
 
-<body>
+<body id="arriba">
+    <div class="menu-movil">
+        <h2>WorkFlow</h2>
+    </div>
+    <a href="#arriba"><i class="fas fa-arrow-up"></i></a>
     <div class="contenedor-principal">
         <aside>
             <div class="sidebar">
+                <i class="fas fa-times"></i>
                 <div class="barraprogreso">
                     <div class="circulo">
                         <p>WorkFlow</p>
@@ -40,21 +45,26 @@
         </aside>
         <div class="contenido">
             <div class="barra">
-                <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver al menú</a>
+                <i class="fas fa-bars">Menuwu</i>
+                <a href="index.html" class="volver"><i class="fas fa-arrow-left"></i>Volver a la página principal</a>
             </div>
             <div class="listadoproyectos">
-                <form class="proyecto" action="">
+                <form class="proyecto feedback" action="">
                     <fieldset>
                         <legend>Nuevo proyecto</legend>
                         <div>
-                            <label for="nombreproyecto">¿Cuál es el nombre del proyecto?</label>
-                            <input type="text" name="nombreproyecto">
-                            <label for="descripcionproyecto">Agrega una descripción:</label>
-                            <textarea name="descripcionproyecto" id="campotexto" cols="50" rows="3"></textarea>
+                            <label for="nombreproyecto">¿Cuál es el nombre del proyecto?
+                                <span class="feedback">0/50</span>
+                            </label>
+                            <input type="text" name="nombreproyecto" maxlength="50">
+                            <label for="descripcionproyecto">Agrega una descripción:
+                                <span class="feedback">0/200</span>
+                            </label>
+                            <textarea name="descripcionproyecto" id="campotexto" cols="50" rows="3" maxlength="200"></textarea>
                             <label for="fechaentrega">Selecciona la fecha estimada de la entrega:</label>
                             <input type="date" name="fechaentrega">
                             <label for="color" class="color">Selecciona un color para identificarlo:</label>
-                            <input type="color" id="color" name="color" value="000000">
+                            <input type="color" id="color" name="color" value="#000000">
                             <div class="boton">
                                 <input type="submit" class="btnEnviar">
                                 <div class="bg"></div>
@@ -67,7 +77,10 @@
                         <div>
                             <label for="areas">Indica las áreas de trabajo para este proyecto:</label>
                             <div>
-                                <input type="text" class="area">
+                                <label>->
+                                    <span class="feedback">0/25</span>
+                                </label>
+                                <input type="text" class="area" maxlength="25">
                             </div>
                             <button class="area-trabajo"><i class="fas fa-plus"></i>Agregar área</button>
                         </div>

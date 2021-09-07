@@ -2,15 +2,19 @@ doctype html
 html(lang="es")
   head
     include partials/header
-body
+body#arriba
+    .menu-movil
+      h2 Proyecto: 
+        span(style=`color:${proyecto.color}`) #{proyecto.nombre_proyecto}
+    a(href="#arriba") 
+      i.fas.fa-arrow-up
     .contenedor-principal
       aside
         .sidebar
+          i.fas.fa-times
           .barraprogreso
-
             .circulo(style=`border: 7px solid ${proyecto.color}`)
               //- JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
-
               p #{proyecto.porcentaje}%
               span COMPLETADO
           .detallesproyecto
@@ -29,9 +33,10 @@ body
           a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
             i.fas.fa-plus
             | Nueva tarea
+          i.fas.fa-bars Menuwu
           a.volver(href='/')
             i.fas.fa-arrow-left
-            | Volver al menú
+            | Volver a la página principal
         
         .departamentos
           each area in areas
@@ -40,6 +45,9 @@ body
               .barraVacia
                 .progresoDepto(style=`background-color:${proyecto.color}`)
               p
+        .barra.movil
+          a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
+            i.fas.fa-plus Nueva tarea
         
         if tareas.length
           .tareas
