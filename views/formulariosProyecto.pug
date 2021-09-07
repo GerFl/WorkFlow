@@ -88,9 +88,9 @@ html(lang="en")
                     span.feedback 0/25
                   if areas
                     each area in areas
-                      input.area(type="text" value=area)
+                      input.area(type="text" value=area maxlength='25')
                   else
-                    input.area(type="text")
+                    input.area(type="text" maxlength='25')
                 button.area-trabajo
                   i.fas.fa-plus
                   | Agregar área
