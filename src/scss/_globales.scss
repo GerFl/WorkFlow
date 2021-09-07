@@ -4,6 +4,7 @@ html {
     /**Reset para REMS - 62.5% = 10px de 16px*/
     background-color: var(--fondo);
     user-select: none;
+    scroll-behavior: smooth;
 }
 
 *,
