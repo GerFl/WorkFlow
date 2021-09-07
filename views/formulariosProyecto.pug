@@ -2,10 +2,15 @@ doctype html
 html(lang="en")
   head
     include partials/header
-  body
+  body#arriba
+    .menu-movil
+      h2 WorkFlow
+    a(href="#arriba")
+      i.fas.fa-arrow-up
     .contenedor-principal
       aside
         .sidebar
+          i.fas.fa-times
           if !proyecto
             .barraprogreso
               .circulo
@@ -43,50 +48,54 @@ html(lang="en")
                 button.eliminar Eliminar proyecto
       .contenido
         .barra
+          i.fas.fa-bars Menuwu
           a.volver(href='/')
             i.fas.fa-arrow-left
-            | Volver al menú
+            | Volver a la página principal
         .listadoproyectos
-          .formulario
-            form(action=actionForm method="POST")
-              fieldset
-                legend #{titulo}
-                div 
-                  if errores
-                    each error in errores
-                      p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
-                  label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
-                  input(type='text' name='nombre_proyecto' value= proyecto ? proyecto.nombre_proyecto:'' required maxlength="50")
-                  label(for='descripcion_proyecto') Agrega una descripción:
-                  if proyecto
-                    textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")= `${proyecto.descripcion_proyecto}`
-                  else
-                    textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")
-                  label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
-                  input(id='date' type='date' name='fecha_entrega' value=proyecto?proyecto.fecha_entrega:"" required min='2021-07-15')
-                  label(for="color" class="color") Selecciona un color para identificarlo:
-                  input(type="color" id="color" name="color" value= proyecto? proyecto.color:"#000000" required)
-                  .boton
-                    input.btnEnviar(type='submit' value="Agregar")
-                    .bg
-                    .bg
-                    .bg
-                    .bg
-                    .bg
+          form.proyecto.feedback(action=actionForm method="POST")
+            fieldset
+              legend #{titulo}
+              div 
+                if errores
+                  each error in errores
+                    p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+                label(for='nombreproyecto') ¿Cuál es el nombre del proyecto?
+                  span.feedback 0/50
+                input(type='text' name='nombre_proyecto' value= proyecto ? proyecto.nombre_proyecto:'' required maxlength="50")
+                label(for='descripcion_proyecto') Agrega una descripción:
+                  span.feedback 0/200
+                if proyecto
+                  textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")= `${proyecto.descripcion_proyecto}`
+                else
+                  textarea#campotexto(name='descripcion_proyecto' cols='50' rows='5' maxlength="200")
+                label(for='fecha_entrega') Selecciona la fecha estimada de la entrega:
+                input(id='date' type='date' name='fecha_entrega' value=proyecto?proyecto.fecha_entrega:"" required min='2021-07-15')
+                label(for="color" class="color") Selecciona un color para identificarlo:
+                input(type="color" id="color" name="color" value= proyecto? proyecto.color:"#000000" required)
+                .boton
+                  input.btnEnviar(type='submit' value="Agregar")
+                  .bg
+                  .bg
+                  .bg
+                  .bg
+                  .bg
+              div
+                label(for="areas") Indica las áreas para este proyecto:
+                p Los caracteres especiales no se guardaran
                 div
-                  label(for="areas") Indica las áreas para este proyecto:
-                  p Los caracteres especiales no se guardaran
-                  div
-                    if areas
-                      each area in areas
-                        input.area(type="text" value=area)
-                    else
-                      input.area(type="text")
-                  button.areas-trabajo
-                    i.fas.fa-plus
-                    | Agregar área
-                  input.set-areas-trabajo(type="hidden" name="areas")
-        //- Cierre de proyectos
-        //- Cierre del contenido
-  
+                  label.feedback ->
+                    span.feedback 0/25
+                  if areas
+                    each area in areas
+                      input.area(type="text" value=area)
+                  else
+                    input.area(type="text")
+                button.area-trabajo
+                  i.fas.fa-plus
+                  | Agregar área
+                input.set-areas-trabajo(type="hidden" name="areas")
+      //- Cierre de proyectos
+      //- Cierre del contenido
+
   include partials/footer

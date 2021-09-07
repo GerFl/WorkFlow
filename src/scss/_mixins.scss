@@ -1,0 +1,217 @@
+@mixin mq-barra-movil {
+    @media only screen and (max-width: 768px) {
+        div.barra a:first-child {
+            display: none;
+        }
+        div.barra.movil {
+            display: block;
+        }
+        div.barra.movil a:first-child {
+            display: inherit;
+            width: 15rem;
+        }
+        div.barra a {
+            margin: 0 auto;
+        }
+        div.menu-movil {
+            display: block;
+            color: var(--claro);
+            background-color: var(--sidebar);
+            padding: 1rem;
+            text-align: center;
+            img {
+                width: 22rem;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+@mixin mq-error404 {
+    @media only screen and (max-width: 768px) {
+        padding: 0;
+        img {
+            width: 30rem;
+        }
+    }
+    justify-content: flex-start;
+}
+
+@mixin mq-login {
+    @media only screen and (max-width: 768px) {
+        padding: 1rem;
+        .caja-login {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            label {
+                margin: 1rem auto;
+                text-align: center;
+            }
+        }
+        .contenido {
+            display: none;
+        }
+    }
+}
+
+@mixin mq-editar-cuenta {
+    @media only screen and (max-width: 768px) {
+        .login.mobile {
+            height: 100%;
+        }
+        .caja-login.mobile {
+            display: block!important;
+        }
+        form.flex-form {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            .form-child {
+                width: 100%;
+            }
+            input[type="submit"] {
+                margin: 2rem 0;
+            }
+        }
+        a.uwu {
+            margin: 1rem 0;
+        }
+    }
+}
+
+@mixin mq-sidebar {
+    @media only screen and (max-width: 768px) {
+        .contenedor-principal {
+            position: relative;
+        }
+        aside {
+            position: absolute;
+            display: none;
+            padding: 0;
+            z-index: 1;
+            .sidebar {
+                position: fixed;
+                top: 0;
+                width: 30rem;
+                i.fas.fa-times {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    margin: 1rem;
+                }
+            }
+        }
+    }
+}
+
+@mixin mq-listado-proyectos {
+    @media only screen and (max-width: 768px) {
+        div.contenido {
+            width: 100%;
+            padding: 1rem;
+        }
+        div.proyecto {
+            h2.nombreproyecto {
+                font-size: 1.7rem;
+                margin-left: 0.2rem;
+            }
+            p {
+                font-size: 1.3rem;
+            }
+            h3 {
+                font-size: 1.7rem;
+            }
+        }
+    }
+}
+
+@mixin mq-formulario-proyecto-tarea {
+    @media only screen and (max-width: 768px) {
+        fieldset {
+            flex-direction: column;
+        }
+        label,
+        input,
+        textarea,
+        select {
+            font-size: 2.2rem;
+            width: 100%;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        span.feedback {
+            right: 1rem;
+            top: 3.5rem;
+        }
+        .mobile span.feedback {
+            right: 0;
+            top: 1rem;
+        }
+        .flex-form span.feedback {
+            bottom: 0rem;
+            right: 0rem;
+        }
+        input#color {
+            display: block;
+            height: 5rem;
+            width: 50%;
+            margin: 2rem auto;
+        }
+        .boton {
+            bottom: -10rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
+
+@mixin mq-proyecto {
+    @media only screen and (max-width: 768px) {
+        div.departamentos {
+            flex-direction: column;
+            div.barraDepto {
+                display: flex;
+                justify-content: space-evenly;
+                height: 2rem;
+                * {
+                    width: 33%;
+                    text-align: center;
+                }
+            }
+        }
+        .barraVacia {
+            width: 90%;
+            height: 1rem;
+        }
+        .progresoDepto {
+            height: 1rem
+        }
+        div.tareas {
+            div.tarea {
+                margin: 1rem 0;
+                border: 2px solid var(--light-gray);
+                i.fa-ellipsis-v {
+                    right: 1rem;
+                }
+                p.descripcion {
+                    margin: 1rem;
+                }
+            }
+        }
+        div.iconos-tarea {
+            a {
+                font-size: 3rem;
+                margin: 0;
+            }
+        }
+        .tooltip {
+            .tooltiptext {
+                top: 110%;
+                left: 0;
+            }
+        }
+    }
+}

@@ -2,10 +2,15 @@ doctype html
 html(lang="es")
   head
     include partials/header
-  body
+  body#arriba
+    .menu-movil
+      h2 WorkFlow
+    a(href="#arriba")
+      i.fas.fa-arrow-up 
     .contenedor-principal
       aside
         .sidebar
+          i.fas.fa-times
           .barraprogreso
             .circulo
               p WorkFlow
@@ -30,6 +35,7 @@ html(lang="es")
                 |  Salir
       .contenido
         .barra
+          i.fas.fa-bars Menuwu
           a.botonazul(href='/agregar-proyecto')
             i.fas.fa-plus
             | Nuevo proyecto

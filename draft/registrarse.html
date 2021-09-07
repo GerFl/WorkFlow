@@ -8,24 +8,47 @@
     <link rel="shortcut icon" href="../public/assets/fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/normalize.css">
-    <link rel="stylesheet" href="../public/css/estilos.css">
+    <link rel="stylesheet" href="../public/css/app.css">
     <link rel="stylesheet" href="../public/css/sweetalert2.min.css">
     <title>Registrarse en WorkFlow</title>
 </head>
 
 <body>
-    <div class="contenedor-principal login">
+    <div class="contenedor-principal login mobile">
         <div class="caja-login">
             <div class="encabezado">
                 <h2>Crear cuenta en WorkFlow</h2>
-            </div><img style="margin:0 auto;" src="../public/assets/joinUs.gif" alt="El gif">
-            <form action="" method="" enctype="">
+            </div>
+            <img class="join-us" src="../public/assets/joinUs.gif" alt="El gif">
+            <form class="feedback" action="" method="" enctype="">
                 <div class="form-child">
-                    <div class="campo"><label>Nombre de usuario:</label><input type="text" name="nombre_usuario" value="" required maxlength="60"></div>
-                    <div class="campo"><label for="email">E-mail:</label><input type="email" name="email" value="" required maxlength="60"></div>
-                    <div class="campo"><label for="password">Contraseña:</label><input type="password" name="password" required maxlength="60"></div>
-                    <div class="campo"><label for="confirmarpassword">Confirmar contraseña:</label><input type="password" name="confirmarpassword" required maxlength="60"></div>
-                    <div class="campo"><input class="btn-login" type="submit" value="Crear cuenta"></div>
+                    <div class="campo">
+                        <label>Nombre de usuario:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="text" name="nombre_usuario" value="" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="email">E-mail:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="email" name="email" value="" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="password">Contraseña:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="password" name="password" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <label for="confirmarpassword">Confirmar contraseña:
+                            <span class="feedback">0/60</span>
+                        </label>
+                        <input type="password" name="confirmarpassword" required maxlength="60">
+                    </div>
+                    <div class="campo">
+                        <input class="btn-login" type="submit" value="Crear cuenta">
+                    </div>
                 </div>
             </form>
             <p>¿Ya estás registrado? <a href="iniciar-sesion.html" style="color:#8de4af">Iniciar sesión</a></p>

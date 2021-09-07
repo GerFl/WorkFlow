@@ -1,118 +1,14 @@
-html {
-    box-sizing: border-box;
-    font-size: 62.5%;
-    /**Reset para REMS - 62.5% = 10px de 16px*/
-    background-color: var(--fondo);
-    user-select: none;
-}
-
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-}
-
-:root {
-    --fondo: #e7e7e7;
-    --correcto: #3bd964;
-    --incorrecto: #d93b5b;
-    --warning: #d99c3b;
-    --claro: #fbfbfb;
-    --oscuro: #242121;
-    --black: #000000;
-    --btn-proyecto-tarea: #0085ff;
-    --sidebar: #23374d;
-    --light-gray: #5d5c61;
-    --color-principal: #8de4af;
-}
-
-h2,
-h3,
-a,
-p,
-i,
-select,
-span,
-button,
-.tooltiptext {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h2,
-h3 {
-    font-size: 2.8rem;
-}
-
-h2 {
-    color: var(--color-principal);
-}
-
-h3 {
-    color: var(--light-gray);
-}
-
-p {
-    font-size: 1.5rem;
-}
-
-a {
-    text-decoration: none;
-    color: var(--claro);
-    font-size: 1.5rem;
-}
-
-.contenedor-principal {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-
-/* GLOBALES */
-
-.campo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1rem auto;
-}
-
-.sidebar {
-    background-color: var(--sidebar);
-}
-
-a.completo,
-a.nocompleto {
-    color: var(--oscuro);
-}
-
-a.completo.activo {
-    color: var(--correcto);
-}
-
-a.nocompleto.activo {
-    color: var(--incorrecto);
-}
-
-a.completo:hover {
-    color: var(--correcto);
-    transition: .2s ease-in-out;
-}
-
-a.nocompleto:hover {
-    color: var(--incorrecto);
-    transition: .2s ease-in-out;
-}
-
+@import 'globales.scss';
+@import 'mixins.scss';
 div.barra {
     display: flex;
     justify-content: space-between;
-    margin: 1rem 0;
+    margin: 2rem 0;
     align-items: center;
     a {
+        display: block;
         color: var(--oscuro);
-        margin: 0 1rem;
+        text-align: center;
     }
     a.volver {
         font-weight: 700;
@@ -130,6 +26,11 @@ div.barra {
     }
 }
 
+div.barra.movil {
+    display: none;
+}
+
+@include mq-barra-movil;
 a.botonazul {
     display: inline-flex;
     justify-content: space-evenly;
@@ -147,17 +48,33 @@ a.botonazul {
 }
 
 
-/* LOGIN */
+/* 404 */
 
-.login .contenido {
+div.error-404 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    img {
-        width: 55rem;
+    h1 {
+        color: var(--color-principal);
+        font-size: 3rem;
     }
+    h2 {
+        color: var(--incorrecto);
+        font-size: 2rem;
+    }
+    img {
+        width: 40rem;
+    }
+    a {
+        color: var(--color-principal);
+        text-decoration: underline;
+    }
+    @include mq-error404;
 }
+
+
+/* LOGIN */
 
 .login {
     background-color: var(--black);
@@ -165,9 +82,18 @@ a.botonazul {
     justify-content: center;
     color: var(--claro);
     text-align: center;
-    padding-left: 2rem;
-    img {
-        width: 10rem;
+    padding: 2rem;
+    .caja-login {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 60rem;
+        height: 40rem;
+        img {
+            margin: 0 auto;
+            width: 10rem;
+        }
     }
     .encabezado i {
         color: var(--claro);
@@ -203,15 +129,16 @@ a.botonazul {
             cursor: pointer;
         }
     }
-}
-
-.caja-login {
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 60rem;
-    height: 40rem;
+    .contenido {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 55rem;
+        }
+    }
+    @include mq-login;
 }
 
 body.loader {
@@ -232,9 +159,10 @@ body.loader {
 /* SIDEBAR*/
 
 aside {
-    width: 25%;
+    width: 35rem;
     height: 100vh;
     padding: 1rem;
+    display: block;
 }
 
 .sidebar {
@@ -312,6 +240,7 @@ div.acciones {
     }
 }
 
+@include mq-sidebar;
 
 /* SIDEBAR PROYECTO */
 
@@ -380,6 +309,9 @@ div.proyecto {
         margin: 1rem 0;
         background-color: var(--claro);
     }
+    .color {
+        width: 5%;
+    }
     h2.nombreproyecto {
         width: 25%;
         color: var(--light-gray);
@@ -428,20 +360,25 @@ div.ended {
     background-color: var(--incorrecto);
 }
 
+@include mq-listado-proyectos;
 
 /* DEPARTAMENTOS */
 
 .departamentos {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    gap: 2rem;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     .barraDepto {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
     }
 }
 
 .barraVacia {
-    width: 7rem;
+    width: 50%;
     height: 0.7rem;
     align-self: center;
     border-radius: 2rem;
@@ -463,14 +400,15 @@ div.ended {
 /* GRID TAREAS  Y BARRA*/
 
 div.tareas {
-    margin-top: 3rem;
+    margin: 3rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-auto-columns: 20rem;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     gap: 2rem;
 }
 
 div.tarea {
-    border: 4px solid var(--light-gray);
+    border: 2px solid var(--light-gray);
     text-align: center;
     padding: 1rem 0;
     display: flex;
@@ -507,6 +445,7 @@ div.iconos-tarea {
 div.selects {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 .tooltip {
@@ -541,6 +480,7 @@ div.selects {
     }
 }
 
+@include mq-proyecto;
 
 /* SELECT */
 
@@ -564,11 +504,21 @@ form.flex-form {
     justify-content: center;
     width: 100rem;
     align-self: center;
+    align-items: center;
     .form-child {
         width: 50rem;
+        img {
+            width: 23rem;
+            height: 23rem;
+        }
+        * {
+            margin-left: auto;
+            margin-right: auto;
+        }
     }
 }
 
+@include mq-editar-cuenta;
 form {
     font-family: 'Lato', sans-serif;
     position: relative;
@@ -598,6 +548,24 @@ select {
     width: 70%;
 }
 
+label {
+    position: relative;
+}
+
+span.feedback {
+    position: absolute;
+    font-weight: 300;
+    font-size: 1.5rem;
+    right: 0rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.flex-form span.feedback {
+    bottom: -6rem;
+    right: -4rem;
+}
+
 label.color {
     display: inline-block;
 }
@@ -618,70 +586,4 @@ select {
     padding: 0.5rem;
 }
 
-
-/*
-    Esta pequeña animación.
-    Si se quita el overflow hidden, se verán las barras debajo del botón. Por eso es "hidden".
-    Mueves las posiciones del position.
-    Background-transparent quién sabe que sea, pero se ocupa.
-    z-index es para declarar capas.
-*/
-
-.boton {
-    width: 100px;
-    height: 50px;
-    position: absolute;
-    bottom: -7rem;
-    left: 2rem;
-    margin: 1rem;
-    overflow: hidden;
-    &:hover .bg {
-        transform: translateY(0);
-    }
-}
-
-input.btnEnviar {
-    position: absolute;
-    width: 100px;
-    height: 100%;
-    background: transparent;
-    border: 2px solid var(--oscuro);
-    cursor: pointer;
-    color: var(--oscuro);
-    font-size: 1.8rem;
-    margin: 0;
-    &:hover {
-        color: var(--claro);
-        transition: .5s ease-in-out;
-    }
-}
-
-.bg {
-    position: absolute;
-    width: 20px;
-    height: 100%;
-    background: #ea2c62;
-    z-index: -1;
-    transform: translateY(100%);
-    transition: all .5s;
-    &:nth-child(3) {
-        left: 20px;
-        transition-delay: .1s;
-    }
-    &:nth-child(4) {
-        left: 40px;
-        transition-delay: .2s;
-    }
-    &:nth-child(5) {
-        left: 60px;
-        transition-delay: .3s;
-    }
-    &:nth-child(6) {
-        left: 80px;
-        transition-delay: .4s;
-    }
-    &:nth-child(7) {
-        left: 100px;
-        transition-delay: .5s;
-    }
-}
+@include mq-formulario-proyecto-tarea;
