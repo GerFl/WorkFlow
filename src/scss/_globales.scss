@@ -53,7 +53,7 @@ h2 {
     color: var(--color-principal);
 }
 
-.menu-movil {
+.header-movil {
     h2 {
         color: var(--claro)
     }
@@ -121,7 +121,7 @@ i.fas.fa-arrow-up {
     display: none;
 }
 
-div.menu-movil {
+div.header-movil {
     display: none;
 }
 
@@ -130,7 +130,8 @@ div.menu-movil {
     i.fas.fa-times,
     i.fas.fa-arrow-up {
         display: block;
-        font-size: 3rem;
+        font-size: 2rem;
+        margin: 0 0.5rem;
         &:hover {
             cursor: pointer;
         }

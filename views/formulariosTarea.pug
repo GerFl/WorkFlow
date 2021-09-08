@@ -3,16 +3,20 @@ html(lang="en")
   head
     include partials/header
   body#arriba
-    .menu-movil
+    .header-movil
       h2 Proyecto: 
         span(style=`color:${proyecto.color}`) #{proyecto.nombre_proyecto}
+      .menu-movil
+        p
+          i.fas.fa-bars
+          | Menuwu
     a(href="#arriba") 
       i.fas.fa-arrow-up
     .contenedor-principal
       aside
         .sidebar
           i.fas.fa-times
-          .barraprogreso
+          .barra-progreso
             .circulo(style=`border: 7px solid ${proyecto.color}`)
               p #{proyecto.porcentaje}%
               span COMPLETADO
@@ -25,11 +29,10 @@ html(lang="en")
             p Entrega del proyecto: #{proyecto.fecha_entrega}
       .contenido
         .barra
-          i.fas.fa-bars Menuwu
           a.volver(href=`/proyecto/${proyecto.url}`)
             i.fas.fa-arrow-left
             | Volver al proyecto
-        .listadoproyectos
+        .listado-proyectos
           form.feedback(action=`${actionForm}` method="POST")
             fieldset
               legend #{titulo}
@@ -43,7 +46,10 @@ html(lang="en")
                 input(type='text' name='tarea_nombre' maxlength="30" value=tarea ? `${tarea.tarea_nombre}` : '' required)
                 label(for='descripcion_tarea') Agrega una pequeña descripción:
                   span.feedback 0/100
-                input(type='text' name='descripcion_tarea' maxlength="100" value=tarea ? `${tarea.descripcion_tarea}` : '' required)
+                if tarea
+                  textarea#campotexto(name='descripcion_tarea' cols='50' rows='5' maxlength="100" required)= `${tarea.descripcion_tarea}`
+                else
+                  textarea#campotexto(name='descripcion_tarea' cols='50' rows='5' maxlength="100" required)
                 label(for='departamento') ¿A qué área de trabajo pertenece?
                 select#departamento(name="departamento")
                   option(value="" disabled selected) -- Seleccione --

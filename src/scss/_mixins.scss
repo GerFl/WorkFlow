@@ -1,28 +1,44 @@
 @mixin mq-barra-movil {
     @media only screen and (max-width: 768px) {
-        div.barra a:first-child {
-            display: none;
+        div.barra {
+            a {
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                &.ocultar {
+                    display: none;
+                }
+            }
+            &.movil {
+                display: flex;
+            }
         }
-        div.barra.movil {
-            display: block;
-        }
-        div.barra.movil a:first-child {
-            display: inherit;
-            width: 15rem;
-        }
-        div.barra a {
-            margin: 0 auto;
-        }
-        div.menu-movil {
+        div.header-movil {
             display: block;
             color: var(--claro);
             background-color: var(--sidebar);
             padding: 1rem;
             text-align: center;
-            img {
-                width: 22rem;
-                display: block;
+            .menu-movil {
                 margin: 0 auto;
+                width: 10rem;
+                p {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 2rem;
+                    margin: 0;
+                }
+                &.fijo {
+                    position: fixed;
+                    background-color: var(--sidebar);
+                    box-shadow: 0 .3rem 0.4rem #444;
+                    width: 100%;
+                    top: 0;
+                    right: 0;
+                    padding: 2rem;
+                    z-index: 1;
+                }
             }
         }
     }
@@ -132,6 +148,9 @@
     @media only screen and (max-width: 768px) {
         fieldset {
             flex-direction: column;
+        }
+        legend {
+            font-size: 2rem;
         }
         label,
         input,

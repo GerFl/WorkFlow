@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#242121">
     <link rel="shortcut icon" href="../public/assets/fish.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/css/normalize.css">
@@ -14,15 +15,16 @@
 </head>
 
 <body id="arriba">
-    <div class="menu-movil">
-        <h2>WorkFlow</h2>
+    <div class="header-movil">
+        <h2>Proyecto: <span>WorkFlow</span></h2>
+        <p><i class="fas fa-bars"></i>Menuwu</p>
     </div>
     <a href="#arriba"><i class="fas fa-arrow-up"></i></a>
     <div class="contenedor-principal">
         <aside>
             <div class="sidebar">
                 <i class="fas fa-times"></i>
-                <div class="barraprogreso">
+                <div class="barra-progreso">
                     <div class="circulo" style="border: 7px solid #32d2b2">
                         <p>75%</p><span>COMPLETADO</span></div>
                 </div>
@@ -38,10 +40,9 @@
         </aside>
         <div class="contenido">
             <div class="barra">
-                <i class="fas fa-bars">Menuwu</i>
-                <a class="volver" href="proyecto.html"><i class="fas fa-arrow-left"></i>Volver</a>
+                <a class="volver" href="proyecto.html"><i class="fas fa-arrow-left"></i>Volver a la página principal</a>
             </div>
-            <div class="listadoproyectos">
+            <div class="listado-proyectos">
                 <div class="formulario">
                     <form class="feedback" action="" method="">
                         <fieldset>
@@ -83,8 +84,7 @@
         </div>
     </div>
 </body>
-<script src="../public/js/script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../public/js/app.js"></script>
 <script src="../public/js/sweetalert2.all.min.js"></script>
 
 </html>

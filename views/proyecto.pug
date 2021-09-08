@@ -3,16 +3,20 @@ html(lang="es")
   head
     include partials/header
 body#arriba
-    .menu-movil
-      h2 Proyecto: 
+    .header-movil
+      h2(data-url=proyecto.url) Proyecto: 
         span(style=`color:${proyecto.color}`) #{proyecto.nombre_proyecto}
+      .menu-movil
+        p
+          i.fas.fa-bars
+          | Menuwu
     a(href="#arriba") 
       i.fas.fa-arrow-up
     .contenedor-principal
       aside
         .sidebar
           i.fas.fa-times
-          .barraprogreso
+          .barra-progreso
             .circulo(style=`border: 7px solid ${proyecto.color}`)
               //- JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
               p #{proyecto.porcentaje}%
@@ -30,10 +34,9 @@ body#arriba
               button.eliminar Eliminar proyecto
       .contenido
         .barra
-          a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
+          a.botonazul.ocultar(href=`/proyecto/${proyecto.url}/agregar-tarea`)
             i.fas.fa-plus
             | Nueva tarea
-          i.fas.fa-bars Menuwu
           a.volver(href='/')
             i.fas.fa-arrow-left
             | Volver a la página principal
@@ -47,7 +50,8 @@ body#arriba
               p
         .barra.movil
           a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
-            i.fas.fa-plus Nueva tarea
+            i.fas.fa-plus
+            | Nueva tarea
         
         if tareas.length
           .tareas

@@ -2,6 +2,7 @@ const { src, dest, watch } = require('gulp');
 const gulpSass = require('gulp-sass');
 const dartSass = require('dart-sass');
 const sass = gulpSass(dartSass);
+const uglify = require('gulp-uglify');
 
 function compilarSass() {
     return src('./src/scss/app.scss')
@@ -10,12 +11,19 @@ function compilarSass() {
         .pipe(dest('./public/css'));
 }
 
+function minificarJs() {
+    return src('./src/js/app.js')
+        .pipe(uglify())
+        .pipe(dest('./public/js'));
+}
+
 function uatu() {
     watch('./src/scss/*.scss', compilarSass);
-    // watch('./src/scss/*.scss', compilarSass);
+    // watch('./src/js/*.js', minificarJs);
 }
 
 exports.compilarSass = compilarSass;
+exports.minificarJs = minificarJs;
 exports.uatu = uatu;
 
 /*

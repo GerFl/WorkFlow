@@ -99,7 +99,7 @@ exports.editarCuenta = async(req, res, next) => {
     password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     let imagen_perfil = usuario.imagen_perfil;
     if (req.body.imagen) {
-        const rutaImagen = __dirname + `/../public/uploads/${imagen_perfil}`;
+        const rutaImagen = __dirname + `/../public/profilePics/${imagen_perfil}`;
         fs.unlink(rutaImagen, (err) => {
             if (err && err.code == 'ENOENT') {
                 console.log("El archivo ya no existe.");
@@ -150,7 +150,7 @@ exports.validarCuenta = async(req, res, next) => {
                 usuario,
                 errores
             });
-            const rutaImagen = __dirname + `/../public/uploads/${req.body.imagen}`;
+            const rutaImagen = __dirname + `/../public/profilePics/${req.body.imagen}`;
             fs.unlink(rutaImagen, (err) => {
                 if (err && err.code == 'ENOENT') {
                     // File doesn't exist
@@ -198,7 +198,7 @@ exports.validarImagen = (req, res, next) => {
 const configMulter = {
     storage: fileStorage = multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, __dirname + '/../public/uploads');
+            cb(null, __dirname + '/../public/profilePics');
         },
         filename: (req, file, cb) => {
             const extension = file.mimetype.split('/')[1]; // Capturar extension de la imagen
