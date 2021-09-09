@@ -15,8 +15,8 @@ entre otras.
 
 ## ¿Cómo instalar las dependencias?
 Se puede instalar de dos maneras, una usando el archivo 'package.json' y otra utilizando 'package-lock.json'.
-- Si se decide utilizar el 'package.json' sólo es necesario estar en la carpeta del proyecto en la terminal y escribir `npm install`
-- Si se usa 'package-lock.json' también se debe estar en la carpeta del proyecto en la terminal, pero en este caso se escribe `npm ci`
+- Si se decide utilizar el 'package.json' sólo es necesario estar en la carpeta del proyecto en la terminal y escribir `npm install`. Esto instalará las versiones recientes de las dependencias
+- Si se usa 'package-lock.json' también se debe estar en la carpeta del proyecto en la terminal, pero en este caso se escribe `npm ci`. Esto instalará las versiones **utilizadas** de las dependencias durante el desarrollo del proyecto
 
 Para más información visita este hilo en [stackoverflow](https://stackoverflow.com/questions/44206782/do-i-commit-the-package-lock-json-file-created-by-npm-5?rq=1)
   
