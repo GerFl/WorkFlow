@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('../config/database');
-const proyectos = require('./Proyectos');
+const Proyectos = require('./Proyectos');
 
 const Tareas = database.define('tareas', {
     id_tarea: {
@@ -18,6 +18,6 @@ const Tareas = database.define('tareas', {
         defaultValue: Sequelize.NOW
     }
 });
-Tareas.belongsTo(proyectos); // Añadiendo llaves foraneas para relacionar ambas tablas
+Tareas.belongsTo(Proyectos); // Añadiendo llaves foraneas para relacionar ambas tablas
 
 module.exports = Tareas;

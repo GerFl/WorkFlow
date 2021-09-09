@@ -41,10 +41,6 @@ const Usuarios = database.define('usuarios', {
     hooks: {
         beforeCreate(usuario) {
             usuario.password = bcrypt.hashSync(usuario.password, bcrypt.genSaltSync(10));
-        },
-        beforeUpdate(usuario) {
-            console.log("Corriendo el beforeUpdate");
-            console.log(usuario);
         }
     }
 });

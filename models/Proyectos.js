@@ -27,10 +27,6 @@ const Proyectos = database.define('proyectos', {
             // Slug recorta espacios
             const url = slug(proyecto.nombre_proyecto);
             proyecto.url = `${url}-${shortid.generate()}`;
-        },
-        beforeUpdate(proyecto) {
-            console.log("Corriendo el beforeUpdate");
-            console.log(proyecto);
         }
     }
 });

@@ -1,6 +1,6 @@
 {
     "name": "workflow",
-    "version": "2.0.0",
+    "version": "1.5.0",
     "description": "Administrador de proyectos personal. Realizado en Node.",
     "main": "index.js",
     "scripts": {

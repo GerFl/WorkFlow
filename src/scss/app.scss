@@ -102,7 +102,6 @@ div.error-404 {
     .campo {
         label {
             text-align: left;
-            height: 2rem;
             color: var(--claro);
         }
         input {
@@ -153,6 +152,14 @@ body.loader {
     display: flex;
     justify-content: center;
     z-index: 21;
+}
+
+@media only screen and (max-width:768px) {
+    .loading {
+        img {
+            width: 100%;
+        }
+    }
 }
 
 
@@ -500,13 +507,12 @@ div.selects select {
 /* FORMULARIOS */
 
 form.flex-form {
-    display: flex;
-    justify-content: center;
-    width: 100rem;
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     align-self: center;
-    align-items: center;
+    width: 75rem;
     .form-child {
-        width: 50rem;
         img {
             width: 23rem;
             height: 23rem;

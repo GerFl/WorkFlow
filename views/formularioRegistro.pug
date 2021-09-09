@@ -7,6 +7,8 @@ html(lang='es')
       .caja-login
         .encabezado
           h2 #{titulo}
+          if editar
+            p Para guardar cualquier cambio, es necesario dar click en el botón "Editar mi cuenta"
           if errores
             each error in errores
               p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
@@ -37,8 +39,7 @@ html(lang='es')
               label(for='confirmarpassword') Confirmar contraseña:
                 span.feedback 0/60
               input(type='password' name='confirmarpassword' required maxlength="60")
-            .campo
-              input.btn-login(type='submit' value=editar?'Editar mi cuenta':'Crear cuenta')
+            input.btn-login(type='submit' value=editar?'Editar mi cuenta':'Crear cuenta')
         if editar
           a(href="/" style="color:#8de4af") Regresar a la página principal 
         else

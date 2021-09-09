@@ -8,7 +8,18 @@ module.exports = {
                 }, { transaction: t }),
                 queryInterface.addColumn('Usuarios', 'favoriteColor', {
                     type: Sequelize.DataTypes.STRING,
-                }, { transaction: t })
+                }, { transaction: t }),
+                //                 // 1) drop constraint
+                // queryInterface.removeConstraint('my_some_table', 'my_constraint');
+
+                // // 2) rename column
+                // queryInterface.renameColumn('my_some_table', 'totoId', 'toto_id');
+
+                // // 3) add constraint back
+                // queryInterface.addConstraint('my_some_table', ['toto_id'], {
+                //     type: 'unique',
+                //     name: 'my_constraint'
+                // });
             ]);
         });
     },

@@ -6,7 +6,6 @@ import { conteoyPorcentaje } from './modules/benAffleck'
     document.addEventListener('DOMContentLoaded', function() {
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
 
-
         // MODULE INITIALIZED
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
@@ -14,6 +13,7 @@ import { conteoyPorcentaje } from './modules/benAffleck'
                 window.location.href = '/';
             }, 9000);
         }
+
         // SEMAFORO
         const proyectos = document.querySelectorAll('.proyecto a');
         proyectos.forEach(proyecto => {
@@ -41,14 +41,13 @@ import { conteoyPorcentaje } from './modules/benAffleck'
             1 hora = 60 minutos = 3,600,000 milisegundos
             1 dia = 24 horas = 86400000 milisegundos
         */
-
         // CALENDARIO
-        var date = new Date();
-        if (date.getMonth() < 10) {
-            date = date.getFullYear() + '-0' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
-        } else {
-            date = date.getFullYear() + '-' + (date.getUTCMonth() + 1) + '-' + date.getUTCDate();
-        }
+        let date = new Date();
+        let dia = date.getUTCDate();
+        let mes = date.getUTCMonth();
+        (dia < 10) ? dia = '0' + dia: '';
+        (mes < 9) ? mes = '0' + (mes + 1): '';
+        date = date.getFullYear() + '-' + mes + '-' + dia;
         (document.querySelector('input#date')) ? (document.querySelector('input#date')).min = date: '';
         // FIN CALENDARIO
 
@@ -58,33 +57,31 @@ import { conteoyPorcentaje } from './modules/benAffleck'
         if (btnMenu && sidebar) {
             btnMenu.addEventListener('click', e => {
                 sidebar.style.display = "block";
+                sidebar.style.animation = "abrir-transicion-sidebar .3s linear";
                 const btnCerrarMenu = document.querySelector('i.fas.fa-times');
                 btnCerrarMenu.addEventListener('click', e => {
-                    (e.target == btnCerrarMenu) ? sidebar.style.display = "none": '';
+                    if (e.target == btnCerrarMenu) {
+                        sidebar.style.animation = "cerrar-transicion-sidebar .3s linear";
+                        sidebar.style.display = "none";
+                    }
                 });
             });
         }
+        // Barra movil
+        const barra = document.querySelector('.menu-movil');
+        //Registrar observador
+        const observer = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+                barra.classList.remove('fijo');
+            } else {
+                barra.classList.add('fijo');
+            }
+        });
+        // Elemento observado
+        observer.observe(document.querySelector('.header-movil'));
         // FINHAMBURGER
-        // JUST IN CASE
-        // Llamar
-        barraFija();
-        // Declarar
-        function barraFija() {
-            const barra = document.querySelector('.menu-movil');
-            //Registrar observer
-            const observer = new IntersectionObserver(function(entries) {
-                console.log(entries[0]);
-                if (entries[0].isIntersecting) {
-                    barra.classList.remove('fijo');
-                } else {
-                    barra.classList.add('fijo');
-                }
-            });
-            // Elemento a observar
-            observer.observe(document.querySelector('.header-movil'));
-        }
 
-        // CONTEO
+        // CONTEO DE TAREAS
         const totalTareas = document.querySelectorAll('.tarea');
         const areas = document.querySelector('input#areas');
         if (totalTareas.length > 0) {
@@ -164,6 +161,5 @@ import { conteoyPorcentaje } from './modules/benAffleck'
             }
         }
         // FIN CONTEO CARACTERES
-
     });
 })();
