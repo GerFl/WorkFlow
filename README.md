@@ -14,21 +14,29 @@ También se usaron tecnologías como:
 entre otras.
 
 ## ¿Cómo instalar las dependencias?
-Se puede instalar de dos maneras, una usando el archivo 'package.json' y otra utilizando 'package-lock.json'.
+Se pueden instalar de dos maneras, una usando el archivo 'package.json' y otra utilizando el 'package-lock.json'.
 - Si se decide utilizar el 'package.json' sólo es necesario estar en la carpeta del proyecto en la terminal y escribir `npm install`. Esto instalará las versiones recientes de las dependencias
 - Si se usa 'package-lock.json' también se debe estar en la carpeta del proyecto en la terminal, pero en este caso se escribe `npm ci`. Esto instalará las versiones **utilizadas** de las dependencias durante el desarrollo del proyecto
 
 Para más información visita este hilo en [stackoverflow](https://stackoverflow.com/questions/44206782/do-i-commit-the-package-lock-json-file-created-by-npm-5?rq=1)
   
 ## ¿Cómo iniciar la aplicación?
+**Es necesario tener la base de datos creada previamente. Los datos de conexión se pueden cambiar en ./config/database.js**
+**El ORM se encargará de crear las tablas al ejecutar la aplicación.**
 ### NPM scripts
-  Hay tres comandos para poder ejecutar la aplicación:
-  - `npm run start` : iniciará la aplicación de manera normal con Nodemon, el cual captura los cambios de los archivos .js
-  - `npm run watch` : utilizará **webpack** para poder compilar los archivos js ubicados en la carpeta 'src', los cuales son utilizados para el frontend y para mandar peticiones con **axios**
-  - `npm run dev` : utilizará el paquete **concurrently** para poder ejecutar *npm run start* y *npm run watch* al mismo tiempo, 
+  Hay cuatro comandos :
+  - `npm run start` : iniciará la aplicación para uso normal
+  - `npm run pokemon` : iniciará la aplicación con **nodemon**, el cual captura los cambios de los archivos .js y .json
+  - `npm run watch` : Este comando no inicia la aplicación, sólo utilizará **webpack** para poder compilar los modulos js ubicados en la carpeta 'src', los cuales se mandan al frontend para funcionalidad y mandar peticiones con **axios**
+  - `npm run dev` : utilizará el paquete **concurrently** para poder ejecutar *npm run pokemon* y *npm run watch* al mismo tiempo
 
 La aplicación se muestra por default en `localhost:3001`. El puerto se puede cambiar en el archivo 'index.js' ubicado en la raíz del proyecto.
-  
+
+### GULP
+En caso de hacer cambios en los archivos de Sass, se puede correr cualquiera de los siguientes comandos:
+- `gulp compilarSass` : compila Sass una sola vez
+- `gulp uatu` : compila Sass de manera automática cada que haya cambios en los archivos .scss
+
 ### Migraciones
   Para hacer una migración de la base de datos es necesario contar con sequelize-cli, el cuál se puede instalar en el proyecto fácilmente con el siguiente comando:
   ````

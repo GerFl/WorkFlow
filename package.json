@@ -4,9 +4,10 @@
     "description": "Administrador de proyectos personal. Realizado en Node.",
     "main": "index.js",
     "scripts": {
-        "start": "nodemon ./index.js",
+        "start": "node ./index.js",
+        "pokemon": "nodemon ./index.js",
         "watch": "webpack -w --mode development",
-        "dev": "concurrently \"npm run watch\" \"npm run start\""
+        "dev": "concurrently \"npm run watch\" \"npm run pokemon\""
     },
     "repository": {
         "type": "git",

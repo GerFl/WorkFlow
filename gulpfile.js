@@ -23,7 +23,6 @@ function uatu() {
 }
 
 exports.compilarSass = compilarSass;
-exports.minificarJs = minificarJs;
 exports.uatu = uatu;
 
 /*
