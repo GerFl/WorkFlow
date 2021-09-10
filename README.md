@@ -21,7 +21,7 @@ Se pueden instalar de dos maneras, una usando el archivo 'package.json' y otra u
 Para más información visita este hilo en [stackoverflow](https://stackoverflow.com/questions/44206782/do-i-commit-the-package-lock-json-file-created-by-npm-5?rq=1)
   
 ## ¿Cómo iniciar la aplicación?
-**Es necesario tener la base de datos creada previamente. Los datos de conexión se pueden cambiar en ./config/database.js**
+**Es necesario tener la base de datos creada previamente. Los datos de conexión se pueden cambiar en ./config/database.js**<br>
 **El ORM se encargará de crear las tablas al ejecutar la aplicación.**
 ### NPM scripts
   Hay cuatro comandos :
