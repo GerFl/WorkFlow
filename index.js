@@ -10,9 +10,10 @@ require('dotenv').config({ path: 'variables.env' });
 
 // Inicializar la BD
 const database = require('./config/database');
+require('./models/Usuarios');
 require('./models/Proyectos');
 require('./models/Tareas');
-require('./models/Usuarios');
+require('./models/associations');
 // Probar conexion
 database.sync()
     .then(() => console.log("Conectado al servidor."))

@@ -45,8 +45,6 @@ const Usuarios = database.define('usuarios', {
     }
 });
 
-Usuarios.hasMany(Proyectos);
-
 Usuarios.prototype.verificarPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 }

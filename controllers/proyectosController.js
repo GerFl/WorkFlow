@@ -6,14 +6,14 @@ const shortid = require('shortid');
 
 exports.paginaPrincipal = async(req, res) => {
     const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
-    const proyectos = await Proyectos.findAll({
-        where: {
-            usuarioIdUsuario: usuario.id_usuario
-        }
-    });
+        // const proyectos = await Proyectos.findAll({
+        //     where: {
+        //         usuarioIdUsuario: usuario.id_usuario
+        //     }
+        // });
     res.render('index', {
         nombrePagina: 'WorkFlow',
-        proyectos,
+        // proyectos,
         usuario
     });
 }

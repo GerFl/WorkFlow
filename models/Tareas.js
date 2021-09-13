@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const database = require('../config/database');
 const Proyectos = require('./Proyectos');
+const ProyectosCompartidos = require('./ProyectosCompartidos');
 
 const Tareas = database.define('tareas', {
     id_tarea: {
