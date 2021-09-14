@@ -12,6 +12,7 @@ require('dotenv').config({ path: 'variables.env' });
 const database = require('./config/database');
 require('./models/Usuarios');
 require('./models/Proyectos');
+require('./models/ProyectosCompartidos');
 require('./models/Tareas');
 require('./models/associations');
 // Probar conexion

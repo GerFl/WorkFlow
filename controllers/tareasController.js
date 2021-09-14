@@ -13,17 +13,17 @@ exports.formularioTarea = async(req, res) => {
         titulo: "Nueva Tarea",
         actionForm: `/proyecto/${proyecto.url}/agregar-tarea`,
         proyecto,
-        totalTareas: await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto
-            }
-        }),
-        tareasCompletadas: await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto,
-                estatus: 1
-            }
-        }),
+        // totalTareas: await Tareas.count({
+        //     where: {
+        //         proyectoIdProyecto: proyecto.id_proyecto
+        //     }
+        // }),
+        // tareasCompletadas: await Tareas.count({
+        //     where: {
+        //         proyectoIdProyecto: proyecto.id_proyecto,
+        //         estatus: 1
+        //     }
+        // }),
         areas
     });
 }

@@ -1,19 +1,31 @@
-const Proyectos = require('../models/Proyectos');
-const Tareas = require('../models/Tareas');
-const Usuarios = require('../models/Usuarios');
 const slug = require('slug');
 const shortid = require('shortid');
+const Usuarios = require('../models/Usuarios');
+const Proyectos = require('../models/Proyectos');
+const ProyectosCompartidos = require('../models/ProyectosCompartidos');
+const Tareas = require('../models/Tareas');
 
 exports.paginaPrincipal = async(req, res) => {
     const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
-        // const proyectos = await Proyectos.findAll({
-        //     where: {
-        //         usuarioIdUsuario: usuario.id_usuario
-        //     }
-        // });
+    const relaciones = await ProyectosCompartidos.findAll({
+        where: {
+            usuarioIdUsuario: usuario.id_usuario
+        },
+        attributes: ['proyectoIdProyecto']
+    });
+    console.log(relaciones);
+    let proyectos = [];
+    for (let i = 0; i < relaciones.length; i++) {
+        let proyecto = await Proyectos.findOne({
+            where: {
+                id_proyecto: relaciones[i].proyectoIdProyecto
+            }
+        });
+        proyectos.push(proyecto);
+    }
     res.render('index', {
         nombrePagina: 'WorkFlow',
-        // proyectos,
+        proyectos,
         usuario
     });
 }
@@ -45,14 +57,14 @@ exports.proyectoUrl = async(req, res, next) => {
 exports.formularioProyecto = async(req, res) => {
     const usuarioId = res.locals.usuario.id_usuario;
     const usuario = await Usuarios.findOne({ where: { id_usuario: usuarioId } });
-    const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
-    const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
+    // const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
+    // const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
     res.render('formulariosProyecto', {
         nombrePagina: 'WorkFlow - Agregar proyecto',
         titulo: "Agregar proyecto",
         actionForm: "/agregar-proyecto",
-        totalProyectos,
-        proyectosCompletados,
+        // totalProyectos,
+        // proyectosCompletados,
         usuario
     });
 }
@@ -87,7 +99,7 @@ exports.agregarProyecto = async(req, res) => {
     const porcentaje = 0;
     const completado = 0;
     const usuarioIdUsuario = res.locals.usuario.id_usuario;
-    await Proyectos.create({
+    const proyecto = await Proyectos.create({
         nombre_proyecto,
         descripcion_proyecto,
         fecha_entrega,
@@ -96,8 +108,12 @@ exports.agregarProyecto = async(req, res) => {
         color,
         completado,
         usuarioIdUsuario
-    })
-    return res.redirect('/');
+    });
+    const relacion = await ProyectosCompartidos.create({
+        proyectoIdProyecto: proyecto.id_proyecto,
+        usuarioIdUsuario: res.locals.usuario.id_usuario
+    });
+    if (relacion) return res.redirect('/');
 }
 
 exports.editarProyecto = async(req, res) => {

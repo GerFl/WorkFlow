@@ -4,20 +4,14 @@ const Usuarios = require('./Usuarios');
 const Proyectos = require('./Proyectos');
 
 const ProyectosCompartidos = database.define('proyectos-compartidos', {
-    id_proyecto: {
+    id_relacion: {
         type: Sequelize.INTEGER(11),
-        references: {
-            model: Proyectos,
-            key: 'id_proyecto'
-        }
-    },
-    id_usuario: {
-        type: Sequelize.INTEGER(11),
-        references: {
-            model: Usuarios,
-            key: 'id_usuario'
-        }
+        primaryKey: true,
+        autoIncrement: true
     }
 });
+
+Usuarios.belongsToMany(Proyectos, { through: ProyectosCompartidos });
+Proyectos.belongsToMany(Usuarios, { through: ProyectosCompartidos });
 
 module.exports = ProyectosCompartidos;
