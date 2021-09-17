@@ -63,6 +63,7 @@ html(lang="en")
                         option(value=`${area}`) #{area}
                 label(for='prioridad') Indica la prioridad (la puedes cambiar después):
                 select#prioridad(name='prioridad' required)
+                  option(value="" disabled selected) -- Seleccione --
                   each opt in [1,2,3,4,5,6]
                     option(value=opt selected=(tarea && tarea.prioridad == opt) ? true : false ) #{opt}
               .boton

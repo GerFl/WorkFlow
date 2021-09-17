@@ -52,9 +52,14 @@ html(lang="en")
                 button.eliminar Eliminar proyecto
       .contenido
         .barra
-          a.volver(href='/')
-            i.fas.fa-arrow-left
-            | Volver a la página principal
+          if proyecto
+            a.volver(href=`/proyecto/${proyecto.url}`)
+              i.fas.fa-arrow-left
+              | Volver al proyecto
+          else
+            a.volver(href='/')
+                i.fas.fa-arrow-left
+                | Volver a la página principal
         .listado-proyectos
           form.proyecto.feedback(action=actionForm method="POST")
             fieldset

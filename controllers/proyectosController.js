@@ -7,18 +7,17 @@ const Tareas = require('../models/Tareas');
 
 exports.paginaPrincipal = async(req, res) => {
     const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
-    const relaciones = await ProyectosCompartidos.findAll({
+    const proyectosCompartidos = await ProyectosCompartidos.findAll({
         where: {
             usuarioIdUsuario: usuario.id_usuario
         },
         attributes: ['proyectoIdProyecto']
     });
-    console.log(relaciones);
     let proyectos = [];
-    for (let i = 0; i < relaciones.length; i++) {
+    for (let i = 0; i < proyectosCompartidos.length; i++) {
         let proyecto = await Proyectos.findOne({
             where: {
-                id_proyecto: relaciones[i].proyectoIdProyecto
+                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
             }
         });
         proyectos.push(proyecto);
@@ -55,30 +54,66 @@ exports.proyectoUrl = async(req, res, next) => {
 
 // Vista formulario para agregar
 exports.formularioProyecto = async(req, res) => {
-    const usuarioId = res.locals.usuario.id_usuario;
-    const usuario = await Usuarios.findOne({ where: { id_usuario: usuarioId } });
-    // const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
-    // const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
+    const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } });
+    // Primero encontrar todas las relaciones del usuario actual
+    const proyectosCompartidos = await ProyectosCompartidos.findAll({
+        where: {
+            usuarioIdUsuario: res.locals.usuario.id_usuario
+        },
+        attributes: ['proyectoIdProyecto']
+    });
+    // Buscar los proyectos iterando con los indices de proyectosCompartidos
+    let totalProyectos = [];
+    for (let i = 0; i < proyectosCompartidos.length; i++) {
+        let proyecto = await Proyectos.findOne({
+            where: {
+                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
+            }
+        });
+        totalProyectos.push(proyecto);
+    }
+    // Marcar los proyectos completados
+    let proyectosCompletados = 0;
+    for (let i = 0; i < totalProyectos.length; i++) {
+        (totalProyectos[i].porcentaje == 100) ? proyectosCompletados += 1: '';
+    }
     res.render('formulariosProyecto', {
         nombrePagina: 'WorkFlow - Agregar proyecto',
         titulo: "Agregar proyecto",
         actionForm: "/agregar-proyecto",
-        // totalProyectos,
-        // proyectosCompletados,
+        totalProyectos: totalProyectos.length,
+        proyectosCompletados,
         usuario
     });
 }
 
 exports.formularioEditarProyecto = async(req, res, next) => {
-    const usuarioId = res.locals.usuario.id_usuario;
-    const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
-    const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
-    const proyecto = await Proyectos.findOne({
+    // Primero encontrar todas las relaciones del usuario actual
+    const proyectosCompartidos = await ProyectosCompartidos.findAll({
         where: {
-            url: req.params.proyectourl
-        }
+            usuarioIdUsuario: res.locals.usuario.id_usuario
+        },
+        attributes: ['proyectoIdProyecto']
     });
+    // Buscar los proyectos iterando con los indices de proyectosCompartidos
+    let totalProyectos = [];
+    for (let i = 0; i < proyectosCompartidos.length; i++) {
+        let proyecto = await Proyectos.findOne({
+            where: {
+                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
+            }
+        });
+        totalProyectos.push(proyecto);
+    }
+    // Marcar los proyectos completados
+    let proyectosCompletados = 0;
+    for (let i = 0; i < totalProyectos.length; i++) {
+        (totalProyectos[i].porcentaje == 100) ? proyectosCompletados += 1: '';
+    }
+    // Obtener el proyecto actual
+    const proyecto = await Proyectos.findOne({ where: { url: req.params.proyectourl } });
     const areas = proyecto.areas.split(',');
+    // Buscar las tareas
     const totalTareas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
     const tareasCompletadas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto, estatus: 1 } });
     res.render('formulariosProyecto', {
@@ -132,8 +167,7 @@ exports.editarProyecto = async(req, res) => {
         url
     }, {
         where: {
-            id_proyecto: proyecto.id_proyecto,
-            usuarioIdUsuario: res.locals.usuario.id_usuario
+            id_proyecto: proyecto.id_proyecto
         }
     });
     if (proyectoActualizado) {

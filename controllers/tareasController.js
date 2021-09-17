@@ -8,22 +8,24 @@ exports.formularioTarea = async(req, res) => {
         }
     });
     const areas = proyecto.areas.split(',');
+    const totalTareas = await Tareas.count({
+        where: {
+            proyectoIdProyecto: proyecto.id_proyecto
+        }
+    });
+    const tareasCompletadas = await Tareas.count({
+        where: {
+            estatus: 1,
+            proyectoIdProyecto: proyecto.id_proyecto
+        }
+    });
     res.render('formulariosTarea', {
         nombrePagina: `${proyecto.nombre_proyecto}: Agregar tarea`,
         titulo: "Nueva Tarea",
         actionForm: `/proyecto/${proyecto.url}/agregar-tarea`,
         proyecto,
-        // totalTareas: await Tareas.count({
-        //     where: {
-        //         proyectoIdProyecto: proyecto.id_proyecto
-        //     }
-        // }),
-        // tareasCompletadas: await Tareas.count({
-        //     where: {
-        //         proyectoIdProyecto: proyecto.id_proyecto,
-        //         estatus: 1
-        //     }
-        // }),
+        totalTareas,
+        tareasCompletadas,
         areas
     });
 }
