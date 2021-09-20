@@ -2,12 +2,14 @@
 const express = require('express'); // Se trae todas las funciones de express a este archivo
 const router = express.Router();
 
+const usersController = require('../controllers/usersController');
+const authorizationController = require('../controllers/authorizationController');
 const proyectosController = require('../controllers/proyectosController');
 const tareasController = require('../controllers/tareasController');
-const authorizationController = require('../controllers/authorizationController');
-const usersController = require('../controllers/usersController');
+const proyectosCompartidos = require('../controllers/proysCompartidosController');
 
 module.exports = function() { // Exportar rutas
+    /* HOME */
     router.get('/',
         authorizationController.usuarioAutenticado,
         proyectosController.paginaPrincipal
@@ -65,7 +67,8 @@ module.exports = function() { // Exportar rutas
 
     /* PROYECTOS */
     // Listar proyectos
-    // Usa proyectourl como comodin, puesto que no sabemos a cuál url va ir. Dicha url se asigna en la vista del index en cada etiqueta a generada por los proyectos listados
+    // Usa proyectourl como comodin, puesto que no sabemos a cuál url va ir.
+    // Dicha url se asigna en la vista del index en cada etiqueta a generada por los proyectos listados
     router.get('/proyecto/:proyectourl',
         authorizationController.usuarioAutenticado,
         proyectosController.proyectoUrl
@@ -94,7 +97,15 @@ module.exports = function() { // Exportar rutas
         authorizationController.usuarioAutenticado,
         proyectosController.eliminarProyecto
     );
+    /* FIN PROYECTOS */
 
+    /* PROYECTOS COMPARTIDOS */
+    router.get('/proyecto/:proyectourl/colaboradores',
+        proyectosCompartidos.index
+    );
+    /* FIN PROYECTOS COMPARTIDOS */
+
+    /* TAREAS */
     /* AGREGAR Y EDITAR TAREAS */
     router.get('/proyecto/:proyectourl/agregar-tarea',
         authorizationController.usuarioAutenticado,
@@ -104,7 +115,7 @@ module.exports = function() { // Exportar rutas
         authorizationController.usuarioAutenticado,
         tareasController.validarTareas,
         tareasController.agregarTarea,
-        proyectosController.actualizarProyecto
+        proyectosController.actualizarPorcentaje
     );
     router.get('/proyecto/:proyectourl/editar-tarea/:idtarea',
         authorizationController.usuarioAutenticado,
@@ -119,17 +130,17 @@ module.exports = function() { // Exportar rutas
     router.patch('/tarea-completada/:id',
         authorizationController.usuarioAutenticado,
         tareasController.completarTarea,
-        proyectosController.actualizarProyecto
+        proyectosController.actualizarPorcentaje
     );
     router.patch('/tarea-descompletada/:id',
         authorizationController.usuarioAutenticado,
         tareasController.descompletarTarea,
-        proyectosController.actualizarProyecto
+        proyectosController.actualizarPorcentaje
     );
     router.delete('/tarea-eliminar/:id',
         authorizationController.usuarioAutenticado,
         tareasController.eliminarTarea,
-        proyectosController.actualizarProyecto
+        proyectosController.actualizarPorcentaje
     );
 
     // ERROR 404

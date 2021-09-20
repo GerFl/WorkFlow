@@ -92,17 +92,45 @@ html(lang="en")
                 label(for="areas") Indica las áreas para este proyecto:
                 p Los caracteres especiales no se guardaran
                 div
-                  label.feedback ->
-                    span.feedback 0/25
                   if areas
                     each area in areas
+                      label.feedback
+                        span.feedback 0/25
                       input.area(type="text" value=area maxlength='25')
                   else
+                    label.feedback
+                      span.feedback 0/25
                     input.area(type="text" maxlength='25')
-                button.area-trabajo
+                button.transparente
                   i.fas.fa-plus
                   | Agregar área
                 input.set-areas-trabajo(type="hidden" name="areas")
+            fieldset.colaboradores
+              legend Colaboradores
+              .grid-colaboradores
+                .colaborador
+                  img(src="/assets/fish.ico", alt="Imagen")
+                  div
+                    p Gerardo Flores
+                    h4 Análisis
+                .colaborador
+                  img(src="/profilePics/e5049180-27be-47b9-bbff-0282f69f4301.jpeg", alt="Imagen")
+                  div
+                    p DozenthSpade
+                    h4 Coding
+                .colaborador
+                  img(src="/assets/fish.ico", alt="Imagen")
+                  div
+                    p ddFanybb
+                    h4 Coding
+                .colaborador
+                  img(src="/profilePics/e5049180-27be-47b9-bbff-0282f69f4301.jpeg", alt="Imagen")
+                  div
+                    p Estef Ania
+                    h4 Testing
+              button.transparente.agregar-colaborador
+                i.fas.fa-plus
+                | Agregar colaborador
       //- Cierre de proyectos
       //- Cierre del contenido
 

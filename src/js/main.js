@@ -69,16 +69,18 @@ import { conteoyPorcentaje } from './modules/benAffleck'
         }
         // Barra movil
         const barra = document.querySelector('.menu-movil');
-        //Registrar observador
-        const observer = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) {
-                barra.classList.remove('fijo');
-            } else {
-                barra.classList.add('fijo');
-            }
-        });
-        // Elemento observado
-        observer.observe(document.querySelector('.header-movil'));
+        if (window.innerWidth < 768) {
+            //Registrar observador
+            const observer = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting) {
+                    barra.classList.remove('fijo');
+                } else {
+                    barra.classList.add('fijo');
+                }
+            });
+            // Elemento observado
+            observer.observe(document.querySelector('.header-movil'));
+        }
         // FINHAMBURGER
 
         // CONTEO DE TAREAS
@@ -100,7 +102,7 @@ import { conteoyPorcentaje } from './modules/benAffleck'
                     btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
                     const nuevaArea =
                         `<div>
-                            <label>->
+                            <label>
                                 <span class="feedback">0/25</span>
                             </label>
                             <input type="text" class="area" maxlength="25">

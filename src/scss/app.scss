@@ -61,7 +61,6 @@ div.error-404 {
     }
     h2 {
         color: var(--incorrecto);
-        font-size: 2rem;
     }
     img {
         width: 40rem;
@@ -506,7 +505,7 @@ div.selects select {
 
 /* FORMULARIOS */
 
-form.flex-form {
+form.grid-form {
     display: grid;
     grid-auto-flow: dense;
     grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
@@ -537,6 +536,14 @@ form {
 
 fieldset {
     display: flex;
+    margin-top: 2rem;
+}
+
+fieldset.colaboradores {
+    flex-direction: column;
+    button {
+        width: 20rem;
+    }
 }
 
 legend {
@@ -567,7 +574,7 @@ span.feedback {
     transform: translateY(-50%);
 }
 
-.flex-form span.feedback {
+.grid-form span.feedback {
     bottom: -6rem;
     right: -4rem;
 }
@@ -590,6 +597,36 @@ select {
     border-radius: 1rem;
     border: 1px solid var(--oscuro);
     padding: 0.5rem;
+}
+
+.grid-colaboradores {
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
+    align-self: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.colaborador {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: var(--oscuro);
+    color: var(--claro);
+    img {
+        background-color: var(--claro);
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+    }
+    p {
+        margin: 0;
+        padding: 1rem;
+        border-bottom: 1px solid var(--claro);
+    }
 }
 
 @include mq-formulario-proyecto-tarea;

@@ -1,65 +1,28 @@
-doctype html
-html(lang="es")
-  head
-    include partials/header
-  body#arriba
-    .header-movil
-      h2 WorkFlow
-      .menu-movil
-        p
-          i.fas.fa-bars
-          | Menuwu
-    a(href="#arriba")
-      i.fas.fa-arrow-up 
-    .contenedor-principal
-      aside
-        .sidebar
-          i.fas.fa-times
-          .barra-progreso
-            .circulo
-              p WorkFlow
-          .detalles-proyectos
-            .user
-              img(src=usuario.imagen_perfil?`/profilePics/${usuario.imagen_perfil}`:'/assets/fish.ico' alt='Profile Pic')
-              h2
-                | Bienvenido, 
-                span #{usuario.nombre_usuario}
-            p Proyectos empezados: #{proyectos.length}
-            -var terminados=0
-            each proyecto in proyectos 
-              if proyecto.porcentaje==100
-                -terminados+=1 
-            p Proyectos terminados: #{terminados}
-            .acciones
-              a(href='/mi-cuenta/editar')
-                i.fas.fa-tools
-                |  Mi cuenta
-              a(href='/cerrar-sesion')
-                i.fas.fa-sign-out-alt
-                |  Salir
-      .contenido
-        .barra
-          a.botonazul(href='/agregar-proyecto')
-            i.fas.fa-plus
-            | Nuevo proyecto
-        .listado-proyectos
-        if proyectos.length
-          each proyecto in proyectos 
-            .proyecto
-              a(href=`/proyecto/${proyecto.url}`)
-                .color(style=`width:5%; background-color:${proyecto.color}`)
-                h2.nombreproyecto #{proyecto.nombre_proyecto}
-                p #{proyecto.descripcion_proyecto}
-                h3 #{proyecto.porcentaje}%
-                p.fecha-inicio(style="display:none") #{proyecto.fecha_inicio}
-                p.fecha-entrega(style="display:none") #{proyecto.fecha_entrega}
-                .estado-proyecto 
-                  .on-time 
-                  .halfway 
-                  .ended
-        else 
-          h2 No hay ningún proyecto iniciado.
-        //- Cierre de proyectos
-        //- Cierre del contenido
-        
-        include partials/footer
+extends layout
+block contenido
+  .contenido
+    .barra
+      a.botonazul(href='/agregar-proyecto')
+        i.fas.fa-plus
+        | Nuevo proyecto
+    .listado-proyectos
+    if proyectos.length
+      each proyecto in proyectos 
+        .proyecto
+          a(href=`/proyecto/${proyecto.url}`)
+            .color(style=`width:5%; background-color:${proyecto.color}`)
+            h2.nombreproyecto #{proyecto.nombre_proyecto}
+            p #{proyecto.descripcion_proyecto}
+            h3 #{proyecto.porcentaje}%
+            p.fecha-inicio(style="display:none") #{proyecto.fecha_inicio}
+            p.fecha-entrega(style="display:none") #{proyecto.fecha_entrega}
+            .estado-proyecto 
+              .on-time 
+              .halfway 
+              .ended
+    else 
+      h2 No hay ningún proyecto iniciado.
+    //- Cierre de proyectos
+    //- Cierre del contenido
+    
+    include partials/footer

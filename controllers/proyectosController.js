@@ -175,7 +175,7 @@ exports.editarProyecto = async(req, res) => {
     }
 }
 
-exports.actualizarProyecto = async(req, res, next) => {
+exports.actualizarPorcentaje = async(req, res, next) => {
     // GUARDAR EL PORCENTAJE DEL PROYECTO //
     const proyecto = await Proyectos.findOne({ where: { id_proyecto: req.body.id_proyecto } });
     const tareasCompletadas = await Tareas.count({

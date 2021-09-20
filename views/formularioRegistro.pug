@@ -16,7 +16,7 @@ html(lang='es')
             p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error}
         if !editar
           img(style="margin:0 auto;" src="/assets/joinUs.gif" alt="El gif")
-        form(action=actionForm class=editar?'flex-form feedback':'feedback' method='POST' enctype=editar?"multipart/form-data":"")
+        form(action=actionForm class=editar?'grid-form feedback':'feedback' method='POST' enctype=editar?"multipart/form-data":"")
           if editar
             div.form-child
               label Imagen de perfil:
