@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 // El archivo se llama así porque Ben Affleck actúa en una película llamada 'El Contador'
 // donde es una persona con autismo y excelentes habilidades matemáticas que utiliza para
 // contabilizar los fondos de organizaciones criminales.

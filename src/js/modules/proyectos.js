@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 // ELIMINAR PROYECTO
 const btnEliminar = document.querySelector('button.eliminar');
@@ -8,12 +9,12 @@ if (btnEliminar) {
         const proyecto = document.querySelector('h2');
         const urlProyecto = proyecto.dataset.url;
         const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
-        swal({
+        Swal.fire({
                 title: "¿Quieres eliminar el proyecto?",
                 text: "Esta acción no se puede deshacer.",
                 type: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#d93b5b',
+                confirmButtonColor: 'var(--incorrecto)',
                 cancelButtonColor: '',
                 confirmButtonText: 'BORRAR',
                 cancelButtonText: 'Cancelar'
@@ -23,7 +24,7 @@ if (btnEliminar) {
                     axios.delete(url, { urlProyecto })
                         .then(function(response) {
                             if (response.status == 200) {
-                                swal("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
+                                Swal.fire("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
                                 setTimeout(() => {
                                     window.location.href = '/'
                                 }, 3000);

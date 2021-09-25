@@ -1,6 +1,9 @@
 import tareas from './modules/tareas';
 import proyectos from './modules/proyectos';
-import { conteoyPorcentaje } from './modules/benAffleck'
+import { conteoyPorcentaje } from './modules/benAffleck';
+import colaboradores from './modules/colaboradores';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 (function() {
     "use strict";
     document.addEventListener('DOMContentLoaded', function() {
@@ -100,20 +103,19 @@ import { conteoyPorcentaje } from './modules/benAffleck'
                     alert("Llene el campo")
                 } else {
                     btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
-                    const nuevaArea =
+                    const htmlNuevaArea =
                         `<div>
                             <label>
                                 <span class="feedback">0/25</span>
                             </label>
                             <input type="text" class="area" maxlength="25">
                         </div>`;
-                    btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', nuevaArea);
+                    btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', htmlNuevaArea);
                     const textInputs = document.querySelectorAll('form.feedback input[type="text"');
                     conteoCaracteres(textInputs);
                 }
             });
         }
-
         const inputBtnEnviar = document.querySelector('input.btnEnviar');
         const inputAreas = document.querySelector('input.set-areas-trabajo');
         if (inputBtnEnviar) {

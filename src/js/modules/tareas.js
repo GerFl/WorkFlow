@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { conteoyPorcentaje } from './benAffleck';
 
 // AXIOS AND DOMSCRIPTING
@@ -50,12 +51,12 @@ if (totalTareas > 0) {
                 const accion = e.target;
                 const idTarea = accion.parentElement.parentElement.parentElement.dataset.tarea;
                 const url = `${location.origin}/tarea-eliminar/${idTarea}`;
-                swal({
+                Swal.fire({
                         title: "¿Eliminar tarea?",
                         text: "No se podrá recuperar.",
-                        type: "warning",
+                        icon: "warning",
                         showCancelButton: true,
-                        confirmButtonColor: '#d93b5b',
+                        confirmButtonColor: 'var(--incorrecto)',
                         cancelButtonColor: '',
                         confirmButtonText: 'Eliminar tarea',
                         cancelButtonText: 'Cancelar'

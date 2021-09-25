@@ -100,8 +100,8 @@ module.exports = function() { // Exportar rutas
     /* FIN PROYECTOS */
 
     /* PROYECTOS COMPARTIDOS */
-    router.get('/proyecto/:proyectourl/colaboradores',
-        proyectosCompartidos.index
+    router.get('/usuarios',
+        proyectosCompartidos.buscarUsuario
     );
     /* FIN PROYECTOS COMPARTIDOS */
 

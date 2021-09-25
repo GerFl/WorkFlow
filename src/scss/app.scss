@@ -611,7 +611,8 @@ select {
 .colaborador {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    align-items: center;
     padding: 2rem;
     border-radius: 1rem;
     background-color: var(--oscuro);
@@ -623,9 +624,15 @@ select {
         border-radius: 50%;
     }
     p {
+        text-align: center;
         margin: 0;
-        padding: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
         border-bottom: 1px solid var(--claro);
+    }
+    i {
+        font-size: 1.6rem;
+        cursor: pointer;
     }
 }
 
