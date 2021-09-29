@@ -9,7 +9,6 @@ const nullColaboradores = document.querySelector('.grid-colaboradores h3');
 const setIDColaboradores = new Set();
 const inputColaboradores = document.querySelector('input.colaboradores');
 
-console.log(colaboradores);
 (colaboradores.length > 0) ? conteoColaboradores(colaboradores): '';
 
 function conteoColaboradores(colaboradores) {
@@ -18,7 +17,8 @@ function conteoColaboradores(colaboradores) {
         // Añadir al set para busquedas
         setIDColaboradores.add(colaborador.dataset.id);
         inputColaboradores.value = [...setIDColaboradores];
-        // Para eliminar un colaborador
+        console.log(setIDColaboradores);
+        // Listener para eliminar un colaborador
         colaborador.children[2].addEventListener('click', e => {
             Swal.fire({
                 title: '¡Espera!',
@@ -26,7 +26,6 @@ function conteoColaboradores(colaboradores) {
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: 'var(--incorrecto)',
-                cancelButtonColor: '',
                 confirmButtonText: 'Sí, eliminar',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
@@ -49,7 +48,6 @@ function conteoColaboradores(colaboradores) {
 
 if (btnAgregarColaborador) {
     btnAgregarColaborador.addEventListener('click', e => {
-        console.log(setIDColaboradores);
         e.preventDefault();
         Swal.fire({
             title: 'Escribe el correo del usuario:',
@@ -83,6 +81,14 @@ if (btnAgregarColaborador) {
         }).then((result) => {
             if (result.isConfirmed) {
                 const response = result.value.data;
+                if (result.value.data === 'self') {
+                    Swal.fire({
+                        title: 'Ya estás agregado como el autor de este proyecto.',
+                        text: 'Ah bueno gracias',
+                        confirmButtonColor: 'var(--color-principal)',
+                    });
+                    return;
+                }
                 if (setIDColaboradores.has((response.id_usuario).toString())) {
                     Swal.fire({
                         title: 'Usuario ya agregado.',

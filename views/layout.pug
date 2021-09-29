@@ -59,7 +59,8 @@ html(lang="es")
               p Inicio del proyecto: #{proyecto.fecha_inicio}
               p Entrega del proyecto: #{proyecto.fecha_entrega}
               input#areas(type="hidden" disabled value=`${proyecto.areas}`)
-              .opcionesproyecto
-                a(href=`/proyecto/${proyecto.url}/editar-proyecto`) Editar proyecto
-                button.eliminar Eliminar proyecto
+              if permisos.rol==='owner'
+                .opcionesproyecto
+                  a(href=`/proyecto/${proyecto.url}/editar-proyecto`) Editar proyecto
+                  button.eliminar Eliminar proyecto
       block contenido

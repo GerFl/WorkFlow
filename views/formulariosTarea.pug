@@ -27,13 +27,11 @@ block contenido
             select#departamento(name="departamento")
               option(value="" disabled selected) -- Seleccione --
               each area in areas
-                if tarea
-                  if tarea.departamento==area
-                    option(value=`${area}` selected) #{area}
+                if permisos.area===area || permisos.area==='all'
+                  if tarea
+                      option(value=`${area}` selected=(tarea.departamento===area)?true:false) #{area}
                   else
-                    option(value=`${area}`) #{area}
-                else
-                    option(value=`${area}`) #{area}
+                      option(value=`${area}`) #{area}
             label(for='prioridad') Indica la prioridad (la puedes cambiar después):
             select#prioridad(name='prioridad' required)
               option(value="" disabled selected) -- Seleccione --

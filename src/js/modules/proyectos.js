@@ -6,13 +6,13 @@ const btnEliminar = document.querySelector('button.eliminar');
 if (btnEliminar) {
     btnEliminar.addEventListener('click', e => {
         e.preventDefault();
-        const proyecto = document.querySelector('h2');
+        const proyecto = document.querySelector('.sidebar h2');
         const urlProyecto = proyecto.dataset.url;
         const url = `${location.origin}/eliminar-proyecto/${urlProyecto}`;
         Swal.fire({
                 title: "¿Quieres eliminar el proyecto?",
                 text: "Esta acción no se puede deshacer.",
-                type: "warning",
+                icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: 'var(--incorrecto)',
                 cancelButtonColor: '',

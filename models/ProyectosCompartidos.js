@@ -8,7 +8,9 @@ const ProyectosCompartidos = database.define('proyectos-compartidos', {
         type: Sequelize.INTEGER(11),
         primaryKey: true,
         autoIncrement: true
-    }
+    },
+    rol: Sequelize.STRING(11),
+    area: Sequelize.STRING
 });
 
 Usuarios.belongsToMany(Proyectos, { through: ProyectosCompartidos });

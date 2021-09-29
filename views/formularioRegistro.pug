@@ -41,9 +41,10 @@ html(lang='es')
               input(type='password' name='confirmarpassword' required maxlength="60")
             input.btn-login(type='submit' value=editar?'Editar mi cuenta':'Crear cuenta')
         if editar
-          a(href="/" style="color:#8de4af") Regresar a la página principal 
+          a(href="/" style="color:var(--color-principal);width:100%;") Regresar a la página principal 
+          a(href="/mi-cuenta/eliminar" style='margin-top:3rem;color:var(--incorrecto)') ELIMINAR CUENTA
         else
           p ¿Ya estás registrado? 
-            a(href="/iniciar-sesion" style="color:#8de4af") Iniciar sesión
+            a(href="/iniciar-sesion" style="color:var(--color-principal)") Iniciar sesión
     
     include partials/footer

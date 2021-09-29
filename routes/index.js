@@ -11,7 +11,7 @@ const proyectosCompartidos = require('../controllers/proysCompartidosController'
 module.exports = function() { // Exportar rutas
     /* HOME */
     router.get('/',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.paginaPrincipal
     );
     /* LOGIN Y REGISTRO */
@@ -34,11 +34,11 @@ module.exports = function() { // Exportar rutas
     );
     /* EDICION DE LA CUENTA Y REESTABLECIMIENTO DE PASSWORD */
     router.get('/mi-cuenta/editar',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         usersController.formularioEditarCuenta
     );
     router.post('/mi-cuenta/editar',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         usersController.validarImagen,
         usersController.validarCuenta,
         usersController.editarCuenta
@@ -63,38 +63,51 @@ module.exports = function() { // Exportar rutas
         authorizationController.usuarioVerificado,
         authorizationController.activarCuenta
     );
-    router.get('/cerrar-sesion', authorizationController.cerrarSesion);
-
+    /* CERRAR SESION Y ELIMINACION DE LA CUENTA */
+    router.get('/mi-cuenta/eliminar',
+        authorizationController.autenticarUsuario,
+        usersController.formularioEliminarCuenta
+    );
+    router.post('/mi-cuenta/eliminar',
+        authorizationController.autenticarUsuario,
+        usersController.eliminarCuenta
+    );
+    router.get('/cerrar-sesion',
+        authorizationController.cerrarSesion
+    );
     /* PROYECTOS */
     // Listar proyectos
     // Usa proyectourl como comodin, puesto que no sabemos a cuál url va ir.
     // Dicha url se asigna en la vista del index en cada etiqueta a generada por los proyectos listados
     router.get('/proyecto/:proyectourl',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.proyectoUrl
     );
     /* AGREGAR Y EDITAR PROYECTOS */
     router.get('/agregar-proyecto',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.formularioProyecto
     );
     router.post('/agregar-proyecto',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.validarProyecto,
-        proyectosController.agregarProyecto
+        proyectosController.agregarProyecto,
+        proyectosCompartidos.agregarRelaciones
     );
     router.get('/proyecto/:proyectourl/editar-proyecto',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.formularioEditarProyecto
     );
     router.post('/proyecto/:proyectourl/editar-proyecto',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.validarProyecto,
-        proyectosController.editarProyecto
+        proyectosController.editarProyecto,
+        proyectosCompartidos.borrarRelaciones,
+        proyectosCompartidos.agregarRelaciones
     );
     // ELIMINAR PROYECTOS
     router.delete('/eliminar-proyecto/:url',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         proyectosController.eliminarProyecto
     );
     /* FIN PROYECTOS */
@@ -108,37 +121,37 @@ module.exports = function() { // Exportar rutas
     /* TAREAS */
     /* AGREGAR Y EDITAR TAREAS */
     router.get('/proyecto/:proyectourl/agregar-tarea',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.formularioTarea
     );
     router.post('/proyecto/:proyectourl/agregar-tarea',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.validarTareas,
         tareasController.agregarTarea,
         proyectosController.actualizarPorcentaje
     );
     router.get('/proyecto/:proyectourl/editar-tarea/:idtarea',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.formularioEditarTarea
     );
     router.post('/proyecto/:proyectourl/editar-tarea/:idtarea',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.validarTareas,
         tareasController.editarTarea
     );
     /* COMPLETAR, DESCOMPLETAR Y ELIMINAR TAREAS */
     router.patch('/tarea-completada/:id',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.completarTarea,
         proyectosController.actualizarPorcentaje
     );
     router.patch('/tarea-descompletada/:id',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.descompletarTarea,
         proyectosController.actualizarPorcentaje
     );
     router.delete('/tarea-eliminar/:id',
-        authorizationController.usuarioAutenticado,
+        authorizationController.autenticarUsuario,
         tareasController.eliminarTarea,
         proyectosController.actualizarPorcentaje
     );

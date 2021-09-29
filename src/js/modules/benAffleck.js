@@ -52,6 +52,7 @@ function conteoyPorcentaje(totalTareas, areas) {
         Swal.fire({
             title: '¡FELICIDADES!',
             text: "Has terminado el proyecto",
+            confirmButtonColor: 'var(--color-principal)'
         })
     }
 }

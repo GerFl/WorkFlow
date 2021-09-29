@@ -6,18 +6,23 @@ const ProyectosCompartidos = require('../models/ProyectosCompartidos');
 const Tareas = require('../models/Tareas');
 
 exports.paginaPrincipal = async(req, res) => {
-    const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } })
-    const proyectosCompartidos = await ProyectosCompartidos.findAll({
+    const usuario = await Usuarios.findOne({
+        where: { id_usuario: res.locals.usuario.id_usuario },
+        attributes: ['id_usuario', 'nombre_usuario', 'imagen_perfil']
+    });
+    // Busqueda de indices
+    const proyectosUsuario = await ProyectosCompartidos.findAll({
         where: {
             usuarioIdUsuario: usuario.id_usuario
         },
         attributes: ['proyectoIdProyecto']
     });
+    // Almacenar proyectos del usuario en un arreglo
     let proyectos = [];
-    for (let i = 0; i < proyectosCompartidos.length; i++) {
+    for (let i = 0; i < proyectosUsuario.length; i++) {
         let proyecto = await Proyectos.findOne({
             where: {
-                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
+                id_proyecto: proyectosUsuario[i].proyectoIdProyecto
             }
         });
         proyectos.push(proyecto);
@@ -31,13 +36,20 @@ exports.paginaPrincipal = async(req, res) => {
 
 // Listar proyecto
 exports.proyectoUrl = async(req, res, next) => {
+    // Obtiene proyecto
     const proyecto = await Proyectos.findOne({
         where: {
             url: req.params.proyectourl
         }
     });
     if (!proyecto) return next();
-    // SI PROYECTO EXISTE
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol', 'area']
+    })
+
+    // SI EL PROYECTO EXISTE
     const tareas = await Tareas.findAll({
         where: {
             proyectoIdProyecto: proyecto.id_proyecto
@@ -48,26 +60,32 @@ exports.proyectoUrl = async(req, res, next) => {
         nombrePagina: `Tareas del proyecto: ${proyecto.nombre_proyecto}`,
         proyecto,
         tareas,
-        areas
+        areas,
+        permisos
     });
 }
 
 // Vista formulario para agregar
 exports.formularioProyecto = async(req, res) => {
-    const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } });
-    // Primero encontrar todas las relaciones del usuario actual
-    const proyectosCompartidos = await ProyectosCompartidos.findAll({
+    const usuario = await Usuarios.findOne({
+        where: { id_usuario: res.locals.usuario.id_usuario },
+        attributes: ['id_usuario', 'nombre_usuario', 'imagen_perfil']
+    });
+    // Encontrar todas las relaciones del usuario actual
+    // proyectosUsuario almacena los indices de las relaciones del modelo ProyectosCompartidos
+    const proyectosUsuario = await ProyectosCompartidos.findAll({
         where: {
-            usuarioIdUsuario: res.locals.usuario.id_usuario
+            usuarioIdUsuario: usuario.id_usuario
         },
         attributes: ['proyectoIdProyecto']
     });
-    // Buscar los proyectos iterando con los indices de proyectosCompartidos
+    // Buscar los proyectos iterando con los indices de las relaciones
+    // totalProyectos almacena la información de los proyectos del modelo Proyectos
     let totalProyectos = [];
-    for (let i = 0; i < proyectosCompartidos.length; i++) {
+    for (let i = 0; i < proyectosUsuario.length; i++) {
         let proyecto = await Proyectos.findOne({
             where: {
-                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
+                id_proyecto: proyectosUsuario[i].proyectoIdProyecto
             }
         });
         totalProyectos.push(proyecto);
@@ -88,19 +106,19 @@ exports.formularioProyecto = async(req, res) => {
 }
 
 exports.formularioEditarProyecto = async(req, res, next) => {
-    // Primero encontrar todas las relaciones del usuario actual
-    const proyectosCompartidos = await ProyectosCompartidos.findAll({
+    // Encontrar todas las relaciones del usuario actual
+    const proyectosUsuario = await ProyectosCompartidos.findAll({
         where: {
             usuarioIdUsuario: res.locals.usuario.id_usuario
         },
         attributes: ['proyectoIdProyecto']
     });
-    // Buscar los proyectos iterando con los indices de proyectosCompartidos
+    // Buscar en los proyectos iterando con los indices de proyectosCompartidos
     let totalProyectos = [];
-    for (let i = 0; i < proyectosCompartidos.length; i++) {
+    for (let i = 0; i < proyectosUsuario.length; i++) {
         let proyecto = await Proyectos.findOne({
             where: {
-                id_proyecto: proyectosCompartidos[i].proyectoIdProyecto
+                id_proyecto: proyectosUsuario[i].proyectoIdProyecto
             }
         });
         totalProyectos.push(proyecto);
@@ -116,6 +134,19 @@ exports.formularioEditarProyecto = async(req, res, next) => {
     // Buscar las tareas
     const totalTareas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
     const tareasCompletadas = await Tareas.count({ where: { proyectoIdProyecto: proyecto.id_proyecto, estatus: 1 } });
+    // Obtener los colaboradores
+    const indices = await ProyectosCompartidos.findAll({
+        where: { proyectoIdProyecto: proyecto.id_proyecto },
+        attributes: ['usuarioIdUsuario', 'area']
+    });
+    let colaboradores = [];
+    for (let i = 0; i < indices.length; i++) {
+        let colaborador = await Usuarios.findOne({
+            where: { id_usuario: indices[i].usuarioIdUsuario },
+            attributes: ['id_usuario', 'nombre_usuario', 'imagen_perfil']
+        });
+        if (colaborador && colaborador.id_usuario != res.locals.usuario.id_usuario) colaboradores.push(colaborador);
+    }
     res.render('formulariosProyecto', {
         nombrePagina: `WorkFlow - Editar proyecto: ${proyecto.nombre_proyecto}`,
         titulo: `Editar proyecto:${proyecto.nombre_proyecto}`,
@@ -125,54 +156,59 @@ exports.formularioEditarProyecto = async(req, res, next) => {
         proyectosCompletados,
         areas,
         totalTareas,
-        tareasCompletadas
+        tareasCompletadas,
+        colaboradores
     });
 }
 
-exports.agregarProyecto = async(req, res) => {
-    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color } = req.body;
-    const porcentaje = 0;
-    const completado = 0;
-    const usuarioIdUsuario = res.locals.usuario.id_usuario;
+exports.agregarProyecto = async(req, res, next) => {
+    // Se extraen los valores
+    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color, colaboradores } = req.body;
+    // Se crea
     const proyecto = await Proyectos.create({
         nombre_proyecto,
         descripcion_proyecto,
         fecha_entrega,
-        porcentaje,
+        porcentaje: 0,
         areas,
         color,
-        completado,
-        usuarioIdUsuario
+        completado: 0
     });
-    const relacion = await ProyectosCompartidos.create({
-        proyectoIdProyecto: proyecto.id_proyecto,
-        usuarioIdUsuario: res.locals.usuario.id_usuario
-    });
-    if (relacion) return res.redirect('/');
+    // Añadir al request
+    req.proyecto = proyecto;
+    (colaboradores != '') ? req.proyecto.colaboradores = colaboradores: '';
+    req.proyecto.editar = false;
+    // Middleware de proysCompartidosController
+    if (proyecto) return next();
 }
 
-exports.editarProyecto = async(req, res) => {
-    var url = req.params.proyectourl
+exports.editarProyecto = async(req, res, next) => {
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol']
+    })
+    if (permisos.rol != "owner") return res.redirect(`/proyecto/${req.params.proyectourl}`);
+    // SI TIENE PERMISO
+    var url = req.params.proyectourl;
     const proyecto = await Proyectos.findOne({ where: { url } });
-    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color } = req.body;
+    const { nombre_proyecto, descripcion_proyecto, fecha_entrega, areas, color, colaboradores } = req.body;
     if (proyecto.nombre_proyecto != nombre_proyecto) {
-        var url = `${slug(nombre_proyecto)}-${shortid.generate()}`;
+        url = `${slug(nombre_proyecto)}-${shortid.generate()}`;
     }
-    const proyectoActualizado = await Proyectos.update({
-        nombre_proyecto,
-        descripcion_proyecto,
-        fecha_entrega,
-        areas,
-        color,
-        url
-    }, {
-        where: {
-            id_proyecto: proyecto.id_proyecto
-        }
-    });
-    if (proyectoActualizado) {
-        return res.redirect(`/proyecto/${url}`);
-    }
+    proyecto.nombre_proyecto = nombre_proyecto;
+    proyecto.descripcion_proyecto = descripcion_proyecto;
+    proyecto.fecha_entrega = fecha_entrega;
+    proyecto.areas = areas;
+    proyecto.color = color;
+    proyecto.url = url;
+    proyecto.save();
+    // Añadir al request
+    req.proyecto = proyecto;
+    (colaboradores != '') ? req.proyecto.colaboradores = colaboradores: '';
+    req.proyecto.editar = true;
+    // Middleware de proysCompartidosController
+    if (proyecto) return next();
 }
 
 exports.actualizarPorcentaje = async(req, res, next) => {
@@ -200,10 +236,18 @@ exports.actualizarPorcentaje = async(req, res, next) => {
 }
 
 exports.eliminarProyecto = async(req, res, next) => {
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol']
+    })
+    if (permisos.rol != "owner") return res.redirect(`/proyecto/${req.params.proyectourl}`);
+    // SI TIENE PERMISO
     const { url } = req.params;
     const proyecto = await Proyectos.findOne({ where: { url } });
     if (!proyecto) return next();
     const tareas = await Tareas.destroy({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
+    const proyectosCompartidos = await ProyectosCompartidos.destroy({ where: { proyectoIdProyecto: proyecto.id_proyecto } });
     proyecto.destroy();
     res.send().status(200);
 }
@@ -215,6 +259,7 @@ exports.validarProyecto = async(req, res, next) => {
     req.checkBody('fecha_entrega').trim().notEmpty().withMessage("Debe marcar la fecha de entrega.");
     req.checkBody('areas').trim().not().isNumeric().withMessage("El nombre del departamento no puede ser solo números.");
     req.checkBody('color').notEmpty().trim().withMessage("Elija un color para identificar el proyecto.");
+    req.checkBody('colaboradores').trim();
     // VALIDAR LONGITUD
     req.checkBody('nombre_proyecto', 'El nombre del proyecto debe ser entre 3 y 50 caracteres.').isLength({ min: 3, max: 50 });
     req.checkBody('descripcion_proyecto', 'La descripción del proyecto no debe exceder los 200 caracteres.').isLength({ min: 0, max: 200 });
@@ -235,7 +280,6 @@ exports.validarProyecto = async(req, res, next) => {
         }
     });
     req.body.areas = [...set].toString();
-    console.log(req.body.areas);
     const errores = req.validationErrors();
     if (errores) {
         const usuarioId = res.locals.usuario.id_usuario;
@@ -279,5 +323,6 @@ exports.validarProyecto = async(req, res, next) => {
     req.sanitizeBody('fecha_entrega').escape();
     req.sanitizeBody('areas').escape();
     req.sanitizeBody('color').escape();
+    req.sanitizeBody('colaboradores').escape();
     return next();
 }

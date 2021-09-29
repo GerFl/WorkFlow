@@ -1,5 +1,6 @@
 const Proyectos = require('../models/Proyectos');
 const Tareas = require('../models/Tareas');
+const ProyectosCompartidos = require('../models/ProyectosCompartidos');
 
 exports.formularioTarea = async(req, res) => {
     const proyecto = await Proyectos.findOne({
@@ -19,6 +20,11 @@ exports.formularioTarea = async(req, res) => {
             proyectoIdProyecto: proyecto.id_proyecto
         }
     });
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol', 'area']
+    })
     res.render('formulariosTarea', {
         nombrePagina: `${proyecto.nombre_proyecto}: Agregar tarea`,
         titulo: "Nueva Tarea",
@@ -26,7 +32,8 @@ exports.formularioTarea = async(req, res) => {
         proyecto,
         totalTareas,
         tareasCompletadas,
-        areas
+        areas,
+        permisos
     });
 }
 
@@ -42,6 +49,11 @@ exports.formularioEditarTarea = async(req, res) => {
         }
     });
     const areas = proyecto.areas.split(',');
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol', 'area']
+    })
     res.render('formulariosTarea', {
         nombrePagina: `${proyecto.nombre_proyecto}: Editar tarea`,
         titulo: `Editar Tarea: ${tarea.tarea_nombre}`,
@@ -59,7 +71,8 @@ exports.formularioEditarTarea = async(req, res) => {
             }
         }),
         tarea,
-        areas
+        areas,
+        permisos
     });
 }
 

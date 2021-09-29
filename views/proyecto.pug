@@ -20,7 +20,6 @@ block contenido
       a.botonazul(href=`/proyecto/${proyecto.url}/agregar-tarea`)
         i.fas.fa-plus
         | Nueva tarea
-    
     if tareas.length
       .tareas
         each tarea in tareas 
@@ -30,17 +29,26 @@ block contenido
             p #{tarea.departamento}
             .selects
               p Prioridad: #{tarea.prioridad}
-            .iconos-tarea
-              a.completo.tooltip(href='#' class=(tarea.estatus==1)?'activo':'')
-                i.far.fa-check-circle
-                  span.tooltiptext Completar
-              a.nocompleto.tooltip(href='#' class=(tarea.estatus==0)?'activo':'')
-                i.far.fa-times-circle
-                  span.tooltiptext Descompletar
-            i.fas.fa-ellipsis-v.tooltip
-              .tooltiptext
-                a(href=`/proyecto/${proyecto.url}/editar-tarea/${tarea.id_tarea}`) Editar
-                p.eliminar-tarea Eliminar
+            if permisos.area===tarea.departamento || permisos.area==="all"
+              .iconos-tarea.acciones-tarea
+                a.completo.tooltip(href='#' class=(tarea.estatus==1)?'activo':'')
+                  i.far.fa-check-circle
+                    span.tooltiptext Completar
+                a.nocompleto.tooltip(href='#' class=(tarea.estatus==0)?'activo':'')
+                  i.far.fa-times-circle
+                    span.tooltiptext Descompletar
+              i.fas.fa-ellipsis-v.tooltip
+                .tooltiptext
+                  a(href=`/proyecto/${proyecto.url}/editar-tarea/${tarea.id_tarea}`) Editar
+                  p.eliminar-tarea Eliminar
+            else
+              .iconos-tarea
+                a.completo.tooltip(href='#' class=(tarea.estatus==1)?'activo':'')
+                  i.far.fa-check-circle
+                    span.tooltiptext Completar
+                a.nocompleto.tooltip(href='#' class=(tarea.estatus==0)?'activo':'')
+                  i.far.fa-times-circle
+                    span.tooltiptext Descompletar
       h3#null-tareas(style="display:none;") No hay tareas en este proyecto aún.
     else 
       h3#null-tareas No hay tareas en este proyecto aún.

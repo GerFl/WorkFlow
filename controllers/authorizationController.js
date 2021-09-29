@@ -14,6 +14,26 @@ exports.loginPage = (req, res) => {
     });
 }
 
+// Reestablecer password
+exports.formularioReestablecerPassword = (req, res, next) => {
+    if (req.params.token) {
+        res.render('formularioReestablecer', {
+            nombrePagina: "WorkFlow",
+            titulo: "Reestablecer password",
+            reestablecer: true,
+            formAction: `/reestablecer-password/${req.params.token}`
+        });
+    } else {
+        // Pa enviar el correo
+        res.render('formularioReestablecer', {
+            nombrePagina: "WorkFlow",
+            titulo: "Reestablecer password",
+            formAction: "/reestablecer-password"
+        });
+    }
+}
+
+// Esta función usa passport para dar acceso
 exports.verificarUsuario = (req, res, next) => passport.authenticate('local', function(err, user, info) {
     (err) ? console.log(err): '';
     if (!user) {
@@ -23,7 +43,7 @@ exports.verificarUsuario = (req, res, next) => passport.authenticate('local', fu
             fondo: 'failedLogin.gif',
             failedLogin: true
         });
-        return next();
+        return res.status(404);
     }
     if (user.activo == 0) {
         res.render('login', {
@@ -36,6 +56,7 @@ exports.verificarUsuario = (req, res, next) => passport.authenticate('local', fu
     req.logIn(user, function(err) {
         // Success
         (err) ? console.log(err): '';
+        if (req.originalUrl === '/mi-cuenta/eliminar') return next();
         return res.render('login', {
             nombrePagina: "WorkFlow",
             fondo: 'login.gif',
@@ -44,13 +65,13 @@ exports.verificarUsuario = (req, res, next) => passport.authenticate('local', fu
     });
 })(req, res, next);
 
-/* La diferencia entre estos middlewares es que con usuarioAutenticado 
-    verificamos que el usuario tenga acceso a las paginas principales y
+/* La diferencia entre estos middlewares es que con autenticarUsuario 
+    verificamos si la persona tiene acceso a las paginas principales y
     continuar la cadena de middlewares. Y con usuarioVerificado sabemos
-    que el usuario está autenticado pero esta no permite entrar en las
+    que el usuario ya está autenticado pero esta no permite entrar en las
     paginas de reestablecimiento de password.
 */
-exports.usuarioAutenticado = (req, res, next) => {
+exports.autenticarUsuario = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next();
     }
@@ -90,26 +111,6 @@ exports.activarCuenta = async(req, res, next) => {
         loading: false,
         mensaje: "¡Tu cuenta ha sido activada!"
     });
-}
-
-// Reestablecer password
-exports.formularioReestablecerPassword = (req, res, next) => {
-    if (req.params.token) {
-        res.render('formularioReestablecer', {
-            nombrePagina: "WorkFlow",
-            titulo: "Reestablecer password",
-            reestablecer: true,
-            formAction: `/reestablecer-password/${req.params.token}`
-        });
-    } else {
-        // Pa enviar el correo
-        res.render('formularioReestablecer', {
-            nombrePagina: "WorkFlow",
-            titulo: "Reestablecer password",
-            reestablecer: false,
-            formAction: "/reestablecer-password"
-        });
-    }
 }
 
 exports.activarToken = async(req, res, next) => {

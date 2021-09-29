@@ -2,8 +2,6 @@ import tareas from './modules/tareas';
 import proyectos from './modules/proyectos';
 import { conteoyPorcentaje } from './modules/benAffleck';
 import colaboradores from './modules/colaboradores';
-import Swal from 'sweetalert2';
-import axios from 'axios';
 (function() {
     "use strict";
     document.addEventListener('DOMContentLoaded', function() {
@@ -14,7 +12,7 @@ import axios from 'axios';
         if (animacionCargando) {
             setTimeout(function() {
                 window.location.href = '/';
-            }, 9000);
+            }, 8000);
         }
 
         // SEMAFORO
@@ -94,7 +92,7 @@ import axios from 'axios';
         }
 
         // AREAS DE TRABAJO PERSONALIZABLES
-        const btnAgregarArea = document.querySelector('button.area-trabajo');
+        const btnAgregarArea = document.querySelector('button.transparente');
         if (btnAgregarArea) {
             btnAgregarArea.addEventListener('click', e => {
                 e.preventDefault();

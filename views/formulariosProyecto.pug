@@ -108,8 +108,16 @@ html(lang="en")
             fieldset.colaboradores
               legend Colaboradores
               .grid-colaboradores
+                if colaboradores
+                  each colaborador in colaboradores
+                    .colaborador(data-id=`${colaborador.id_usuario}`)
+                      img(src=`/profilePics/${colaborador.imagen_perfil}`, alt="Imagen perfil")
+                      div
+                        p #{colaborador.nombre_usuario}
+                        h4 Área
+                      i.fas.fa-trash
                 h3 Aún no hay colaboradores en este proyecto
-              input.colaboradores(type="text" name="id_colaboradores" disabled)
+              input.colaboradores(type="hidden" name="colaboradores")
               button.transparente.agregar-colaborador
                 i.fas.fa-plus
                 | Agregar colaborador

@@ -13,21 +13,35 @@ html(lang='es')
             each error in errores
               p #{error}
         form(action=formAction method='POST')
-          if reestablecer==false
-            p Escribe tu correo electrónico para que podamos enviarte un mensaje y permitirte cambiar tu password
+          if reestablecer
+            .campo
+              label(for='password') Contraseña:
+              input(type='password' name='password' required maxlength="60")
+            .campo
+              label(for='confirmarpassword') Confirmar contraseña:
+              input(type='password' name='confirmarpassword' required maxlength="60")
+          else if eliminar
+            p ¿Realmente quieres eliminar tu cuenta?
+            p Se eliminarán TODOS tus proyectos y tareas almacenadas, junto con todos tus datos.
+            p LA ELIMINACION ES INMEDIATA AL MOMENTO DE DAR CLICK AL BOTON, NO SE ENVIARA NINGUN CORREO.
+            p En caso de tener proyectos en curso, asegúrate de transferirle la autoría a otro usuario.
+            .campo
+              label(for='email') E-mail:
+              input(type='text' name="email" id="email" required)
+            .campo
+              label(for='password') Contraseña:
+              input(type='password' name="password" id="password" required)
+            input.btn-login.eliminar-cuenta(type='submit' value="Si, eliminar")
+            a(href="/" style="color:#8de4af;font-size:2rem") REGRESAR A LA PAGINA PRINCIPAL
+          else
+            p Escribe tu correo electrónico para que podamos enviarte un mensaje y permitirte cambiar tu password.
             .campo
                 label E-mail:
                 input(type='email' name='email' required maxlength="60")
-          else
+          if !eliminar
             .campo
-                label(for='password') Contraseña:
-                input(type='password' name='password' required maxlength="60")
-            .campo
-                label(for='confirmarpassword') Confirmar contraseña:
-                input(type='password' name='confirmarpassword' required maxlength="60")
-          .campo
-              input.btn-login(type='submit' value="Reestablecer password")
-          p ¿Ya te acordaste? 
-            a(href="/iniciar-sesion" style="color:#8de4af") Iniciar sesión
+                input.btn-login(type='submit' value="Reestablecer password")
+            p ¿Ya te acordaste? 
+              a(href="/iniciar-sesion" style="color:#8de4af") Iniciar sesión
     
     include partials/footer

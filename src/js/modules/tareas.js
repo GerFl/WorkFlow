@@ -5,7 +5,7 @@ import { conteoyPorcentaje } from './benAffleck';
 // AXIOS AND DOMSCRIPTING
 const totalTareas = document.querySelectorAll('.tarea').length;
 if (totalTareas > 0) {
-    const iconosTarea = document.querySelectorAll('.iconos-tarea');
+    const iconosTarea = document.querySelectorAll('.acciones-tarea a');
     iconosTarea.forEach(tarea => {
         tarea.addEventListener('click', e => {
             e.preventDefault();

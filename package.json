@@ -46,7 +46,6 @@
         "dart-sass": "^1.25.0",
         "gulp": "^4.0.2",
         "gulp-sass": "^5.0.0",
-        "gulp-uglify": "^3.0.2",
         "nodemon": "^2.0.7",
         "sequelize-cli": "^6.2.0",
         "webpack": "^5.52.0",
