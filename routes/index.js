@@ -32,7 +32,7 @@ module.exports = function() { // Exportar rutas
         usersController.validarCuenta,
         usersController.crearCuenta
     );
-    /* EDICION DE LA CUENTA Y REESTABLECIMIENTO DE PASSWORD */
+    /* EDICION DE LA CUENTA */
     router.get('/mi-cuenta/editar',
         authorizationController.autenticarUsuario,
         usersController.formularioEditarCuenta
@@ -43,6 +43,11 @@ module.exports = function() { // Exportar rutas
         usersController.validarCuenta,
         usersController.editarCuenta
     );
+    /* EDITAR PASSWORD */
+    router.get('/mi-cuenta/editar-password',
+        usersController.formularioEditarPassword
+    );
+    /* REESTABLECIMIENTO DE PASSWORD */
     router.get('/reestablecer-password',
         authorizationController.usuarioVerificado,
         authorizationController.formularioReestablecerPassword
@@ -70,7 +75,8 @@ module.exports = function() { // Exportar rutas
     );
     router.post('/mi-cuenta/eliminar',
         authorizationController.autenticarUsuario,
-        usersController.eliminarCuenta
+        usersController.eliminarCuenta,
+        authorizationController.cerrarSesion
     );
     router.get('/cerrar-sesion',
         authorizationController.cerrarSesion

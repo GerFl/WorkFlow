@@ -1,5 +1,7 @@
 const Usuarios = require('../models/Usuarios');
 const ProyectosCompartidos = require('../models/ProyectosCompartidos');
+const Proyectos = require('../models/Proyectos');
+const Tareas = require('../models/Tareas');
 const bcrypt = require('bcrypt-nodejs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -25,7 +27,9 @@ exports.formularioEditarCuenta = async(req, res, next) => {
         usuario
     });
 }
-
+exports.formularioEditarPassword = async(req, res, next) => {
+    res.render('confirmarIdentidad');
+}
 exports.formularioEliminarCuenta = async(req, res, next) => {
     res.render('formularioReestablecer', {
         nombrePagina: "WorkFlow - Eliminar cuenta",
@@ -137,9 +141,32 @@ exports.editarCuenta = async(req, res, next) => {
 exports.eliminarCuenta = async(req, res, next) => {
     const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } });
     if (usuario) {
-        await ProyectosCompartidos.destroy({ where: { usuarioIdUsuario: usuario.id_usuario } });
-        await usuario.destroy();
-        return res.redirect('/iniciar-sesion');
+        const idProyectos = await ProyectosCompartidos.findAll({
+            where: {
+                usuarioIdUsuario: usuario.id_usuario,
+                rol: "owner"
+            },
+            attributes: ['proyectoIdProyecto']
+        });
+        for (let i = 0; i < idProyectos.length; i++) {
+            let proyecto = await Proyectos.findOne({
+                where: { id_proyecto: idProyectos[0].proyectoIdProyecto },
+                attributes: ['id_proyecto']
+            });
+            await Tareas.destroy({
+                where: {
+                    proyectoIdProyecto: proyecto.id_proyecto
+                }
+            })
+            await proyecto.destroy();
+        }
+        await ProyectosCompartidos.destroy({
+            where: { usuarioIdUsuario: usuario.id_usuario }
+        })
+        await Usuarios.destroy({
+            where: { id_usuario: usuario.id_usuario }
+        })
+        return next();
     }
     return res.render('formularioRegistro', {
         nombrePagina: "WorkFlow - Editar cuenta",
