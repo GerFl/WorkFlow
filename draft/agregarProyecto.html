@@ -67,7 +67,7 @@
                             <label for="color" class="color">Selecciona un color para identificarlo:</label>
                             <input type="color" id="color" name="color" value="#000000">
                             <div class="boton">
-                                <input type="submit" class="btnEnviar">
+                                <input type="submit" class="btnEnviar" value="Agregar">
                                 <div class="bg"></div>
                                 <div class="bg"></div>
                                 <div class="bg"></div>
@@ -78,13 +78,52 @@
                         <div>
                             <label for="areas">Indica las áreas de trabajo para este proyecto:</label>
                             <div>
-                                <label>->
+                                <label>
                                     <span class="feedback">0/25</span>
                                 </label>
                                 <input type="text" class="area" maxlength="25">
                             </div>
-                            <button class="area-trabajo"><i class="fas fa-plus"></i>Agregar área</button>
+                            <button class="transparente">
+                                <i class="fas fa-plus"></i>Agregar área
+                            </button>
+                            <input class="set-areas-trabajo" type="hidden" name="areas">
                         </div>
+                    </fieldset>
+                    <fieldset class="colaboradores">
+                        <legend>Colaboradores</legend>
+                        <div class="grid-colaboradores">
+                            <div class="colaborador">
+                                <img src="../public/profilePics/fish.ico" alt="Imagen">
+                                <div>
+                                    <p>Gerardo Flores</p>
+                                    <h4>Coding</h4>
+                                </div>
+                            </div>
+                            <div class="colaborador">
+                                <img src="../public/profilePics/83a70deb-957c-4d1a-91c2-f10fccb92e11.png" alt="Imagen">
+                                <div>
+                                    <p>DozenthSpade</p>
+                                    <h4>Análisis</h4>
+                                </div>
+                            </div>
+                            <div class="colaborador">
+                                <img src="../public/profilePics/0ba7d1b6-b457-4f42-906c-e69ad849b27b.jpeg" alt="Imagen">
+                                <div>
+                                    <p>ddFanybb</p>
+                                    <h4>Coding</h4>
+                                </div>
+                            </div>
+                            <div class="colaborador">
+                                <img src="../public/profilePics/e5049180-27be-47b9-bbff-0282f69f4301.jpeg" alt="Imagen">
+                                <div>
+                                    <p>Estef Ania</p>
+                                    <h4>Testing</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="transparente agregar-colaborador">
+                            <i class="fas fa-plus"></i>Agregar colaborador
+                        </button>
                     </fieldset>
                 </form>
             </div>

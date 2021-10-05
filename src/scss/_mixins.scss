@@ -83,7 +83,7 @@
         .caja-login.mobile {
             display: block!important;
         }
-        form.flex-form {
+        form.grid-form {
             display: block;
             width: 100%;
             margin: 0;
@@ -156,7 +156,7 @@
                 font-size: 1.3rem;
             }
             h3 {
-                font-size: 1.7rem;
+                font-size: 1.5rem;
             }
         }
     }
@@ -187,7 +187,7 @@
             right: 0;
             top: 1rem;
         }
-        .flex-form span.feedback {
+        .grid-form span.feedback {
             bottom: 0rem;
             right: 0rem;
         }
@@ -224,7 +224,8 @@
             height: 1rem;
         }
         .progresoDepto {
-            height: 1rem
+            height: 1rem;
+            width: 10rem;
         }
         div.tareas {
             div.tarea {
@@ -239,7 +240,7 @@
             }
         }
         div.iconos-tarea {
-            a {
+            i {
                 font-size: 3rem;
                 margin: 0;
             }

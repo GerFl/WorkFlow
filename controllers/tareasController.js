@@ -1,5 +1,6 @@
 const Proyectos = require('../models/Proyectos');
 const Tareas = require('../models/Tareas');
+const ProyectosCompartidos = require('../models/ProyectosCompartidos');
 
 exports.formularioTarea = async(req, res) => {
     const proyecto = await Proyectos.findOne({
@@ -8,23 +9,31 @@ exports.formularioTarea = async(req, res) => {
         }
     });
     const areas = proyecto.areas.split(',');
+    const totalTareas = await Tareas.count({
+        where: {
+            proyectoIdProyecto: proyecto.id_proyecto
+        }
+    });
+    const tareasCompletadas = await Tareas.count({
+        where: {
+            estatus: 1,
+            proyectoIdProyecto: proyecto.id_proyecto
+        }
+    });
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol', 'area']
+    })
     res.render('formulariosTarea', {
         nombrePagina: `${proyecto.nombre_proyecto}: Agregar tarea`,
         titulo: "Nueva Tarea",
         actionForm: `/proyecto/${proyecto.url}/agregar-tarea`,
         proyecto,
-        totalTareas: await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto
-            }
-        }),
-        tareasCompletadas: await Tareas.count({
-            where: {
-                proyectoIdProyecto: proyecto.id_proyecto,
-                estatus: 1
-            }
-        }),
-        areas
+        totalTareas,
+        tareasCompletadas,
+        areas,
+        permisos
     });
 }
 
@@ -40,6 +49,11 @@ exports.formularioEditarTarea = async(req, res) => {
         }
     });
     const areas = proyecto.areas.split(',');
+    // Obtiene rol
+    const permisos = await ProyectosCompartidos.findOne({
+        where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+        attributes: ['rol', 'area']
+    })
     res.render('formulariosTarea', {
         nombrePagina: `${proyecto.nombre_proyecto}: Editar tarea`,
         titulo: `Editar Tarea: ${tarea.tarea_nombre}`,
@@ -57,7 +71,8 @@ exports.formularioEditarTarea = async(req, res) => {
             }
         }),
         tarea,
-        areas
+        areas,
+        permisos
     });
 }
 

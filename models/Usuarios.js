@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('../config/database');
 const bcrypt = require('bcrypt-nodejs');
-const Proyectos = require('./Proyectos');
 
 const Usuarios = database.define('usuarios', {
     id_usuario: {
@@ -44,8 +43,6 @@ const Usuarios = database.define('usuarios', {
         }
     }
 });
-
-Usuarios.hasMany(Proyectos);
 
 Usuarios.prototype.verificarPassword = function(password) {
     return bcrypt.compareSync(password, this.password);

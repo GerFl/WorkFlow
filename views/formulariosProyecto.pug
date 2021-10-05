@@ -21,7 +21,7 @@ html(lang="en")
                 p WorkFlow
             .detalles-proyectos
               .user
-                img(src=usuario.imagen_perfil?`/profilePics/${usuario.imagen_perfil}`:'/fish.ico' alt='Profile Pic')
+                img(src=usuario.imagen_perfil?`/profilePics/${usuario.imagen_perfil}`:'/assets/fish.ico' alt='Profile Pic')
                 h2
                   | Bienvenido, 
                   span #{usuario.nombre_usuario}
@@ -52,9 +52,14 @@ html(lang="en")
                 button.eliminar Eliminar proyecto
       .contenido
         .barra
-          a.volver(href='/')
-            i.fas.fa-arrow-left
-            | Volver a la página principal
+          if proyecto
+            a.volver(href=`/proyecto/${proyecto.url}`)
+              i.fas.fa-arrow-left
+              | Volver al proyecto
+          else
+            a.volver(href='/')
+                i.fas.fa-arrow-left
+                | Volver a la página principal
         .listado-proyectos
           form.proyecto.feedback(action=actionForm method="POST")
             fieldset
@@ -87,17 +92,35 @@ html(lang="en")
                 label(for="areas") Indica las áreas para este proyecto:
                 p Los caracteres especiales no se guardaran
                 div
-                  label.feedback ->
-                    span.feedback 0/25
                   if areas
                     each area in areas
+                      label.feedback
+                        span.feedback 0/25
                       input.area(type="text" value=area maxlength='25')
                   else
+                    label.feedback
+                      span.feedback 0/25
                     input.area(type="text" maxlength='25')
-                button.area-trabajo
+                button.transparente
                   i.fas.fa-plus
                   | Agregar área
                 input.set-areas-trabajo(type="hidden" name="areas")
+            fieldset.colaboradores
+              legend Colaboradores
+              .grid-colaboradores
+                if colaboradores
+                  each colaborador in colaboradores
+                    .colaborador(data-id=`${colaborador.id_usuario}`)
+                      img(src=`/profilePics/${colaborador.imagen_perfil}`, alt="Imagen perfil")
+                      div
+                        p #{colaborador.nombre_usuario}
+                        h4 Área
+                      i.fas.fa-trash
+                h3 Aún no hay colaboradores en este proyecto
+              input.colaboradores(type="hidden" name="colaboradores")
+              button.transparente.agregar-colaborador
+                i.fas.fa-plus
+                | Agregar colaborador
       //- Cierre de proyectos
       //- Cierre del contenido
 

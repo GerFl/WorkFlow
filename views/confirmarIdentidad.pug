@@ -1,0 +1,20 @@
+doctype html
+html(lang='es')
+  head
+    include partials/header
+  body.loader
+    .contenedor-principal
+        .encabezado
+            h2 Confirmar identidad
+        form(action='/iniciar-sesion' method="POST")
+          .campo
+            label(for='email') E-mail:
+            input(type='text' name="email" id="email" required)
+          .campo
+            label(for='password') Contraseña:
+            input(type='password' name="password" id="password" required)
+          .campo
+            input.btn-login(type='submit' value='Iniciar sesión')
+        a(href="/mi-cuenta/editar" style="color:#8de4af") Volver
+    
+    include partials/footer

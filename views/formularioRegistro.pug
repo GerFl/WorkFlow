@@ -16,7 +16,7 @@ html(lang='es')
             p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error}
         if !editar
           img(style="margin:0 auto;" src="/assets/joinUs.gif" alt="El gif")
-        form(action=actionForm class=editar?'flex-form feedback':'feedback' method='POST' enctype=editar?"multipart/form-data":"")
+        form(action=actionForm class=editar?'grid-form feedback':'feedback' method='POST' enctype=editar?"multipart/form-data":"")
           if editar
             div.form-child
               label Imagen de perfil:
@@ -41,9 +41,10 @@ html(lang='es')
               input(type='password' name='confirmarpassword' required maxlength="60")
             input.btn-login(type='submit' value=editar?'Editar mi cuenta':'Crear cuenta')
         if editar
-          a(href="/" style="color:#8de4af") Regresar a la página principal 
+          a(href="/" style="color:var(--color-principal);width:100%;") Regresar a la página principal 
+          a(href="/mi-cuenta/eliminar" style='margin-top:3rem;color:var(--incorrecto)') ELIMINAR CUENTA
         else
           p ¿Ya estás registrado? 
-            a(href="/iniciar-sesion" style="color:#8de4af") Iniciar sesión
+            a(href="/iniciar-sesion" style="color:var(--color-principal)") Iniciar sesión
     
     include partials/footer

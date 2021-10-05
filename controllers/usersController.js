@@ -1,4 +1,7 @@
 const Usuarios = require('../models/Usuarios');
+const ProyectosCompartidos = require('../models/ProyectosCompartidos');
+const Proyectos = require('../models/Proyectos');
+const Tareas = require('../models/Tareas');
 const bcrypt = require('bcrypt-nodejs');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
@@ -11,8 +14,7 @@ exports.formularioRegistro = (req, res) => {
     res.render('formularioRegistro', {
         nombrePagina: "Registrarse en WorkFlow",
         titulo: "Crear cuenta en WorkFlow",
-        actionForm: "/registrarse",
-        editar: false
+        actionForm: "/registrarse"
     });
 }
 exports.formularioEditarCuenta = async(req, res, next) => {
@@ -24,7 +26,17 @@ exports.formularioEditarCuenta = async(req, res, next) => {
         editar: true,
         usuario
     });
-
+}
+exports.formularioEditarPassword = async(req, res, next) => {
+    res.render('confirmarIdentidad');
+}
+exports.formularioEliminarCuenta = async(req, res, next) => {
+    res.render('formularioReestablecer', {
+        nombrePagina: "WorkFlow - Eliminar cuenta",
+        titulo: "ELIMINAR CUENTA",
+        actionForm: "/mi-cuenta/eliminar",
+        eliminar: true
+    });
 }
 
 exports.crearCuenta = async(req, res, next) => {
@@ -40,7 +52,7 @@ exports.crearCuenta = async(req, res, next) => {
         });
     } else {
         const token = crypto.randomBytes(20).toString('hex');
-        await Usuarios.create({ nombre_usuario, email, password, token });
+        await Usuarios.create({ nombre_usuario, email, password, token, imagen_perfil: 'fish.ico' });
         async function main() {
             let transporter = nodemailer.createTransport({
                 host: "smtp.mailtrap.io",
@@ -95,7 +107,7 @@ exports.editarCuenta = async(req, res, next) => {
             return next();
         }
     }
-    let password = req.body.password;
+    let password = req.body.confirmarpassword;
     password = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     let imagen_perfil = usuario.imagen_perfil;
     if (req.body.imagen) {
@@ -123,7 +135,47 @@ exports.editarCuenta = async(req, res, next) => {
             id_usuario: res.locals.usuario.id_usuario
         }
     });
-    if (usuarioActualizado) return res.redirect(`/`);
+    if (usuarioActualizado) return res.redirect('/');
+}
+
+exports.eliminarCuenta = async(req, res, next) => {
+    const usuario = await Usuarios.findOne({ where: { id_usuario: res.locals.usuario.id_usuario } });
+    if (usuario) {
+        const idProyectos = await ProyectosCompartidos.findAll({
+            where: {
+                usuarioIdUsuario: usuario.id_usuario,
+                rol: "owner"
+            },
+            attributes: ['proyectoIdProyecto']
+        });
+        for (let i = 0; i < idProyectos.length; i++) {
+            let proyecto = await Proyectos.findOne({
+                where: { id_proyecto: idProyectos[0].proyectoIdProyecto },
+                attributes: ['id_proyecto']
+            });
+            await Tareas.destroy({
+                where: {
+                    proyectoIdProyecto: proyecto.id_proyecto
+                }
+            })
+            await proyecto.destroy();
+        }
+        await ProyectosCompartidos.destroy({
+            where: { usuarioIdUsuario: usuario.id_usuario }
+        })
+        await Usuarios.destroy({
+            where: { id_usuario: usuario.id_usuario }
+        })
+        return next();
+    }
+    return res.render('formularioRegistro', {
+        nombrePagina: "WorkFlow - Editar cuenta",
+        titulo: "Editar cuenta",
+        actionForm: "/mi-cuenta/editar",
+        editar: true,
+        usuario,
+        error: "No se pudo eliminar tu cuenta."
+    });
 }
 
 exports.validarCuenta = async(req, res, next) => {

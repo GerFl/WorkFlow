@@ -18,6 +18,7 @@ const Tareas = database.define('tareas', {
         defaultValue: Sequelize.NOW
     }
 });
-Tareas.belongsTo(Proyectos); // Añadiendo llaves foraneas para relacionar ambas tablas
+
+Tareas.belongsTo(Proyectos);
 
 module.exports = Tareas;

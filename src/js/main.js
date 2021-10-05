@@ -1,6 +1,7 @@
 import tareas from './modules/tareas';
 import proyectos from './modules/proyectos';
-import { conteoyPorcentaje } from './modules/benAffleck'
+import { conteoyPorcentaje } from './modules/benAffleck';
+import colaboradores from './modules/colaboradores';
 (function() {
     "use strict";
     document.addEventListener('DOMContentLoaded', function() {
@@ -11,7 +12,7 @@ import { conteoyPorcentaje } from './modules/benAffleck'
         if (animacionCargando) {
             setTimeout(function() {
                 window.location.href = '/';
-            }, 9000);
+            }, 8000);
         }
 
         // SEMAFORO
@@ -69,16 +70,18 @@ import { conteoyPorcentaje } from './modules/benAffleck'
         }
         // Barra movil
         const barra = document.querySelector('.menu-movil');
-        //Registrar observador
-        const observer = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) {
-                barra.classList.remove('fijo');
-            } else {
-                barra.classList.add('fijo');
-            }
-        });
-        // Elemento observado
-        observer.observe(document.querySelector('.header-movil'));
+        if (window.innerWidth < 768) {
+            //Registrar observador
+            const observer = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting) {
+                    barra.classList.remove('fijo');
+                } else {
+                    barra.classList.add('fijo');
+                }
+            });
+            // Elemento observado
+            observer.observe(document.querySelector('.header-movil'));
+        }
         // FINHAMBURGER
 
         // CONTEO DE TAREAS
@@ -89,7 +92,7 @@ import { conteoyPorcentaje } from './modules/benAffleck'
         }
 
         // AREAS DE TRABAJO PERSONALIZABLES
-        const btnAgregarArea = document.querySelector('button.area-trabajo');
+        const btnAgregarArea = document.querySelector('button.transparente');
         if (btnAgregarArea) {
             btnAgregarArea.addEventListener('click', e => {
                 e.preventDefault();
@@ -98,20 +101,19 @@ import { conteoyPorcentaje } from './modules/benAffleck'
                     alert("Llene el campo")
                 } else {
                     btnAgregarArea.previousElementSibling.lastElementChild.style.border = '2px solid var(--oscuro)';
-                    const nuevaArea =
+                    const htmlNuevaArea =
                         `<div>
-                            <label>->
+                            <label>
                                 <span class="feedback">0/25</span>
                             </label>
                             <input type="text" class="area" maxlength="25">
                         </div>`;
-                    btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', nuevaArea);
+                    btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', htmlNuevaArea);
                     const textInputs = document.querySelectorAll('form.feedback input[type="text"');
                     conteoCaracteres(textInputs);
                 }
             });
         }
-
         const inputBtnEnviar = document.querySelector('input.btnEnviar');
         const inputAreas = document.querySelector('input.set-areas-trabajo');
         if (inputBtnEnviar) {
