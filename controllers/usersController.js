@@ -52,7 +52,7 @@ exports.crearCuenta = async(req, res, next) => {
         });
     } else {
         const token = crypto.randomBytes(20).toString('hex');
-        await Usuarios.create({ nombre_usuario, email, password, token, imagen_perfil: 'fish.ico' });
+        await Usuarios.create({ nombre_usuario, email, password, token });
         async function main() {
             let transporter = nodemailer.createTransport({
                 host: "smtp.mailtrap.io",

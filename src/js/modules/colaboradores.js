@@ -17,7 +17,6 @@ function conteoColaboradores(colaboradores) {
         // Añadir al set para busquedas
         setIDColaboradores.add(colaborador.dataset.id);
         inputColaboradores.value = [...setIDColaboradores];
-        console.log(setIDColaboradores);
         // Listener para eliminar un colaborador
         colaborador.children[2].addEventListener('click', e => {
             Swal.fire({
@@ -39,7 +38,6 @@ function conteoColaboradores(colaboradores) {
                     setIDColaboradores.delete(colaborador.dataset.id);
                     inputColaboradores.value = [...setIDColaboradores];
                     colaborador.remove();
-                    console.log(setIDColaboradores);
                 }
             })
         });

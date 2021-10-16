@@ -72,6 +72,39 @@ div.error-404 {
     @include mq-error404;
 }
 
+// FADINGS
+div.fading-errors {
+    position: absolute;
+    z-index: 1;
+}
+
+p.error {
+    top: 0;
+    right: 10rem;
+    left: 10rem;
+    color: var(--incorrecto);
+    text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    border: 1px solid var(--oscuro);
+    background-color: var(--oscuro);
+    padding: 1rem;
+    animation: fadingAlert 8s linear;
+}
+
+@keyframes fadingAlert {
+    0% {
+        opacity: 1
+    }
+    80% {
+        opacity: 1
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 
 /* LOGIN */
 

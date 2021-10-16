@@ -256,21 +256,49 @@ exports.validarProyecto = async(req, res, next) => {
     req.body.areas = [...set].toString();
     const errores = req.validationErrors();
     if (errores) {
-        const usuarioId = res.locals.usuario.id_usuario;
-        const totalProyectos = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId } });
-        const proyectosCompletados = await Proyectos.count({ where: { usuarioIdUsuario: usuarioId, porcentaje: 100 } });
+        const usuario = await Usuarios.findOne({
+            where: { id_usuario: res.locals.usuario.id_usuario },
+            attributes: ['id_usuario', 'nombre_usuario', 'imagen_perfil']
+        });
+        const idProyectosUsuario = await ProyectosCompartidos.findAll({
+            where: {
+                usuarioIdUsuario: usuario.id_usuario
+            },
+            attributes: ['proyectoIdProyecto']
+        });
+        // Buscar los proyectos iterando con los indices de las relaciones
+        // totalProyectos almacena la información de los proyectos del modelo Proyectos
+        let totalProyectos = [];
+        for (let i = 0; i < idProyectosUsuario.length; i++) {
+            let proyecto = await Proyectos.findOne({
+                where: {
+                    id_proyecto: idProyectosUsuario[i].proyectoIdProyecto
+                }
+            });
+            totalProyectos.push(proyecto);
+        }
+        // Marcar los proyectos completados
+        let proyectosCompletados = totalProyectos.filter(proyecto => proyecto.porcentaje == 100).length;
+
         if (!req.params.proyectourl) { // Al agregar nuevos proyectos
             res.render('formulariosProyecto', {
                 nombrePagina: 'WorkFlow - Agregar proyecto',
                 titulo: "Agregar proyecto",
                 actionForm: "/agregar-proyecto",
-                totalProyectos,
+                totalProyectos: totalProyectos.length,
                 proyectosCompletados,
                 errores
             });
             res.status(401);
             return;
         } else { // Al editar el proyecto
+            // Obtiene rol
+            const permisos = await ProyectosCompartidos.findOne({
+                where: { usuarioIdUsuario: usuario.id_usuario },
+                attributes: ['rol', 'area']
+            })
+            if (permisos.rol != "owner") return res.redirect(`/proyecto/${req.params.proyectourl}`);
+            // SI TIENE PERMISO
             const proyecto = await Proyectos.findOne({
                 where: {
                     url: req.params.proyectourl
@@ -285,6 +313,7 @@ exports.validarProyecto = async(req, res, next) => {
                 totalProyectos,
                 proyectosCompletados,
                 areas,
+                permisos,
                 errores
             });
             res.status(401);

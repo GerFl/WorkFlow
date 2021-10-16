@@ -24,7 +24,12 @@ if (btnEliminar) {
                     axios.delete(url, { urlProyecto })
                         .then(function(response) {
                             if (response.status == 200) {
-                                Swal.fire("PROYECTO ELIMINADO", "En breve se te redirigirá a la página principal :)", "success");
+                                Swal.fire({
+                                    title: "PROYECTO ELIMINADO",
+                                    text: "En breve se te redirigirá a la página principal :)",
+                                    icon: "success",
+                                    confirmButtonColor: 'var(--color-principal)'
+                                });
                                 setTimeout(() => {
                                     window.location.href = '/'
                                 }, 3000);

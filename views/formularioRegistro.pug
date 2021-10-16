@@ -10,8 +10,9 @@ html(lang='es')
           if editar
             p Para guardar cualquier cambio, es necesario dar click en el botón "Editar mi cuenta"
           if errores
-            each error in errores
-              p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+            .fading-errors
+              each error in errores
+                p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
           if error
             p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error}
         if !editar
@@ -20,7 +21,7 @@ html(lang='es')
           if editar
             div.form-child
               label Imagen de perfil:
-              img(src=usuario.imagen_perfil?`/profilePics/${usuario.imagen_perfil}`:'/fish.ico' alt='Profile Pic')
+              img(src=usuario.imagen_perfil?`/profilePics/${usuario.imagen_perfil}`:'/assets/fish.ico' alt='Profile Pic')
               input(type='file' name='imagen')
           div.form-child
             .campo

@@ -22,7 +22,8 @@ exports.agregarRelaciones = async(req, res) => {
     const owner = await ProyectosCompartidos.create({
         usuarioIdUsuario: res.locals.usuario.id_usuario,
         proyectoIdProyecto: req.proyecto.id_proyecto,
-        rol: 'owner'
+        rol: 'owner',
+        area: 'all'
     });
     // Agregar los plebes
     if (req.proyecto.colaboradores) {

@@ -11,8 +11,9 @@ block contenido
           legend #{titulo}
           div
             if errores
-              each error in errores
-                p(style="color:#d93b5b;font-weight:700;font-size:2rem;margin:0;") #{error.msg}
+              .fading-errors
+                each error in errores
+                  p.error #{error.msg}
             input(type="hidden" name="id_tarea" value=tarea? tarea.id_tarea:'')
             label(for='tarea_nombre') ¿Cuál es el nombre de la tarea?
               span.feedback 0/30

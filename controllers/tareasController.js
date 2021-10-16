@@ -149,6 +149,11 @@ exports.validarTareas = async(req, res, next) => {
     req.checkBody('descripcion_tarea', 'La descripción de la tarea debe ser entre 2 y 100 caracteres.').isLength({ min: 2, max: 100 });
     const errores = req.validationErrors();
     if (errores) {
+        // Obtiene rol
+        const permisos = await ProyectosCompartidos.findOne({
+            where: { usuarioIdUsuario: res.locals.usuario.id_usuario },
+            attributes: ['rol', 'area']
+        })
         const proyecto = await Proyectos.findOne({
             where: { url: req.params.proyectourl }
         });
@@ -169,11 +174,13 @@ exports.validarTareas = async(req, res, next) => {
                 totalTareas,
                 tareasCompletadas,
                 areas,
+                permisos,
                 errores
             });
             res.status(401);
             return;
         } else if (req.params.idtarea) { // AL EDITAR
+            if (permisos.rol != "owner") return res.redirect(`/proyecto/${req.params.proyectourl}`);
             const tarea = await Tareas.findOne({
                 where: {
                     id_tarea: req.params.idtarea
@@ -188,6 +195,7 @@ exports.validarTareas = async(req, res, next) => {
                 tareasCompletadas,
                 tarea,
                 areas,
+                permisos,
                 errores
             });
             res.status(401);

@@ -6,7 +6,6 @@ import colaboradores from './modules/colaboradores';
     "use strict";
     document.addEventListener('DOMContentLoaded', function() {
         // JADE/PUG lets you run unbuffered JavaScript code in the templating engine.
-
         // MODULE INITIALIZED
         const animacionCargando = document.querySelector('.loading');
         if (animacionCargando) {
@@ -109,7 +108,7 @@ import colaboradores from './modules/colaboradores';
                             <input type="text" class="area" maxlength="25">
                         </div>`;
                     btnAgregarArea.previousElementSibling.insertAdjacentHTML('afterend', htmlNuevaArea);
-                    const textInputs = document.querySelectorAll('form.feedback input[type="text"');
+                    const textInputs = document.querySelectorAll('form.feedback input[type="text"]');
                     conteoCaracteres(textInputs);
                 }
             });
@@ -140,16 +139,21 @@ import colaboradores from './modules/colaboradores';
 
         function conteoCaracteres(textInputs, textAreas, textEmail, textPasswords) {
             textInputs.forEach(input => {
+                (input.value.length > 0) ? input.previousElementSibling.childNodes[1].innerText = `${input.value.length}/${input.maxLength}`: '';
                 input.addEventListener('input', function(e) {
                     e.target.previousElementSibling.childNodes[1].innerText = `${input.value.length}/${input.maxLength}`
                 });
             });
-            textAreas.forEach(area => {
-                area.addEventListener('input', function(e) {
-                    e.target.previousElementSibling.childNodes[1].innerText = `${area.value.length}/${area.maxLength}`
+            if (textAreas) {
+                textAreas.forEach(area => {
+                    (area.value.length > 0) ? area.previousElementSibling.firstElementChild.innerText = `${area.value.length}/${area.maxLength}`: '';
+                    area.addEventListener('input', function(e) {
+                        e.target.previousElementSibling.firstElementChild.innerText = `${area.value.length}/${area.maxLength}`
+                    });
                 });
-            });
+            }
             if (textEmail) {
+                (textEmail.value.length) ? textEmail.previousElementSibling.childNodes[1].innerText = `${textEmail.value.length}/${textEmail.maxLength}`: '';
                 textEmail.addEventListener('input', function(e) {
                     e.target.previousElementSibling.childNodes[1].innerText = `${textEmail.value.length}/${textEmail.maxLength}`
                 });
@@ -163,5 +167,16 @@ import colaboradores from './modules/colaboradores';
             }
         }
         // FIN CONTEO CARACTERES
+
+        // FADINGS
+        const popupErrores = document.querySelectorAll('p.error');
+        popupErrores.forEach(error => {
+            error.style.display = "block"
+            setTimeout(function() {
+                error.style.display = "none"
+            }, 7000)
+        });
+
+        // FIN FADINGS
     });
 })();
