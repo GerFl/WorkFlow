@@ -1,4 +1,7 @@
 # WorkFlow - v1.5
+
+Hola desde la compu Vostro:)
+
 Administrador de proyectos.<br>
 Fue elaborado en el entorno NodeJs, usando Express como servidor de la aplicación, Sequelize como ORM para la base de datos con SQL y Pug como template engine.
 
