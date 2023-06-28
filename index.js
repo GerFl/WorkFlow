@@ -17,7 +17,7 @@ require('./models/Tareas');
 require('./models/associations');
 // Probar conexion
 database.sync()
-    .then(() => console.log("Conectado al servidor."))
+    .then(() => console.log("App corriendo en http://localhost:3001"))
     .catch(error => console.log(error));
 
 // .use - Para cualquier request, se correra el codigo de ese bloque

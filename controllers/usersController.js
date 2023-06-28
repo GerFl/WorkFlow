@@ -55,17 +55,22 @@ exports.crearCuenta = async(req, res, next) => {
         await Usuarios.create({ nombre_usuario, email, password, token });
         async function main() {
             let transporter = nodemailer.createTransport({
-                host: "smtp.mailtrap.io",
-                port: 2525,
+                host: process.env.EMAIL_SERVICE,
+                secureConnection: false,
+                port: 587,
                 auth: {
-                    user: "84fda2e06df08d",
-                    pass: "e7e2c6c7dd0613"
+                    user: process.env.EMAIL_USERNAME,
+                    pass: process.env.EMAIL_PASSWORD
+                },
+                tls: {
+                    ciphers: 'SSLv3'
                 }
             });
             const activacionUrl = `http://${req.headers.host}/mi-cuenta/activar/${token}`;
+
             let info = await transporter.sendMail({
-                from: '"Gerardo Flores 👻" <from@example.com>', // Remitente
-                to: "to@example.com", // Destinatario(s)
+                from: process.env.EMAIL_FROM, // Remitente
+                to: email, // Destinatario(s)
                 subject: "Activar cuenta", // Asunto
                 text: "Hello world?", // Plain text body
                 html: `
