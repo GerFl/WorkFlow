@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
+const { development, production } = require('./config');
 require('dotenv').config({ path: 'variables.env' });
+
 const database = new Sequelize(production.database, production.username, production.password, {
     host: production.host,
     dialect: production.dialect,
