@@ -17,7 +17,7 @@ require('./models/Tareas');
 require('./models/associations');
 // Probar conexion
 database.sync()
-    .then(() => console.log("App corriendo en http://localhost:3001"))
+    .then(() => console.log(`App corriendo en http://localhost:${process.env.PROD_APP_PORT}`))
     .catch(error => console.log(error));
 
 // .use - Para cualquier request, se correra el codigo de ese bloque
@@ -51,4 +51,4 @@ app.use((req, res, next) => {
 app.use('/', routes());
 
 // Indicar puerto de ejecucion
-app.listen(3001);
+app.listen(process.env.PROD_APP_PORT);
