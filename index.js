@@ -51,4 +51,4 @@ app.use((req, res, next) => {
 app.use('/', routes());
 
 // Indicar puerto de ejecucion
-app.listen(process.env.PROD_APP_PORT);
+app.listen(process.env.PORT);
